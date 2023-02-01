@@ -1,4 +1,4 @@
-const ProductRepository = require('../services/product.repository.js')
+const ProductRepository = require('../repositories/product.repository.js')
 const {Products} = require('../models/index.js')
 
 class ProductService {

@@ -1,9 +1,8 @@
-const express = require('express')
-const router = express.Router()
-
-// controllers
-const UserController = require('../controllers/user.controller.js')
-const userController = new UserController()
+const express = require("express");
+const auth_middlewares = require("../middlewares/auth-middlewares");
+const router = express.Router();
+const { getUsers, createUser, updateUser, deleteUser } = require("../controllers/user.controller");
 
 
-module.exports = router
+
+module.exports = router;

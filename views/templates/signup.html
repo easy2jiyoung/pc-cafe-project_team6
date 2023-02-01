@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>회원가입 페이지</title>
+
+    <link href="../static/css/signup.css" rel="stylesheet" />
+    <script src="signup.js"></script>
+    <style></style>
+  </head>
+
+  <body>
+    <div>
+      <h1 id="mytitle">PC방 이름</h1>
+    </div>
+    <div class="wrapper">
+      <div class="title"><h1 style="font-size: 21px">회원가입</h1></div>
+      <div class="email">
+        <span>Email :</span>
+        <input id="email" type="text" placeholder="이메일을 입력해 주세요." />
+        <div id="emailError" class="error"></div>
+      </div>
+      <div class="name">
+        <span>이름 :</span>
+        <input id="name" type="text" placeholder="이름을 입력해 주세요." />
+        <div id="nameError" class="error"></div>
+      </div>
+      <div class="userId">
+        <span>ID :</span>
+        <input id="userId" type="text" placeholder="아이디를 입력해 주세요." />
+        <div id="IdError" class="error"></div>
+      </div>
+      <div class="password">
+        <span>PW :</span>
+        <input
+          id="password"
+          type="password"
+          placeholder="비밀번호를 입력해 주세요."
+        />
+        <div id="passwordError" class="error"></div>
+      </div>
+      <div class="passwordCheck">
+        <span>PW 확인 :</span>
+        <input
+          id="passwordCheck"
+          type="password"
+          placeholder="비밀번호를 다시 입력해 주세요."
+        />
+        <div id="passwordCheckError" class="error"></div>
+      </div>
+      <div class="phone">
+        <span>휴대폰 번호 :</span>
+        <input
+          id="phone1"
+          type="text"
+          size="1"
+          maxlength="3"
+          oninput="changePhone1()"
+        />
+        -
+        <input
+          id="phone2"
+          type="text"
+          size="3"
+          maxlength="4"
+          oninput="changePhone2()"
+        />
+        -
+        <input
+          id="phone3"
+          type="text"
+          size="3"
+          maxlength="4"
+          oninput="changePhone3()"
+        />
+      </div>
+
+      <div class="line"></div>
+      <div class="signUp">
+        <button id="signUpButton" disabled onclick="signUpCheck()">
+          회원가입
+        </button>
+        <p></p>
+        <button id="goBackButton" disabled onclick="goBackCheck()">
+          뒤로가기
+        </button>
+      </div>
+      <div id="guideText">
+        <span>&#127872;포인트 충전은 카운터로&#127872;</span>
+      </div>
+    </div>
+  </body>
+</html>

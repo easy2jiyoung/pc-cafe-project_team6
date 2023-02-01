@@ -1,5 +1,3 @@
-const UserRepository = require('../services/user.repository.js')
-
 class UserRepository {
     constructor(UserModel) {
         this.userModel = UserModel

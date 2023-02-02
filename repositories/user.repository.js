@@ -85,6 +85,12 @@ class UserRepository {
             throw error
         }    
     }
+
+    //id로 나의 포인트 조회 /api/users/points/:userId
+    getMyPoint = async(userId) =>{
+        const myPoint = await this.userModel.findOne({where: { userId:userId}});
+        return myPoint;
+    }
 }
 
 module.exports = UserRepository;

@@ -40,6 +40,18 @@ class UserController {
             return res.status(error.status).json({message: error.message})
         }
     }
+
+    //id로 나의 포인트 조회
+    getMyPoint = async (req,res) => {
+        try{
+            const myPoint = await this.userService.getMyPoint(userId)
+
+            res.status(201).json({message:{myPoint}})
+        } catch(error){
+            return res.status(error.status).json({message: error.message})
+        }
+       
+    }
 }
 
 module.exports = UserController;

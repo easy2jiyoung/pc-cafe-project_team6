@@ -5,7 +5,7 @@ class UserRepository {
         this.userModel = UserModel
     }
 
-    // 여기에 함수 작성해주세요
+    
     findUsers = async (id) => {
         const users = await this.userModel.findAll({where: { id }});
         return users;
@@ -29,6 +29,23 @@ class UserRepository {
     deleteUser = async (userId) => {
         const deleteUserData = await this.userModel.destroy({where: { userId }});
         return deleteUserData;
+    }
+
+    // 이름과 핸드폰 번호로 아이디 찾기
+    findByNameAndPhone = async (name,phone) => {
+        try {
+            const id = await this.userModel.findAll({
+                where: {
+                    name: name,
+                    phone: phone
+                },
+                attributes: [userId, id]
+            })
+
+            return id
+        } catch (error) {
+            return error   
+        }
     }
 }
 

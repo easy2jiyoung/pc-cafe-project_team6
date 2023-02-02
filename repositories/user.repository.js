@@ -26,10 +26,28 @@ class UserRepository {
     }
 
 
-    // 유저 수정
-    updateUser = async (password, name, phone, email, role, points) => {
-        const updateUserData = await this.userModel.update({ id, password, name, phone, email, role, points });
-        return updateUserData;
+    //id로 나의 정보 수정
+    updateUser = async (userId, id, phone, email, password) => {
+        try{
+            const updateUserData = await this.userModel.update(
+                {
+                    phone: phone,
+                    email: email,
+                    password: password,
+                },
+               {
+                 where:{ userId : userId}
+                }
+                
+            );
+          
+            return updateUserData;
+
+        }catch(error){
+            error.status = 400
+            throw error
+        }
+
     }
 
     
@@ -91,14 +109,18 @@ class UserRepository {
     }
 
     //id로 나의 포인트 조회 /api/users/points/:userId
-    getMyPoint = async(userId) =>{
-        try {
-            const myPoint = await this.userModel.findOne({where: { userId:userId}});
+    getMyPoint = async(userId) => {
+        try{
+            const myPoint = await this.userModel.findOne({
+                where: { userId:userId },
+                attributes: ['userId','points']
+            });
             return myPoint;
-        } catch (error) {
+        }catch(error){
             error.status = 400
-            throw error   
+            throw error
         }
+      
     }
 }
 

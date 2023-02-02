@@ -23,6 +23,26 @@ class UserController {
         }
     }
 
+
+    //id로 나의 정보 수정
+    updateUser = async (req,res) => {
+        try {
+            const {userId} = req.params
+            const {id, phone, email, password,confirmPassword}=req.body
+    
+            if (password !== confirmPassword) {
+                const error = new Error('새 비밀번호가 비밀번호 확인 값과 일치하지 않습니다.')
+                error.status = 412
+                throw(error)
+            }
+    
+            const updateMyinfo = await this.userService.updateUser(userId, id, phone, email, password)
+            res.status(200).json({message: "내 정보를 업데이트 완료 했습니다."})
+        } catch (error) {
+            return res.status(error.status).json({message: error.message})
+        }
+} 
+
     // 이름과 핸드폰 번호로 아이디 찾기
     findByNameAndPhone = async (req, res) => {
         try {
@@ -67,12 +87,15 @@ class UserController {
             const {userId} = req.params
             const myPoint = await this.userService.getMyPoint(userId)
 
-            res.status(201).json({message:{myPoint}})
+            res.status(200).json(myPoint)
         } catch(error){
+            console.log(error)
             return res.status(error.status).json({message: error.message})
         }
-       
     }
+
+    
+
 }
 
 module.exports = UserController;

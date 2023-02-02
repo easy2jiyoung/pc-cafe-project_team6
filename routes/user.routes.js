@@ -17,4 +17,7 @@ router.put('/password', userController.putPasswordByIdNamePhone)
 //userId로 소지 포인트 조회
 router.get('/points/:userId', userController.getMyPoint)
 
+//userId로 내 정보 변경
+router.put('/update/:userId', userController.updateUser)
+
 module.exports = router;

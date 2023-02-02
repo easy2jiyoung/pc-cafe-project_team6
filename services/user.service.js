@@ -106,6 +106,16 @@ class UserService {
             throw error
         }
     }
+
+    getMyPoint = async(userId) => {
+        try{
+          const getMyPoint  = await this.userRepository.getMyPoint(userId)
+
+          return getMyPoint;
+        }catch(error){
+            throw error
+        }
+    }
 }
 
 module.exports = UserService;

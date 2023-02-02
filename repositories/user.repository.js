@@ -85,14 +85,20 @@ class UserRepository {
 
             return userIdUpdatedPassword
         } catch (error) {
+            error.status = 400
             throw error
         }    
     }
 
     //id로 나의 포인트 조회 /api/users/points/:userId
     getMyPoint = async(userId) =>{
-        const myPoint = await this.userModel.findOne({where: { userId:userId}});
-        return myPoint;
+        try {
+            const myPoint = await this.userModel.findOne({where: { userId:userId}});
+            return myPoint;
+        } catch (error) {
+            error.status = 400
+            throw error   
+        }
     }
 }
 

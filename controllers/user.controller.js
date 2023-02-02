@@ -64,6 +64,7 @@ class UserController {
     //id로 나의 포인트 조회
     getMyPoint = async (req,res) => {
         try{
+            const {userId} = req.params
             const myPoint = await this.userService.getMyPoint(userId)
 
             res.status(201).json({message:{myPoint}})

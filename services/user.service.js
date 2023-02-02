@@ -4,6 +4,7 @@ const { Users } = require('../models/index.js')
 class UserService {
     userRepository = new UserRepository(Users)
 
+
     // 유저 전체 조회
     findUsers = async (id) => {
         const allUser = await this.userRepository.findUsers( id );
@@ -82,6 +83,28 @@ class UserService {
         const deleteUserData = await this.userRepository.deleteUser( userId );
 
         return deleteUserData;
+    }
+
+    // 이름과 핸드폰 번호로 아이디 찾기
+    findByNameAndPhone = async (name,phone) => {
+        try {
+            const id = await this.userRepository.findByNameAndPhone(name,phone)
+
+            return id
+        } catch (error) {
+            throw error   
+        }
+    }
+
+    // ID, 이름, 휴대폰 번호로 비밀번호 재설정
+    putPasswordByIdNamePhone = async (id,name,phone,password) => {
+        try {
+            const userIdUpdatedPassword = await this.userRepository.putPasswordByIdNamePhone(id,name,phone,password)
+
+            return userIdUpdatedPassword
+        } catch (error) {
+            throw error
+        }
     }
 }
 

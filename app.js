@@ -16,7 +16,7 @@ const router = require('./routes');
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use('/api', [userRouter]);
+app.use('/api', router);
 
 
 http.listen(port, () => {

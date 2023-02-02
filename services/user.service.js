@@ -4,43 +4,6 @@ const { Users } = require('../models/index.js')
 class UserService {
     userRepository = new UserRepository(Users)
 
-    // 유저 전체 조회
-    findUsers = async (id) => {
-        const allUser = await Users.userRepository.findUsers( id );
-        
-        return allUser.map(users => {
-            return {
-                userId: users.userId,
-                id: users.id,
-                password: users.password,
-                name: users.name,
-                phone: users.phone,
-                email: users.email,
-                role: users.role,
-                points: users.points,
-            }
-        });
-    }
-
-
-    // 특정 유저 조회
-    findOneUser = async (id, userId) => {
-        const oneUser = await Users.userRepository.findOneUser( id, userId );
-        
-        return {
-            userId: oneUser.userId,
-            id: oneUser.id,
-            password: oneUser.password,
-            name: oneUser.name,
-            phone: oneUser.phone,
-            email: oneUser.email,
-            role: oneUser.role,
-            points: oneUser.points,
-            createdAt: oneUser.createdAt,
-            updatedAt: oneUser.updatedAt,
-        };
-    }
-
 
     // 유저 생성
     createUser = async (userId, id, password, name, phone, email, role, points, createdAt, updatedAt) => {
@@ -81,6 +44,28 @@ class UserService {
         const deleteUserData = await Users.userRepository.deleteUser( userId );
 
         return deleteUserData;
+    }
+
+    // 이름과 핸드폰 번호로 아이디 찾기
+    findByNameAndPhone = async (name,phone) => {
+        try {
+            const id = await this.userRepository.findByNameAndPhone(name,phone)
+
+            return id
+        } catch (error) {
+            throw error   
+        }
+    }
+
+    // ID, 이름, 휴대폰 번호로 비밀번호 재설정
+    putPasswordByIdNamePhone = async (id,name,phone,password) => {
+        try {
+            const userIdUpdatedPassword = await this.userRepository.putPasswordByIdNamePhone(id,name,phone,password)
+
+            return userIdUpdatedPassword
+        } catch (error) {
+            throw error
+        }
     }
 }
 

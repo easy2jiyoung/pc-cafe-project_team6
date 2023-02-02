@@ -50,8 +50,40 @@ class UserRepository {
             return id
         } catch (error) {
             error.status = 400
-            return error
+            throw error
         }
+    }
+
+    // ID, 이름, 휴대폰 번호로 비밀번호 재설정
+    putPasswordByIdNamePhone = async (id,name,phone,password) => {
+        try {
+            const [doesUserExist] = await this.userModel.findAll({
+                where: {
+                    id: id,
+                    name: name,
+                    phone: phone
+                },
+                attributes: ['userId']
+            })
+
+            // If user does not exist
+            if (doesUserExist === undefined) {
+                const error = new Error('아이디, 이름과 핸드폰 번호와 일치하는 계정이 없습니다.')
+                error.status = 404
+                throw error
+            }
+
+            const userIdUpdatedPassword = await this.userModel.update({password: password}, {
+                where: {
+                    id: id
+                },
+                attributes: ['userId']
+            })
+
+            return userIdUpdatedPassword
+        } catch (error) {
+            throw error
+        }    
     }
 }
 

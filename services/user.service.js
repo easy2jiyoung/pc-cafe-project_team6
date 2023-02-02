@@ -53,7 +53,18 @@ class UserService {
 
             return id
         } catch (error) {
-            return error   
+            throw error   
+        }
+    }
+
+    // ID, 이름, 휴대폰 번호로 비밀번호 재설정
+    putPasswordByIdNamePhone = async (id,name,phone,password) => {
+        try {
+            const userIdUpdatedPassword = await this.userRepository.putPasswordByIdNamePhone(id,name,phone,password)
+
+            return userIdUpdatedPassword
+        } catch (error) {
+            throw error
         }
     }
 }

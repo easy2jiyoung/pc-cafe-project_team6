@@ -2,6 +2,8 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const { createServer } = require('http');
 
+const userRouter = require("./routes/user.routes");
+
 const app = express();
 const port = 1004
 

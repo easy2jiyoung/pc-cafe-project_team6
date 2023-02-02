@@ -6,10 +6,11 @@ class UserService {
 
     // 유저 전체 조회
     findUsers = async (id) => {
-        const allUser = await Users.userRepository.findUsers( id );
+        const allUser = await this.userRepository.findUsers( id );
         
         return allUser.map(users => {
             return {
+                // 프론트 진행하면서 필요한 부분 추가 또는 삭제
                 userId: users.userId,
                 id: users.id,
                 password: users.password,
@@ -24,8 +25,8 @@ class UserService {
 
 
     // 특정 유저 조회
-    findOneUser = async (id, userId) => {
-        const oneUser = await Users.userRepository.findOneUser( id, userId );
+    findOneUser = async (id, password) => {
+        const oneUser = await this.userRepository.findOneUser( id, password );
         
         return {
             userId: oneUser.userId,
@@ -44,7 +45,7 @@ class UserService {
 
     // 유저 생성
     createUser = async (userId, id, password, name, phone, email, role, points, createdAt, updatedAt) => {
-        const createUserData = await Users.userRepository.createUser( userId, id, password, name, phone, email, role, points, createdAt, updatedAt );
+        const createUserData = await this.userRepository.createUser( userId, id, password, name, phone, email, role, points, createdAt, updatedAt );
         
         return {
             userId: createUserData.userId,
@@ -63,7 +64,7 @@ class UserService {
 
     // 유저 수정
     updateUser = async (password, name, phone, email, points, updatedAt) => {
-        const updateUserData = await Users.userRepository.updateUser( password, name, phone, email, points, updatedAt );
+        const updateUserData = await this.userRepository.updateUser( password, name, phone, email, points, updatedAt );
 
         return {
             password: updateUserData.password,
@@ -78,7 +79,7 @@ class UserService {
 
     // 유저 삭제
     deleteUser = async (userId) => {
-        const deleteUserData = await Users.userRepository.deleteUser( userId );
+        const deleteUserData = await this.userRepository.deleteUser( userId );
 
         return deleteUserData;
     }

@@ -1,33 +1,55 @@
-const express = require('express');
-const cookieParser = require('cookie-parser');
-const { createServer } = require('http');
-const path = require('path')
+// const express = require('express');
+// const cookieParser = require('cookie-parser');
+// const { createServer } = require('http');
+// const path = require('path')
 
-const userRouter = require("./routes/user.routes");
+// const userRouter = require("./routes/user.routes");
+
+// const app = express();
+// const port = 1004
+
+// // socket
+// const http = createServer(app);
+
+// const router = require('./routes');
+
+// /* ejs setting*/
+// app.set('view engine','ejs');
+// app.set('views', './views')
+// app.use(express.static(path.join(__dirname,'views')));
+
+// /* router */
+// app.use(cookieParser());
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
+// app.use('/api', router);
+
+// app.get('/',(req,res) => {
+//     res.render('login');
+// })
+
+// http.listen(port, () => {
+//     console.log(`${port} 포트가 열렸습니다!`);
+// });
+
+
+
+// 로그인
+const express = require("express");
+const cookieParser = require('cookie-parser');
+
+const loginRouter = require("./routes/login.routes.js");
 
 const app = express();
-const port = 1004
-
-// socket
-const http = createServer(app);
-
-const router = require('./routes');
-
-/* ejs setting*/
-app.set('view engine','ejs');
-app.set('views', './views')
-app.use(express.static(path.join(__dirname,'views')));
-
-/* router */
-app.use(cookieParser());
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use('/api', router);
+app.use(cookieParser());
 
-app.get('/',(req,res) => {
-    res.render('login');
-})
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
-http.listen(port, () => {
-    console.log(`${port} 포트가 열렸습니다!`);
+app.use("/api", [loginRouter]);
+
+app.listen(3100, () => {
+  console.log("서버오픈");
 });

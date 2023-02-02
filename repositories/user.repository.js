@@ -103,6 +103,7 @@ class UserRepository {
 
             return userIdUpdatedPassword
         } catch (error) {
+            error.status = 400
             throw error
         }    
     }

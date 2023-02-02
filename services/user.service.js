@@ -45,6 +45,17 @@ class UserService {
 
         return deleteUserData;
     }
+
+    // 이름과 핸드폰 번호로 아이디 찾기
+    findByNameAndPhone = async (name,phone) => {
+        try {
+            const id = await this.userRepository.findByNameAndPhone(name,phone)
+
+            return id
+        } catch (error) {
+            return error   
+        }
+    }
 }
 
 module.exports = UserService;

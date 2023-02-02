@@ -39,17 +39,18 @@ class UserRepository {
     // 이름과 핸드폰 번호로 아이디 찾기
     findByNameAndPhone = async (name,phone) => {
         try {
-            const id = await this.userModel.findAll({
+            const [id] = await this.userModel.findAll({
                 where: {
                     name: name,
                     phone: phone
                 },
-                attributes: [userId, id]
+                attributes: ['userId', 'id']
             })
 
             return id
         } catch (error) {
-            return error   
+            error.status = 400
+            return error
         }
     }
 }

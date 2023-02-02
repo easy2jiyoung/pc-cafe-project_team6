@@ -5,7 +5,7 @@ const { getUsers, createUser, updateUser, deleteUser } = require("../controllers
 const {Users} = require('../models/index.js')
 const { Op } = require("sequelize");
 
-const UserController = require('../controllers/product.controller.js')
+const UserController = require('../controllers/user.controller.js')
 const userController = new UserController()
 
 // 이름과 핸드폰 번호로 아이디 찾기

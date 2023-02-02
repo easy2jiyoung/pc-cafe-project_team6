@@ -98,6 +98,7 @@ class UserController {
     getUserInfo = async (req, res) => {
         try {
             const UserInfo = await this.userService.findUsers();
+
             res.status(200).send(UserInfo)
         } catch (error) {
             console.log(error)

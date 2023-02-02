@@ -63,17 +63,21 @@ class UserService {
     }
 
 
-    // 유저 수정
-    updateUser = async (password, name, phone, email, points, updatedAt) => {
-        const updateUserData = await this.userRepository.updateUser( password, name, phone, email, points, updatedAt );
-
-        return {
-            password: updateUserData.password,
-            name: updateUserData.name,
-            phone: updateUserData.phone,
-            email: updateUserData.email,
-            points: updateUserData.points,
-            updatedAt: updateUserData.updatedAt,
+    //id로 나의 정보 수정
+    updateUser = async (userId, id, phone, email, password) => {
+        try {
+            const updateUserData = await this.userRepository.updateUser(userId, id, phone, email, password);
+            return {
+                id:updateUserData.id,
+                password: updateUserData.password,
+                name: updateUserData.name,
+                phone: updateUserData.phone,
+                email: updateUserData.email,
+                points: updateUserData.points,
+                updatedAt: updateUserData.updatedAt,
+            }
+        } catch (error) {
+            throw error
         }
     }
 
@@ -107,6 +111,7 @@ class UserService {
         }
     }
 
+    //id로 포인트 조회
     getMyPoint = async(userId) => {
         try{
           const getMyPoint  = await this.userRepository.getMyPoint(userId)
@@ -116,6 +121,8 @@ class UserService {
             throw error
         }
     }
+
+
 }
 
 module.exports = UserService;

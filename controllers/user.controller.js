@@ -20,7 +20,8 @@ class UserController {
         } catch (error) {
             console.error(error);
             res.status(500).send({ errorMessage });
-
+        }
+    }
 
     // 이름과 핸드폰 번호로 아이디 찾기
     findByNameAndPhone = async (req, res) => {

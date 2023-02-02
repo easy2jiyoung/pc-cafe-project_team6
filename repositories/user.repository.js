@@ -1,7 +1,10 @@
+// const { Users } = require('../models/index.js')
+
 class UserRepository {
     constructor(UserModel) {
         this.userModel = UserModel
     }
+
 
     // 유저 조회
     findUsers = async (id) => {
@@ -10,8 +13,8 @@ class UserRepository {
     }
 
     // 특정 유저 조회
-    findOneUser = async (id, userId) => {
-        const oneUser = await this.userModel.findOne({where: { id, userId }});
+    findOneUser = async (id, password) => {
+        const oneUser = await this.userModel.findOne({where: { id, password }});
         return oneUser;
     }
 
@@ -84,6 +87,21 @@ class UserRepository {
         } catch (error) {
             throw error
         }    
+    }
+
+    //id로 나의 포인트 조회 /api/users/points/:userId
+    getMyPoint = async(userId) =>{
+        try{
+            const myPoint = await this.userModel.findOne({
+                where: { userId:userId },
+                attributes: ['userId','points']
+            });
+            return myPoint;
+        }catch(error){
+            error.status = 400
+            throw error
+        }
+      
     }
 }
 

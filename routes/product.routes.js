@@ -11,4 +11,9 @@ const productController = new ProductController()
 // 이미지 업로드
 router.post('/image', setUpload('file'), productController.imageUpload)
 
+// 상품 등록
+router.post('/', registerProduct = async (req, res) => {
+    
+})
+
 module.exports = router

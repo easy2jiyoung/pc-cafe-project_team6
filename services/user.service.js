@@ -6,8 +6,8 @@ class UserService {
 
 
     // 유저 전체 조회
-    findUsers = async (id) => {
-        const allUser = await this.userRepository.findUsers( id );
+    findUsers = async () => {
+        const allUser = await this.userRepository.findUsers();
         
         return allUser.map(users => {
             return {

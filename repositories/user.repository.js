@@ -6,9 +6,9 @@ class UserRepository {
     }
 
 
-    // 유저 조회
-    findUsers = async (id) => {
-        const users = await this.userModel.findAll({where: { id }});
+    // (관리자) role=customer 유저 조회
+    findUsers = async () => {
+        const users = await this.userModel.findAll({ where: { role: "customer" }});
         return users;
     }
 

@@ -16,6 +16,9 @@ const PCOrderController = require('../controllers/pcOrder.controller.js')
 const pcOrderController = new PCOrderController()
 router.post('/pcOrder/:userId/:pcId', pcOrderController.postPCOrder)
 
+const adminRouter = require('./admin.routes')
+router.use('/admin', adminRouter)
+
 const auth_middleware = require("../middlewares/auth-middlewares")
 router.get('/auth',auth_middleware)
 

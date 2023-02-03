@@ -104,6 +104,17 @@ class UserController {
         }
     }
 
+    // (관리자) 회원 정보 조회
+    getUserInfo = async (req, res) => {
+        try {
+            const UserInfo = await this.userService.findUsers();
+
+            res.status(200).send(UserInfo)
+        } catch (error) {
+            console.log(error)
+            return res.status(error.status).json({message: error.message})
+        }
+    }
     
 
 }

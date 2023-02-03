@@ -32,3 +32,7 @@ input {
     border-color: #e44525 !important;
     box-shadow: 0 2px 2px rgb(228, 69, 37, 0.075) !important;
 }
+
+#commonHeader button {
+    float: right;
+}

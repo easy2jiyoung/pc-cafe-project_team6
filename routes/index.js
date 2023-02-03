@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 const userRouter = require('./user.routes')
-router.use('/users', userRouter)
+const loginRouter = require("./login.routes")
+router.use('/users', [userRouter, loginRouter])
 
 const productRouter = require('./product.routes')
 router.use('/products', productRouter)
@@ -15,8 +16,7 @@ const PCOrderController = require('../controllers/pcOrder.controller.js')
 const pcOrderController = new PCOrderController()
 router.post('/pcOrder/:userId/:pcId', pcOrderController.postPCOrder)
 
-const loginRouter = require("./login.routes");
-router.use('/login', loginRouter)
-
+const auth_middleware = require("../middlewares/auth-middlewares")
+router.get('/auth',auth_middleware)
 
 module.exports = router;

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
   <head>
+    <%- include('head.ejs') %>
     <meta charset="utf-8" />
     <meta
       name="viewport"
@@ -8,8 +9,8 @@
     />
     <title>회원가입 페이지</title>
 
-    <link href="../static/css/signup.css" rel="stylesheet" />
-    <script src="signup.js"></script>
+    <link href="./css/signup.css" rel="stylesheet" />
+    <script src="../static/js/signup.js"></script>
     <style></style>
   </head>
 
@@ -31,7 +32,7 @@
       </div>
       <div class="userId">
         <span>ID :</span>
-        <input id="userId" type="text" placeholder="아이디를 입력해 주세요." />
+        <input id="id" type="text" placeholder="아이디를 입력해 주세요." />
         <div id="IdError" class="error"></div>
       </div>
       <div class="password">
@@ -55,33 +56,18 @@
       <div class="phone">
         <span>휴대폰 번호 :</span>
         <input
-          id="phone1"
+          id="phone"
           type="text"
           size="1"
-          maxlength="3"
-          oninput="changePhone1()"
+          maxlength="11"
+          placeholder="휴대폰 번호를 입력해주세요.(숫자만)"
         />
-        -
-        <input
-          id="phone2"
-          type="text"
-          size="3"
-          maxlength="4"
-          oninput="changePhone2()"
-        />
-        -
-        <input
-          id="phone3"
-          type="text"
-          size="3"
-          maxlength="4"
-          oninput="changePhone3()"
-        />
+        <div id="phoneCheckError" class="error"></div>
       </div>
-
       <div class="line"></div>
       <div class="signUp">
-        <button id="signUpButton" disabled onclick="signUpCheck()">
+        <!-- class 추가했는데 버튼이 미리 클릭된 것 처럼 나옴 -->
+        <button class="btn btn-primary commonButton" id="signUpButton" disabled onclick="registerUser()">
           회원가입
         </button>
         <p></p>

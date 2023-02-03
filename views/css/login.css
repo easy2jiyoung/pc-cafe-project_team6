@@ -1,0 +1,33 @@
+body {
+    font-weight: 200;
+}
+
+.divLogin {
+    padding-top: 80%;
+}
+
+.loginText {
+    width: 20%;
+}
+
+.loginButton {
+    background-color: #FF4C29;
+    border-color: #FF4C29;
+}
+
+.loginButton:hover, .loginButton:active, .loginButton:focus {
+    background-color: #e44525 !important;
+    border-color: #e44525 !important;
+    box-shadow: 0 2px 2px rgb(228, 69, 37, 0.075) !important;
+}
+
+.divPcListContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.divPcList {
+    padding-top: 20%;
+    text-align: center;
+    /* margin: 0 auto; */
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <%- include('head.ejs') %>
+
+    <link rel="stylesheet" href="css/login.css">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-8 divPcListContainer">
+                PC 목록
+                <div class="divPcList">
+                    <div class="row" id="divPcRow0">
+                    </div>
+                    <div class="row" id="divPcRow1">
+                    </div>
+                    <div class="row" id="divPcRow2">
+                    </div>
+                    <div class="row" id="divPcRow3">
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                로그인
+                <div class="divLogin">
+                    <div class="row">
+                        <label for="loginId" class="col-3 col-form-label loginText">ID</label>
+                        <div class="col">
+                            <input id="loginId">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="loginPassword" class="col-3 col-form-label loginText">패스워드</label>
+                        <div class="col">
+                            <input id="loginPassword">
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary loginButton">로그인</button>
+                    <p style="margin-top:6px"><a href="/signup">회원가입</a></p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+
+<script>
+    $(document).ready(function () {
+        // PC 목록 불러오기
+        $.ajax({
+            type: 'GET',
+            url: `/api/pcs`,
+            async: false,
+            success: function (response) {
+                let pcId
+                let pcStatus
+                let temp_html
+                let divPcRow
+                
+                for(let i=0; i<response.length; i++) {
+                    pcId = response[i].pcId
+                    pcStatus = response[i].pcStatus
+                    divPcRow = `divPcRow${Math.floor(i/4)}`
+
+                    console.log(pcId, pcStatus)
+                    console.log(divPcRow)
+
+                    if (pcStatus===true) {
+                        temp_html = `<div class="col-2">
+                                        <img src="./images/pcDisabledIcon.png">
+                                        PC ${pcId}
+                                    </div>`
+                        console.log(temp_html)
+                        $('#'+divPcRow).append(temp_html)
+                    } else if (pcStatus===false) {
+                        temp_html = `<div class="col-2">
+                                        <img src="./images/pcEnabledIcon.png">
+                                        PC ${pcId}
+                                    </div>`
+                        console.log(temp_html)
+                        $('#'+divPcRow).append(temp_html)
+                    }
+                }
+            },
+        });
+
+    })
+
+</script>
+
+</html>

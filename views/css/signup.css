@@ -1,137 +1,132 @@
 * {
-  margin: 0px;
-  box-sizing: border-box;
-  font-size: 13px;
-  color: white;
+    margin: 0px;
+    box-sizing: border-box;
+    font-size: 13px;
+    color: white;
 }
 
 html {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  padding-top: 20px;
-  padding-bottom: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 body {
-  width: 45%;
-  border: 1px solod black;
+    width: 45%;
+    border: 1px solod black;
 }
 
 #mytitle {
-  text-align: center;
-  font-size: 50px;
+    text-align: center;
+    font-size: 50px;
 }
 
 input {
-  border: 1px solod black;
-  border-radius: 3px;
-  line-height: 35px;
-  font-size: 12px;
-  padding-left: 10px;
-  padding-right: 10px;
+    border: 1px solod black;
+    border-radius: 10px;
+    line-height: 30px;
+    font-size: 12px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 span {
-  font-size: 20px;
+    line-height: 35px;
+    font-size: 20px;
 }
 
 .wrapper {
-  padding: 10px;
+    padding: 10px;
 }
 
 .name span {
-  padding-left: 9px;
+    padding-left: 9px;
 }
 
 .userId span {
-  padding-left: 30px;
+    padding-left: 30px;
 }
 
 .password span {
-  padding-left: 20px;
+    padding-left: 20px;
 }
 
 .passwordCheck span {
-  padding-left: 10px;
+    padding-left: 10px;
 }
 
 div {
-  padding-top: 3px;
-  padding-bottom: 8px;
+    padding-top: 3px;
+    padding-bottom: 8px;
 }
 
 .title {
-  text-align: center;
-  font-weight: 700;
+    text-align: center;
+    font-weight: 700;
 }
 
 .email input {
-  width: 90%;
-  float: right;
+    width: 90%;
+    float: right;
 }
 
 .name input {
-  width: 90%;
-  float: right;
+    width: 90%;
+    float: right;
 }
 
 .userId input {
-  width: 90%;
-  float: right;
+    width: 90%;
+    float: right;
 }
 
 .password input {
-  width: 90%;
-  float: right;
+    width: 90%;
+    float: right;
 }
 
 .passwordCheck input {
-  width: 85%;
-  float: right;
+    width: 85%;
+    float: right;
+}
+
+.phone>span {
+    padding-right: 3px;
 }
 
 .phone {
-  display: flex;
-  justify-content: space-between;
-  line-height: 35px;
+    line-height: 25px;
 }
 
-#phone1 {
-  width: 18%;
-}
-
-#phone2 {
-  width: 30%;
-}
-
-#phone3 {
-  width: 30%;
+#phone {
+    width: 85%;
 }
 
 .signUp {
-  text-align: center;
+    text-align: center;
 }
 
 .signUp button {
-  width: 100%;
-  cursor: pointer;
+    width: 100%;
+    cursor: pointer;
 }
 
 button {
-  cursor: pointer;
-  height: 30px;
-  margin: 10px 0px 10px 0px;
+    cursor: pointer;
+    height: 30px;
+    margin: 10px 0px 10px 0px;
 }
 
 .error {
-  font-size: 1px;
-  height: 20px;
-  color: red;
-  font-weight: 700;
+    font-size: 1px;
+    height: 20px;
+    color: red;
+    font-weight: 700;
 }
 
 #guideText {
-  font-size: 20px;
-  text-align: center;
+    font-size: 20px;
+    text-align: center;
 }

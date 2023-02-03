@@ -15,8 +15,8 @@ const router = require('./routes');
 
 /* ejs setting*/
 app.set('view engine','ejs');
-app.set('views', './views')
-app.use(express.static(path.join(__dirname,'views')));
+app.set('views', __dirname + '/views')
+app.use(express.static(path.join(__dirname + '/views')));
 
 /* router */
 app.use(cookieParser());
@@ -25,7 +25,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api', router);
 
 app.get('/',(req,res) => {
-    res.render('login');
+    res.render('login.ejs');
+})
+
+app.get('/signup',(req,res)=>{
+    res.render('signup.ejs')
 })
 
 http.listen(port, () => {

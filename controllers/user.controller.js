@@ -8,18 +8,28 @@ class UserController {
     // 로그인
     login = async (req, res) => {
         const { id, password } = req.body;
-        const userInfo = await this.userService.findOneUser(id, password);
-        const token = jwt.sign({ userId: userInfo.userId }, "teamSparta6");
+        
         try {
+            const userInfo = await this.userService.findOneUser(id, password);
 
-            res.cookie('jwt', token, {
-                maxAge: 1000 * 60 * 10, // 1초(6000) * 60 = 1분 * 10 = 10분
-            });
+            const token = jwt.sign({ userId: userInfo.userId }, "teamSparta6", {expiresIn: '1d'});
+
+            res.cookie('accessToken',token);
 
             res.status(200).send('PC방에 오신 것을 환영합니다.');
         } catch (error) {
             console.error(error);
-            res.status(500).send({ errorMessage });
+            res.status(error.status).send({message:error.message});
+        }
+    }
+
+    // 로그아웃
+    logout = async (req,res) => {
+        try {
+            res.clearCookie('accessToken')
+            return res.status(200).send({message: '로그아웃 되었습니다.'})
+        } catch (error) {
+            return res.status(400).send(error)
         }
     }
 

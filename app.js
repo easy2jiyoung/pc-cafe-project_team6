@@ -12,11 +12,7 @@ const port = 1004
 const http = createServer(app);
 
 const router = require('./routes');
-
-/* ejs setting*/
-app.set('view engine','ejs');
-app.set('views', __dirname + '/views')
-app.use(express.static(path.join(__dirname + '/views')));
+const ejsRouter = require('./routes/ejs.routes')
 
 /* router */
 app.use(cookieParser());
@@ -24,13 +20,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use('/api', router);
 
-app.get('/',(req,res) => {
-    res.render('login.ejs');
-})
+/* ejs setting*/
+app.use(ejsRouter)
+app.set('view engine','ejs');
+app.set('views', __dirname + '/views')
+app.use(express.static(path.join(__dirname + '/views')));
 
-app.get('/signup',(req,res)=>{
-    res.render('signup.ejs')
-})
 
 http.listen(port, () => {
     console.log(`${port} 포트가 열렸습니다!`);

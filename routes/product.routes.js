@@ -16,11 +16,11 @@ router.post('/image', setUpload('file'), productController.imageUpload)
 router.post('/', registerProduct = async (req, res) => {
     const {productName, productStock, productPrice, productImgUrl, productType} = req.body
     const newProduct = await Products.create({
-        productName: productName,
-        productStock: productStock,
-        productPrice: productPrice,
-        productImgUrl: productImgUrl,
-        productType: productType
+        productName,
+        productStock,
+        productPrice,
+        productImgUrl,
+        productType
     })
     res.status(201).send(newProduct)
 })
@@ -36,7 +36,7 @@ router.get('/', productList = async (req, res) => {
 router.get('/:productId', oneProduct = async (req, res) => {
     const {productId} = req.params
     const product = await Products.findOne({
-        where: {productId:productId}
+        where: {productId}
     });
     res.status(200).send(product)
 })
@@ -46,14 +46,24 @@ router.put('/:productId', modifyProduct = async (req, res) => {
     const {productName, productStock, productPrice, productImgUrl, productType} = req.body
     const {productId} = req.params
     const updateProduct = await Products.update({
-        
-    })
+        productName,
+        productStock,
+        productPrice,
+        productImgUrl,
+        productType
+        }, {
+            where: {productId}
+        })
     res.status(201).send(updateProduct)
 })
 
 // 상품 삭제
 router.delete('/:productId', deleteProduct = async (req, res) => {
-
+    const {productId} = req.params
+    const deleteProduct = await Products.destroy({
+        where: {productId}
+    })
+    res.status(200).send({message:"성공적으로 삭제되었습니다."})
 })
 
 module.exports = router

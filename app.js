@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api', router);
 
 app.get('/',(req,res) => {
-    res.render('login');
+    res.render('updateMyInfo');
 })
 
 http.listen(port, () => {

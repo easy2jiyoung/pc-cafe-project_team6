@@ -7,7 +7,7 @@ class ProductRepository {
     }
 
     // 상품 등록
-    registerProduct = async(productName, productStock, productPrice, productImgUrl, productType) => {
+    productRegister = async(productName, productStock, productPrice, productImgUrl, productType) => {
         try {
             const newProduct = await this.productModel.create({
                 productName,

@@ -7,7 +7,7 @@ class ProductService {
     // 상품 등록
     productRegister = async(productName, productStock, productPrice, productImgUrl, productType) => {
         try {
-            const newProduct = await this.productRepository.registerProduct(
+            const newProduct = await this.productRepository.productRegister(
                 productName,
                 productStock,
                 productPrice,
@@ -21,7 +21,9 @@ class ProductService {
     }
 
     // 상품 조회
-    
+    readProduct = async() => {
+        
+    }
 }
 
 module.exports = ProductService;

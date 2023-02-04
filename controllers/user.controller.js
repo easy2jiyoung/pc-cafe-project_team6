@@ -69,9 +69,7 @@ class UserController {
         role,
         points
       );
-      res
-        .status(201)
-        .json({ message: "회원가입이 성공하였습니다.", data: registerInfo });
+      res.status(201).json({ result: "success", data: registerInfo });
     } catch (error) {
       console.log(error);
       res

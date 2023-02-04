@@ -9,11 +9,14 @@
     />
     <title>회원가입 페이지</title>
 
+    <!-- jquery -->
+    <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+
     <link href="./css/signup.css" rel="stylesheet" />
     <script src="../static/js/signup.js"></script>
     <style></style>
   </head>
-
+  <script></script>
   <body>
     <div>
       <h1 id="mytitle">PC방 이름</h1>
@@ -67,7 +70,12 @@
       <div class="line"></div>
       <div class="signUp">
         <!-- class 추가했는데 버튼이 미리 클릭된 것 처럼 나옴 -->
-        <button class="btn btn-primary commonButton" id="signUpButton" disabled onclick="registerUser()">
+        <button
+          class="btn btn-primary commonButton"
+          id="signUpButton"
+          disabled
+          onclick="registerUser()"
+        >
           회원가입
         </button>
         <p></p>

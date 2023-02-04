@@ -1,49 +1,89 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
   <head>
+    <%- include('head.ejs') %>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>정보 수정</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-  </head>
+    <link href="./css/signup.css" rel="stylesheet" />
+    <link href="./css/index.css" rel="stylesheet" />
+        <!-- jquery -->
+        <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <style>input {color: orange;}</style>
+</head>
+
   <body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-
-    <div class="container">
-        <div class="container text-center">
-            <div class="row">
-              <div class="col">
-                <div class="position-absolute top-50 start-50 translate-middle">
-                    <div class="body">
     
-                        <input class="form-control" type="text" value="Disabled readonly input" aria-label="강하루" disabled readonly>
-                        <div class="col-auto">
-                            <label for="inputPassword2" class="visually-hidden">haru1004</label>
-                            <label for="inputPassword2" class="visually-hidden">강하루</label>
-                            <input type="password" class="form-control" id="inputPassword1" placeholder="Password">
-                            <input type="password" class="form-control" id="inputPassword2" placeholder="PasswordConfirm">
-                            <input type="text" class="form-control" id="ㄷ" placeholder="email">
-                           
-                                <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
-                                <div class="col-sm-10">
-                                  <input type="password" class="form-control" id="inputPassword">
-                                </div>
-                             
-                          </div>
-
-                          <div class="input-group input-group-sm mb-3">
-                        
-                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                          </div>
-                          
-                        
-                    </div>
-                  </div>
-              </div>
-              </div>
-            </div>
-          </div>
-    </div>
-
+    <div>
+        <h1 id="mytitle">PC방 이름</h1>
+      </div>
+      <div class="wrapper">
+        <div class="title"><h1 style="font-size: 21px">내 정보 수정</h1></div>
+        <div class="email">
+          <span>Email :</span>
+          <input id="email" type="text" placeholder="이메일을 입력해 주세요." />
+          <div id="emailError" class="error"></div>
+        </div>
+        <div class="name">
+          <span>이름 :</span>
+          <input id="name" type="text" placeholder="강하루" readonly/>
+          <div id="nameError" class="error"></div>
+        </div>
+        <div class="userId">
+          <span>ID :</span>
+          <input id="id" type="text" placeholder="haru1004" readonly />
+          <div id="IdError" class="error"></div>
+        </div>
+        <div class="password">
+          <span>PW :</span>
+          <input
+            id="password"
+            type="password"
+            placeholder="비밀번호를 입력해 주세요."
+          />
+          <div id="passwordError" class="error"></div>
+        </div>
+        <div class="passwordCheck">
+          <span>PW 확인 :</span>
+          <input
+            id="passwordCheck"
+            type="password"
+            placeholder="비밀번호를 다시 입력해 주세요."
+          />
+          <div id="passwordCheckError" class="error"></div>
+        </div>
+        <div class="phone">
+          <span>휴대폰 번호 :</span>
+          <input
+            id="phone"
+            type="text"
+            size="1"
+            maxlength="11"
+            placeholder="휴대폰 번호를 입력해주세요.(숫자만)"
+          />
+          <div id="phoneCheckError" class="error"></div>
+        </div>
+        <div class="line"></div>
+        <div class="signUp">
+          <!-- class 추가했는데 버튼이 미리 클릭된 것 처럼 나옴 -->
+          <button
+            class="btn btn-primary commonButton"
+            id="signUpButton"
+            disabled
+            onclick="updateMyinfo()"
+          >
+            수정하기
+          </button>
+          <p></p>
+          <button id="goBackButton" disabled onclick="goBackCheck()">
+            뒤로가기
+          </button>
+        </div>
+        <div id="guideText">
+          <span>&#127872;포인트 충전은 카운터로&#127872;</span>
+        </div>
+      </div>
 </body>
 </html>

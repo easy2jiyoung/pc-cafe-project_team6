@@ -15,4 +15,8 @@ router.get('/signup',(req,res)=>{
     res.render('signup.ejs')
 })
 
+router.get('/updateMyInfo',(req,res)=>{
+    res.render('updateMyInfo.ejs')
+})
+
 module.exports = router

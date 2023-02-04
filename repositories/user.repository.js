@@ -36,8 +36,21 @@ class UserRepository {
 
   // 특정 유저 조회
   findOneUser = async (id, password) => {
-    const oneUser = await this.userModel.findOne({ where: { id, password } });
-    return oneUser;
+    try {
+      const oneUser = await this.userModel.findOne({ where: { id, password } });
+      if (oneUser === null) {
+        const error = new Error(
+          "계정이 존재하지 않습니다. ID와 패스워드를 확인해주세요."
+        );
+        error.status = 404;
+        throw error;
+      }
+
+      return oneUser;
+    } catch (error) {
+      error.status = 400;
+      throw error;
+    }
   };
 
   // 유저 생성

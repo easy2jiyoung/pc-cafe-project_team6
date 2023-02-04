@@ -70,20 +70,24 @@ class UserService {
 
   // 특정 유저 조회
   findOneUser = async (id, password) => {
-    const oneUser = await this.userRepository.findOneUser(id, password);
+    try {
+      const oneUser = await this.userRepository.findOneUser(id, password);
 
-    return {
-      userId: oneUser.userId,
-      id: oneUser.id,
-      password: oneUser.password,
-      name: oneUser.name,
-      phone: oneUser.phone,
-      email: oneUser.email,
-      role: oneUser.role,
-      points: oneUser.points,
-      createdAt: oneUser.createdAt,
-      updatedAt: oneUser.updatedAt,
-    };
+      return {
+        userId: oneUser.userId,
+        id: oneUser.id,
+        password: oneUser.password,
+        name: oneUser.name,
+        phone: oneUser.phone,
+        email: oneUser.email,
+        role: oneUser.role,
+        points: oneUser.points,
+        createdAt: oneUser.createdAt,
+        updatedAt: oneUser.updatedAt,
+      };
+    } catch (error) {
+      throw error;
+    }
   };
 
   // 유저 생성

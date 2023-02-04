@@ -4,7 +4,24 @@ const {Products} = require('../models/index.js')
 class ProductService {
     productRepository = new ProductRepository(Products)
 
-    // 여기에 함수 작성해주세요
+    // 상품 등록
+    productRegister = async(productName, productStock, productPrice, productImgUrl, productType) => {
+        try {
+            const newProduct = await this.productRepository.registerProduct(
+                productName,
+                productStock,
+                productPrice,
+                productImgUrl,
+                productType
+            )
+            return newProduct
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    // 상품 조회
+    
 }
 
 module.exports = ProductService;

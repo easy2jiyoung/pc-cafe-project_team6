@@ -13,17 +13,7 @@ const productController = new ProductController()
 router.post('/image', setUpload('file'), productController.imageUpload)
 
 // 상품 등록
-router.post('/', registerProduct = async (req, res) => {
-    const {productName, productStock, productPrice, productImgUrl, productType} = req.body
-    const newProduct = await Products.create({
-        productName,
-        productStock,
-        productPrice,
-        productImgUrl,
-        productType
-    })
-    res.status(201).send(newProduct)
-})
+router.post('/', productController.addNewProduct)
 
 // 상품 조회
 router.get('/', productList = async (req, res) => {

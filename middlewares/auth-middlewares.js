@@ -1,7 +1,7 @@
 // 추후 config.json 참고하여 SECRET_KEY: "teamSparta6" 변경할 것. + User.controller도 변경.
 
 const jwt = require("jsonwebtoken");
-const { Users } = require("../models");
+const { Users, PCOrders } = require("../models");
 
 async function auth_middleware(req, res, next) {
     try {
@@ -16,15 +16,26 @@ async function auth_middleware(req, res, next) {
 
         // jwt.verify를 이용해 쿠키 토큰값 인증
         const { userId } = jwt.verify(token, "teamSparta6")
-        console.log(userId)
 
-        const user = await Users.findByPk(userId, { attributes: ['userId', 'name', 'points'], raw: true })
+        const user = await Users.findByPk(userId, { attributes: ['userId', 'name', 'points', 'role'], raw: true })
         res.locals.user = user;
-        console.log(user)
+
+        const pcOrder = await PCOrders.findAll({
+            where: {userId: userId},
+            attributes: ['userId', 'pcId', 'endDateTime'],
+            order: [['endDateTime', 'DESC']],
+            raw: true
+        })
+        
+        if (!pcOrder[0]) {
+            res.locals.pcOrder = {}
+        } else {
+            res.locals.pcOrder = pcOrder[0]
+        }
+
         next();
 
     } catch (error) {
-        console.log(error)
         res.status(500).send({ error });
     }
 }

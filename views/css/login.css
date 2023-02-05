@@ -64,6 +64,7 @@ body {
 
 #divPcOrder {
     padding-top: 60%;
+    display: none;
 }
 
 #userPoints {

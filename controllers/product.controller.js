@@ -22,7 +22,7 @@ class ProductController {
             )
             return res.status(201).json({message: "성공적으로 등록되었습니다."})
         } catch (error) {
-            res.status(error.status).json({message: error.message})
+            return res.status(error.status).json({message: error.message})
         }
     }
 
@@ -32,7 +32,7 @@ class ProductController {
             const products = await this.productService.readProduct()
             return res.status(200).json({products})
         } catch (error) {
-            res.status(error.status).json({message: error.message})
+            return res.status(error.status).json({message: error.message})
         }
     }
     

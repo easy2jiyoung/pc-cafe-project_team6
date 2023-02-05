@@ -22,8 +22,15 @@ class ProductService {
 
     // 상품 조회
     readProduct = async() => {
-        
+        try {
+            const allProduct = await this.productRepository.findAll()
+            return allProduct
+        } catch (error) {
+            throw error;
+        }
     }
+
+    // 상품 상세 조회
 }
 
 module.exports = ProductService;

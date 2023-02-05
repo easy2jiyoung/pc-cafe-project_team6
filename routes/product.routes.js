@@ -16,11 +16,7 @@ router.post('/image', setUpload('file'), productController.imageUpload)
 router.post('/', productController.addNewProduct)
 
 // 상품 조회
-router.get('/', productList = async (req, res) => {
-    const products = await Products.findAll({
-    });
-    res.status(200).send(products)
-})
+router.get('/', productController.productList)
 
 // 상품 상세 조회
 router.get('/:productId', oneProduct = async (req, res) => {

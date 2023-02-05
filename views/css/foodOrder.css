@@ -19,10 +19,23 @@
 
 #cart {
     background-color:darkgreen;
-    height: 900px;
+    height: 800px;
     /* width: 200px; */
     flex-shrink: 0;
     /* flex:0; */
+}
+
+#cartDetails {
+    background-color: darkcyan;
+    height: 600px
+}
+
+#pointsDetails {
+    text-align: right;
+}
+
+#pointsDetails p {
+    margin-bottom: 0;
 }
 
 #pcOrderInfo {

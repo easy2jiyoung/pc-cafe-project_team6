@@ -10,13 +10,13 @@ class UserController {
         const { id, password } = req.body;
         
         try {
-            const userInfo = await this.userService.findOneUser(id, password);
+            const {userId, role} = await this.userService.findOneUser(id, password);
 
-            const token = jwt.sign({ userId: userInfo.userId }, "teamSparta6", {expiresIn: '1d'});
+            const token = jwt.sign({ userId: userId }, "teamSparta6", {expiresIn: '1d'});
 
             res.cookie('accessToken',token);
 
-            res.status(200).send('PC방에 오신 것을 환영합니다.');
+            res.status(200).json({message:'PC방에 오신 것을 환영합니다.', userId: userId, role: role});
         } catch (error) {
             console.error(error);
             res.status(error.status).send({message:error.message});

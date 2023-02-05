@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <% if (user.userId) { %>
+    <% if (user?.userId) { %>
         <%- include('header.ejs') %>
     <% } %>
     
@@ -59,7 +59,7 @@
                             </div>
                         </div>
                         <div id="userPoints">
-                            <p>보유 포인트: <%- user.points %>p</p>
+                            <p>보유 포인트: <%- user?.points %>p</p>
                             <p id="pointsDeducted">차감 포인트: </p>
                             <p id="pointsRemaining">잔여 포인트: </p>
 
@@ -78,13 +78,37 @@
 <script>
     $(document).ready(function () {
         // 로그인 되어있는지 확인
-        if ('<%= user.length %>' === 0) {
+        let pcOrder = '<%= pcOrder %>'
+        let endDateTime = '<%= pcOrder?.endDateTime %>'
+        endDateTime = endDateTime.toString()
+        let user = '<%= user %>'
+        let userRole = '<%= user?.role %>'
+
+        // console.log('endDateTime', endDateTime)
+        // console.log('endDateTime === undefined', endDateTime === undefined)
+        // console.log('Date.now()', Date.now())
+        // console.log('endDateTime < Date.now()',new Date(endDateTime) < Date.now())
+        // console.log('endDateTime > Date.now()',new Date(endDateTime) > Date.now())
+
+        if (!user) {
             document.getElementById('divPcOrder').style.display = 'none'
-        } else if ('<%= user.userId %>') {
-            // 로그인 되어있으면:
-            document.getElementById('divLogin').style.display = 'none'
-            document.getElementById('divPcOrder').style.display = 'block'
-            document.getElementById('selectPC').style.display = 'block'
+        } else if (userRole === 'customer') {
+            // 고객으로 로그인 되어있으면:
+            // pcOrder가 존재하지 않거나 
+            
+            // console.log(endDateTime,!endDateTime)
+            // console.log('endDateTime === undefined || new Date(endDateTime) < Date.now()',endDateTime === undefined || new Date(endDateTime) < Date.now())
+            if (endDateTime === undefined || new Date(endDateTime) < Date.now()) {
+                document.getElementById('divLogin').style.display = 'none'
+                document.getElementById('divPcOrder').style.display = 'block'
+                document.getElementById('selectPC').style.display = 'block'
+            } else if (new Date(endDateTime) > Date.now()) {
+                // 고객이 이용시간을 결제했고 현재 시간이 이용 마감 시간 전이면:
+                window.location.href='/foodOrder'
+            }
+        } else if (userRole === 'admin') {
+            // 관리자로 로그인 되어있으면:
+            window.location.href = '/admin'
         }
 
 
@@ -98,6 +122,7 @@
                 let pcStatus
                 let temp_html
                 let divPcRow
+                const userId = '<%= user.userId %>'
                 
                 for(let i=0; i<response.length; i++) {
                     pcId = response[i].pcId
@@ -112,7 +137,7 @@
                         $('#'+divPcRow).append(temp_html)
                     } else if (pcStatus===false) {
                         temp_html = `<div class="col-2 divPc">
-                                        <img class="${'<%= user.userId %>' ? 'pcAvailable' : ''}" onclick="${'<%= user.userId %>' ? `selectPc(${pcId})` : ''}" src="./images/pcEnabledIcon.png">
+                                        <img class="${userId ? 'pcAvailable' : ''}" onclick="${userId ? `selectPc(${pcId})` : ''}" src="./images/pcEnabledIcon.png">
                                         PC ${pcId}
                                     </div>`
                         $('#'+divPcRow).append(temp_html)
@@ -128,6 +153,8 @@
         const id = $('#loginId').val()
         const password = $('#loginPassword').val()
 
+        if (!id || !password) {return alert('아이디와 패스워드를 입력해주세요.')}
+
         $.ajax({
             type: 'POST',
             url: '/api/users/login',
@@ -136,7 +163,11 @@
                 password: password,
             },
             success: function (response) {
-                window.location.href='/'
+                if (response.role === 'admin') {
+                    window.location.href='/admin'
+                } else {
+                    window.location.href='/'
+                }
             },
             error: function (response) {
                 alert(response)
@@ -164,11 +195,12 @@
         document.getElementById('selectedPcNum').innerHTML = `PC #${pcId}`
     }
 
+    // 이용시간 구매
     function postPcOrder() {
         let orderTime = $('#pcOrderTime').val()
         orderTime = Number(orderTime)
 
-        let userPoints = '<%= user.points %>'
+        let userPoints = '<%= user?.points %>'
         userPoints = Number(userPoints)
 
         let pointsRemaining  = userPoints - orderTime * 1000
@@ -184,24 +216,29 @@
         const userId = '<%= user.userId %>'
         const [_, pcId] = $('#selectedPcNum').text().split('PC #')
 
-        const startDateTime = new Date()
+        if (!pcId) {
+            return alert('이용할 PC를 선택해주세요.')
+        }
 
-        // startDateTime: new Date.now,
-        // endDateTime: “2023-02-02 18:00”,
+        const startDateTime = luxon.DateTime.now().toFormat('yyyy-MM-dd HH:mm:ss')
+        const endDateTime = luxon.DateTime.now().plus({hours: orderTime}).toFormat('yyyy-MM-dd HH:mm:ss')
         const deductedPoints = orderTime * 1000
+
+        console.log(startDateTime, endDateTime)
 
         $.ajax({
             type: 'POST',
             url: `/api/pcOrder/${userId}/${pcId}`,
             data: {
-                id: id,
-                password: password,
+                startDateTime: startDateTime,
+                endDateTime: endDateTime,
+                deductedPoints: deductedPoints
             },
             success: function (response) {
-                window.location.href='/'
+                window.location.href='/foodOrder'
             },
             error: function (response) {
-                alert(response)
+                alert(response.message)
             }
         })
     }

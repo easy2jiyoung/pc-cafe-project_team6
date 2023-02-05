@@ -39,7 +39,6 @@ module.exports = {
     await queryInterface.addConstraint('ProductOrders', {
         fields: ['userId'],
         type: 'foreign key',
-        name: 'Users_ProductOrders_id_fk',
         references: {
             table: 'Users',
             field: 'userId',
@@ -52,7 +51,6 @@ module.exports = {
     await queryInterface.addConstraint('ProductOrders', {
         fields: ['productId'],
         type: 'foreign key',
-        name: 'Products_ProductOrders_id_fk',
         references: {
             table: 'Products',
             field: 'productId',

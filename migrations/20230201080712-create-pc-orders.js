@@ -43,7 +43,6 @@ module.exports = {
     await queryInterface.addConstraint('PCOrders', {
         fields: ['userId'],
         type: 'foreign key',
-        name: 'Users_PCOrders_id_fk',
         references: {
             table: 'Users',
             field: 'userId',
@@ -56,7 +55,6 @@ module.exports = {
     await queryInterface.addConstraint('PCOrders', {
         fields: ['pcId'],
         type: 'foreign key',
-        name: 'PCs_PCOrders_id_fk',
         references: {
             table: 'PCs',
             field: 'pcId',

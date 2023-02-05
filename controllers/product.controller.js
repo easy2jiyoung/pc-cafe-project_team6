@@ -10,7 +10,7 @@ class ProductController {
     }
 
     // 상품 등록
-    addNewProduct = async (req, res, next) => {
+    addNewProduct = async (req, res) => {
         try {
             const {productName, productStock, productPrice, productImgUrl, productType} = req.body
             const productInfo = await this.productService.productRegister(
@@ -20,22 +20,63 @@ class ProductController {
                 productImgUrl,
                 productType
             )
-            return res.status(201).json({message: "성공적으로 등록되었습니다."})
+            res.status(201).json(productInfo)
         } catch (error) {
             return res.status(error.status).json({message: error.message})
         }
     }
 
     // 상품 조회
-    productList = async (req, res, next) => {
+    productList = async (req, res) => {
         try {
             const products = await this.productService.readProduct()
-            return res.status(200).json({products})
+            res.status(200).json(products)
         } catch (error) {
+            console.log(error)
             return res.status(error.status).json({message: error.message})
         }
     }
     
+    // 상품 상세 조회
+    oneProduct = async (req, res) => {
+        try {
+            const { productId } = req.params;
+            const oneProduct = await this.productService.getOneProduct(productId)
+            res.status(200).json(oneProduct)
+        } catch (error) {
+            return res.status(error.status).json({message: error.message})
+        }
+    }
+
+    // 상품 수정
+    modifyProduct = async (req, res) => {
+        try {
+            const {productName, productStock, productPrice, productImgUrl, productType} = req.body
+            const {productId} = req.params
+            const updateProduct = await this.productService.getUpdateProduct(
+                productId,
+                productName,
+                productStock,
+                productPrice,
+                productImgUrl,
+                productType
+            );
+            res.status(201).json({updateProduct})
+        } catch (error) {
+            return res.status(error.status).json({message: error.message})
+        }
+    }
+
+    // 상품 삭제
+    deleteProduct = async (req, res, next) => {
+        try {
+            const {productId} = req.params
+            const xProduct = await this.productService.getXProduct(productId)
+            res.status(200).json(xProduct)
+        } catch (error) {
+            return res.status(error.status).json({message: error.message})
+        }
+    }    
 }
 
 module.exports = ProductController;

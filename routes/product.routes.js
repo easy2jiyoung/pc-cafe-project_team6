@@ -19,37 +19,12 @@ router.post('/', productController.addNewProduct)
 router.get('/', productController.productList)
 
 // 상품 상세 조회
-router.get('/:productId', oneProduct = async (req, res) => {
-    const {productId} = req.params
-    const product = await Products.findOne({
-        where: {productId}
-    });
-    res.status(200).send(product)
-})
+router.get('/:productId', productController.oneProduct)
 
 // 상품 수정
-router.put('/:productId', modifyProduct = async (req, res) => {
-    const {productName, productStock, productPrice, productImgUrl, productType} = req.body
-    const {productId} = req.params
-    const updateProduct = await Products.update({
-        productName,
-        productStock,
-        productPrice,
-        productImgUrl,
-        productType
-        }, {
-            where: {productId}
-        })
-    res.status(201).send(updateProduct)
-})
+router.put('/:productId', productController.modifyProduct)
 
 // 상품 삭제
-router.delete('/:productId', deleteProduct = async (req, res) => {
-    const {productId} = req.params
-    const deleteProduct = await Products.destroy({
-        where: {productId}
-    })
-    res.status(200).send({message:"성공적으로 삭제되었습니다."})
-})
+router.delete('/:productId', productController.deleteProduct)
 
 module.exports = router

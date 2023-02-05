@@ -205,6 +205,9 @@
 
         let pointsRemaining  = userPoints - orderTime * 1000
 
+        console.log(orderTime, userPoints, pointsRemaining)
+
+        // 확인 필요
         if (pointsRemaining < 0) {
             return alert('포인트가 부족합니다!')
         }

@@ -17,6 +17,15 @@
     height: 700px;
 }
 
+.productCard img {
+    max-height: 250px;
+    object-fit: contain;
+}
+
+.productCard {
+    background-color: #405b6e;
+}
+
 #cart {
     background-color:darkgreen;
     height: 800px;

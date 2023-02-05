@@ -104,16 +104,16 @@
                 <p style="font-size:25px">장바구니</p>
                 <div class="container" id="cartDetails">
                     <div class="row">
-                        <div class="card mb-3" style="max-width: 540px;">
+                        <div class="card mb-3 cardProductDetails" style="max-width: 540px;">
                             <div class="row g-0">
                               <div class="col-md-4">
-                                <img src="..." class="img-fluid rounded-start" alt="...">
+                                <img src="..." class="img-fluid rounded-start cardProductDetailsImage" alt="...">
                               </div>
                               <div class="col-md-8">
                                 <div class="card-body">
-                                  <h5 class="card-title">Card title</h5>
-                                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                  <h5 class="card-title">상품 이름</h5>
+                                  <p class="card-text cardProductDetailsText">수량 :</p>
+                                  <p class="card-text cardProductDetailsText">가격 :</p>
                                 </div>
                               </div>
                             </div>
@@ -180,7 +180,7 @@
                                         <div class="card-body">
                                         <h5 class="card-title">${productName}</h5>
                                         <p class="card-text">가격: ${productPrice}p</p>
-                                        <a href="#" class="btn btn-primary commonButton" onclick="addToCart(${productId}, ${productName}, ${productPrice})">장바구니에 추가</a>
+                                        <a href="#" class="btn btn-primary commonButton" onclick="addToCart('${productId}', '${productName}', '${productPrice}')">장바구니에 추가</a>
                                         </div>
                                     </div>
                                 </div>`
@@ -198,10 +198,11 @@
 
             // 장바구니가 처음에 없으면 session storage에 만든다
             if (sessionStorage.getItem('cart') === null) {
-                sessionStorage.setItem('cart', [])
+                sessionStorage.setItem('cart', JSON.stringify({}))
             }
 
-            let cart = sessionStorage.getItem('cart')
+            let cart = JSON.parse(sessionStorage.getItem('cart'))
+            console.log(cart)
 
             // 장바구니에 동일한 아이템이 담겨있는지 확인
             const index = cart.findIndex(element => element.productId === productId)
@@ -209,7 +210,22 @@
                 // 동일한 아이템이 담겨있으면 구매량 1개 증가
                 cart[index].purchasedUnits = cart[index].purchasedUnits + 1
 
-                temp_html = ``
+                temp_html = `<div class="row">
+                                <div class="card mb-3 cardProductDetails" style="max-width: 540px;">
+                                    <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <img src="..." class="img-fluid rounded-start cardProductDetailsImage" alt="...">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                        <h5 class="card-title">상품 이름</h5>
+                                        <p class="card-text cardProductDetailsText">수량 :</p>
+                                        <p class="card-text cardProductDetailsText">가격 :</p>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>`
 
             } else {
                 // 아이템을 처음 담았으면 items 배열에 추가

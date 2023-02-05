@@ -24,4 +24,8 @@ router.get('/foodOrder', auth_middleware, (req,res) => {
     res.render('foodOrder.ejs', {user: res.locals.user, pcOrder: res.locals.pcOrder})
 })
 
+router.get('/updateMyInfo',(req,res)=>{
+    res.render('updateMyInfo.ejs')
+})
+
 module.exports = router

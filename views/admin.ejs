@@ -1,19 +1,46 @@
 <!DOCTYPE html>
 <html lang="ko">
-
-<head>
+  <head>
     <%- include('head.ejs') %>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>관리자 첫 페이지</title>
 
-    <title></title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js" integrity="sha512-YeeA/Qxn5hYdkukScTCNNOhTrv1C2RubAGButJ1rmgQwZf/HdRaCGl+JAVkqsqaNRaYNHdheiuKKuPf9mDcqKg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link href="./css/admin.css" rel="stylesheet" />
+    <script src="./js/admin.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js" integrity="sha512-YeeA/Qxn5hYdkukScTCNNOhTrv1C2RubAGButJ1rmgQwZf/HdRaCGl+JAVkqsqaNRaYNHdheiuKKuPf9mDcqKg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
-
-<body>
-    <div class="col-1">
-        <button type="button" class="btn btn-danger" onclick="logOut()">로그아웃</button>
+  <body>
+    <div id="fullscreen">
+      <div id="screen1"></div>
+      <div id="screen2">
+        <div id="screen2-1">
+          <div class="container-wrap">
+            <ul class="tabs">
+              <li class="tab-link current" data-tab="tab-1">회원관리</li>
+              <li class="tab-link" data-tab="tab-2">상품목록관리</li>
+              <li class="tab-link" data-tab="tab-3">좌석관리</li>
+            </ul>
+            <div id="tab-1" class="tab-content current">tab content</div>
+            <div id="tab-2" class="tab-content">tab content2</div>
+            <div id="tab-3" class="tab-content">tab content3</div>
+          </div>
+        </div>
+        <div id="screen2-2">
+          <div id="eventlog">이벤트로그</div>
+        </div>
+      </div>
+      <div id="screen3">
+        <div id="btn-logout">
+          <button type="button" class="btn btn-danger" onclick="logOut()">
+            로그아웃
+          </button>
+        </div>
+      </div>
     </div>
-    
-    <div id="socket"></div>
 
     <script>
         function logOut() {
@@ -29,10 +56,6 @@
                 }
             })
         }
-
-        $(document).ready(function () {
-            
-        })
 
         // 소켓 방 입장
         const socket = io.connect("/")

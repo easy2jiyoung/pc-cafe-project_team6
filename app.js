@@ -1,6 +1,7 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const { createServer } = require("http");
+const socketIo = require("socket.io"); // SocketIO 모듈 불러오기
 const path = require("path");
 
 const app = express();
@@ -8,7 +9,27 @@ const port = 1004;
 
 // socket
 const http = createServer(app);
+// const io = socketIo(http);
 
+// // socket connect event handling
+// io.on("connection", (sock) => {
+//     console.log("새로운 소켓이 연결됐어요!");
+  
+//     sock.on("BUY", (data) => {
+//       const emitData = {
+//         ...data,
+//         date: new Date().toISOString(),
+//       }
+//       io.emit("BUY_GOODS", emitData);
+//     });
+  
+//     sock.on("disconnect", () => {
+//       console.log(sock.id, "연결이 끊어졌어요!");
+//     });
+//   });
+
+
+/* define router */
 const router = require("./routes");
 const ejsRouter = require("./routes/ejs.routes");
 

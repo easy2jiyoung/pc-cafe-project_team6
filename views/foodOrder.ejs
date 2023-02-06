@@ -170,6 +170,7 @@
             // 장바구니 추가 버튼이 눌렸을 때
             function addToCart(productId, productName, productPrice, productImgUrl) {
                 let temp_html
+                let userPoints = '<%= user.points %>'
 
                 // 장바구니가 처음에 없으면 session storage에 만든다
                 if (sessionStorage.getItem('cart') === null) {
@@ -192,8 +193,7 @@
                     pointsDeducted += Number(productPrice)
                     $('#pointsDeducted').text(`차감 포인트: ${pointsDeducted}p`)
 
-                    let remainingPoints = Number($('#pointsRemaining').text().split('잔여 포인트: ')[1].split('p')[0])
-                    remainingPoints -= pointsDeducted
+                    let remainingPoints = Number(userPoints) - pointsDeducted
                     $('#pointsRemaining').text(`잔여 포인트: ${remainingPoints}p`)
                 } else {
                     // 아이템을 처음 담았으면 items 배열에 추가
@@ -223,8 +223,7 @@
                     pointsDeducted += Number(productPrice)
                     $('#pointsDeducted').text(`차감 포인트: ${pointsDeducted}p`)
 
-                    let remainingPoints = Number($('#pointsRemaining').text().split('잔여 포인트: ')[1].split('p')[0])
-                    remainingPoints -= pointsDeducted
+                    let remainingPoints = Number(userPoints) - pointsDeducted
                     $('#pointsRemaining').text(`잔여 포인트: ${remainingPoints}p`)
                 }
             }
@@ -265,7 +264,7 @@
                     type: 'POST',
                     url: `/api/productOrder/${userId}`,
                     async: false,
-                    data: {orders: cart},
+                    data: {orders: cart, remainingPoints},
                     success: function (response) {
                         let socketMessage = []
                         cart = JSON.parse(cart)

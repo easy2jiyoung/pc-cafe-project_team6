@@ -163,6 +163,19 @@ class UserRepository {
       throw error;
     }
   };
+
+  updatePoint = async (userId , points) => {
+    try {
+      const userUpdatePoint = await this.userModel.update(
+        { points: points }, { where: { userId } }
+      )
+      
+      return userUpdatePoint;
+    } catch (error) {
+      error.status = 400;
+      throw error;
+    }
+  }
 }
 
 module.exports = UserRepository;

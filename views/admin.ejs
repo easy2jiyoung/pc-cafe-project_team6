@@ -29,7 +29,23 @@
               <li class="tab-link" data-tab="tab-2">상품목록관리</li>
               <li class="tab-link" data-tab="tab-3">좌석관리</li>
             </ul>
-            <div id="tab-1" class="tab-content current">tab content</div>
+            <div id="tab-1" class="tab-content current">
+              <table>
+                <thead>
+                    <tr>
+                        <th>아이디</th>
+                        <th>이름</th>
+                        <th>휴대전화</th>
+                        <th>이메일</th>
+                        <th>포인트</th>
+                        <th>포인트 변경</th>
+                        <th>회원 관리</th>
+                     </tr>
+                </thead>
+                <tbody id="user-list">
+                </tbody>
+            </table>
+            </div>
             <div id="tab-2" class="tab-content">tab content2</div>
             <div id="tab-3" class="tab-content">tab content3</div>
           </div>
@@ -50,4 +66,63 @@
       </div>
     </div>
   </body>
+<script>
+  $.ajax({
+          type: 'GET',
+          url: `/api/admin`,
+          async: false,
+          success: function (response) {
+              for (let i = 0; i < response.length; i++) {
+                  let { userId, id, name, phone, email, points } = response[i]
+
+                  let temp_html = `<tr>
+                                      <td>${id}</td>
+                                      <td>${name}</td>
+                                      <td>${phone}</td>
+                                      <td>${email}</td>
+                                      <td>${points}</td>
+                                      <td><button onclick="pointUpdate(${userId})">포인트 변경</button></td>
+                                      <td><button onclick="userDelete(${userId})">삭제</button></td>
+                                  </tr>`
+                  $('#user-list').append(temp_html);
+              }
+
+              
+          },
+      });
+</script>
+<script>
+  // 포인트 충전
+  function pointUpdate(userId) {
+    let pointInput = prompt("얼마나 변경하시겠습니까?");
+    const points = pointInput;
+    $.ajax({
+        type: 'PUT',
+        url: `/api/admin/${userId}`,
+        data: { points },
+        success: function (data) {
+            alert(points+'로 변경하였습니다.', data)
+            location.reload()
+        },
+    })
+  }
+
+  // 회원 삭제
+  function userDelete(userId) {
+      let result = confirm("해당 회원을 삭제 하시겠습니까?");
+      if (result) {
+          $.ajax({
+              type: 'DELETE',
+              url: `/api/admin/${userId}`,
+              async: false,
+              success: function (response) {
+                  alert("삭제가 완료되었습니다.");
+                  location.reload()
+              }
+          })
+      } else {
+          alert("취소합니다.");
+      }
+  }  
+</script>
 </html>

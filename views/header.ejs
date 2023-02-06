@@ -20,7 +20,7 @@
                 window.location.href='/'
             },
             error: function (response) {
-                alert(response)
+                alert(response.responseJSON.message)
             }
         })
     }

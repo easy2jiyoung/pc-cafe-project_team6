@@ -226,6 +226,19 @@ class UserController {
       return res.status(error.status).json({ message: error.message });
     }
   };
+
+  // (관리자) 회원 삭제
+  deleteUser = async (req, res) => {
+    try {
+      const { userId } = req.params;
+      console.log(userId)
+      const deleteUser = await this.userService.deleteUser(userId);
+
+      res.status(200).send({removedId: deleteUser});
+    } catch (error) {
+      return res.status(error.status).json({ message: error.message });
+    }
+  }
 }
 
 module.exports = UserController;

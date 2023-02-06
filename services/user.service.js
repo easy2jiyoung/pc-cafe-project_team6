@@ -69,9 +69,9 @@ class UserService {
   };
 
   // 특정 유저 조회
-  findOneUser = async (id, password) => {
+  findOneUser = async (id) => {
     try {
-      const oneUser = await this.userRepository.findOneUser(id, password);
+      const oneUser = await this.userRepository.findOneUser(id);
 
       return {
         userId: oneUser.userId,

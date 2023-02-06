@@ -7,12 +7,17 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>관리자 첫 페이지</title>
+    <title>관리자 페이지</title>
 
-<link href="./css/admin.css" rel="stylesheet" />
+    <link href="./css/admin.css" rel="stylesheet" />
     <script src="./js/admin.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js" integrity="sha512-YeeA/Qxn5hYdkukScTCNNOhTrv1C2RubAGButJ1rmgQwZf/HdRaCGl+JAVkqsqaNRaYNHdheiuKKuPf9mDcqKg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-</head>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js"
+      integrity="sha512-YeeA/Qxn5hYdkukScTCNNOhTrv1C2RubAGButJ1rmgQwZf/HdRaCGl+JAVkqsqaNRaYNHdheiuKKuPf9mDcqKg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
   <body>
     <div id="fullscreen">
       <div id="screen1"></div>
@@ -30,7 +35,8 @@
           </div>
         </div>
         <div id="screen2-2">
-          <div id="eventlog"><p style="font-size:25px">이벤트로그</p>
+          <div id="eventlog">
+            <p style="font-size: 25px">이벤트로그</p>
             <div id="logs"></div>
           </div>
         </div>
@@ -43,44 +49,5 @@
         </div>
       </div>
     </div>
-
-    <script>
-        function logOut() {
-            $.ajax({
-                type: 'GET',
-                url: '/api/users/logout',
-                success: function (response) {
-                    sessionStorage.clear()
-                    window.location.href = '/'
-                },
-                error: function (response) {
-                    alert(response)
-                }
-            })
-        }
-
-        // 소켓 방 입장
-        const socket = io.connect("/")
-        const userRole = '<%= user.role %>'
-        socket.emit('newRoom', userRole)
-
-        socket.on('newOrder', (message) => {
-            message = JSON.parse(message)
-            console.log(message)
-            for (item of message) {
-                let {userId, pcId, purchasedItem, qty, userPoints, deductedPoints, remainingPoints, logTime} = item
-                logTime = new Date(logTime)
-                logTime = logTime.toLocaleString('ko-KR')
-
-                let temp_html
-                if(purchasedItem === '이용시간') {
-                    temp_html = `<p>${logTime}&emsp;PC #${pcId}의 이용시간이 ${qty}시간 결제되었습니다. (차감 포인트: ${deductedPoints}p)</p>`
-                } else {
-                    temp_html = `<p>${logTime}&emsp;PC #${pcId}이 ${purchasedItem} ${qty}개를 구매하셨습니다. (차감 포인트: ${deductedPoints}p)</p>`
-                }
-
-                $('#logs').prepend(temp_html)
-            }
-        })
-    </script>
-</body>
+  </body>
+</html>

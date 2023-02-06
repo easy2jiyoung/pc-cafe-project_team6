@@ -1,11 +1,12 @@
 class ProductOrderRepository {
-    constructor(ProductOrderModel, ProductModel) {
+    constructor(ProductOrderModel, ProductModel, UserModel) {
         this.productOrderModel = ProductOrderModel
         this.productModel = ProductModel
+        this.userModel = UserModel
     }
 
     // 상품 구매 등록
-    postProductOrder = async (userId, orders) => {
+    postProductOrder = async (userId, orders, remainingPoints) => {
         try {            
             for(let i=0; i<orders.length; i++) {
                 let product = await this.productModel.findByPk(orders[i].productId, {attributes: ['productId','productStock'], raw:true})
@@ -29,6 +30,8 @@ class ProductOrderRepository {
             }
 
             await this.productOrderModel.bulkCreate(orders)
+
+            await this.userModel.update({points: remainingPoints}, {where:{userId}})
             
             return orders
         } catch (error) {

@@ -107,3 +107,7 @@ ul.tabs li.current {
   overflow: auto;
   padding: 20px;
 }
+
+#logs {
+    overflow: auto;
+}

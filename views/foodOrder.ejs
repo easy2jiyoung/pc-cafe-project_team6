@@ -40,6 +40,11 @@
                     <div class="row">
                         <div class="row row-cols-4" id="productList"></div>
                     </div>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+    
+                        </ul>
+                    </nav>
                 </div>
                 <div class="col-3" id="cart">
                     <p style="font-size:25px; margin-top: 10px;">장바구니</p>
@@ -99,21 +104,24 @@
                 }
 
                 // 상품 목록 불러오기
+                const urlSearch = new URLSearchParams(location.search)
+                const page = Number(urlSearch.get('page'))
+
                 $.ajax({
                     type: 'GET',
-                    url: `/api/products`,
+                    url: `/api/products?page=${page || 1}`,
                     async: false,
                     success: function (response) {
-                        let productName
-                        let productPrice
-                        let productImgUrl
-                        let productType
-                        let temp_html
-                        let productId
-                        let productStock
-
-                        for (let i = 0; i < response.length; i++) {
-                            let { productName, productPrice, productImgUrl, productType, productId, productStock } = response[i]
+                        // 페이지네이션
+                        const lastPage = response.lastPage
+                        const allProduct = response.allProduct
+                        for(let i = 1; i <= lastPage; i++) {
+                            let temp_html = `<li class="page-item"><a class="page-link" href="?page=${i}">${i}</a></li>`
+                            $('.pagination').append(temp_html)
+                        }
+                        
+                        for (let i = 0; i < allProduct.rows.length; i++) {
+                            let { productName, productPrice, productImgUrl, productType, productId, productStock } =  allProduct.rows[i]
 
                             if (Number(productStock) > 0) {
                                 temp_html = `<div class="col">
@@ -170,6 +178,7 @@
             // 장바구니 추가 버튼이 눌렸을 때
             function addToCart(productId, productName, productPrice, productImgUrl) {
                 let temp_html
+                let userPoints = '<%= user.points %>'
 
                 // 장바구니가 처음에 없으면 session storage에 만든다
                 if (sessionStorage.getItem('cart') === null) {
@@ -192,8 +201,7 @@
                     pointsDeducted += Number(productPrice)
                     $('#pointsDeducted').text(`차감 포인트: ${pointsDeducted}p`)
 
-                    let remainingPoints = Number($('#pointsRemaining').text().split('잔여 포인트: ')[1].split('p')[0])
-                    remainingPoints -= pointsDeducted
+                    let remainingPoints = Number(userPoints) - pointsDeducted
                     $('#pointsRemaining').text(`잔여 포인트: ${remainingPoints}p`)
                 } else {
                     // 아이템을 처음 담았으면 items 배열에 추가
@@ -223,8 +231,7 @@
                     pointsDeducted += Number(productPrice)
                     $('#pointsDeducted').text(`차감 포인트: ${pointsDeducted}p`)
 
-                    let remainingPoints = Number($('#pointsRemaining').text().split('잔여 포인트: ')[1].split('p')[0])
-                    remainingPoints -= pointsDeducted
+                    let remainingPoints = Number(userPoints) - pointsDeducted
                     $('#pointsRemaining').text(`잔여 포인트: ${remainingPoints}p`)
                 }
             }
@@ -265,8 +272,26 @@
                     type: 'POST',
                     url: `/api/productOrder/${userId}`,
                     async: false,
-                    data: {orders: cart},
+                    data: {orders: cart, remainingPoints},
                     success: function (response) {
+                        let socketMessage = []
+                        cart = JSON.parse(cart)
+                        cart.forEach(element => {
+                            let item = {}
+                            item.userId = userId
+                            item.pcId = '<%= pcOrder.pcId %>'
+                            item.purchasedItem = element.productName
+                            item.qty = element.purchasedUnits,
+                            item.userPoints = '<%= user.points %>'
+                            item.deductedPoints = element.productPrice
+                            item.remainingPoints = remainingPoints
+                            item.logTime = new Date
+                            
+                            socketMessage.push(item)
+                        })
+                        
+                        socket.emit('newOrder', JSON.stringify(socketMessage))
+
                         sessionStorage.clear()
                         alert('결제되었습니다!')
                         location.reload()

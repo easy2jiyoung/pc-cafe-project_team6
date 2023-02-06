@@ -1,6 +1,10 @@
+const Sequelize = require('sequelize')
+const { development } = require('../config/config.json')
+const sequelize = new Sequelize(development.database, development.username, development.password, { host: development.host, dialect: development.dialect })
 class PCRepository {
-    constructor(PCModel) {
+    constructor(PCModel, PCOrderModel) {
         this.pcModel = PCModel
+        this.pcOrderModel = PCOrderModel
     }
 
     // PC 목록 조회
@@ -12,6 +16,44 @@ class PCRepository {
 
             return pcList
         } catch (error) {
+            error.status = 400
+            throw error
+        }
+    }
+
+    // PC status 업데이트
+    updatePcStatus = async () => {
+        try {
+            // const pcList = await this.pcModel.findAll({attributes:['pcId','pcStatus'], raw:true})
+
+            // for(let i=0; i<pcList.length; i++) {
+            //     let pcOrder = await this.pcOrderModel.findOne({
+            //         where: {pcId: pcList[i].pcId},
+            //         order: [['endDateTime','DESC']],
+            //         raw: true
+            //     })
+            //     // console.log(pcOrder)
+            //     // console.log(`pcId: ${pcList[i].pcId} >>>`,new Date(pcOrder?.endDateTime), new Date)
+            //     // console.log(new Date(pcOrder?.endDateTime) < Date.now())
+
+            //     if (new Date(pcOrder?.endDateTime) < Date.now()) {
+            //         await this.pcModel.update({pcStatus: false}, {where:{pcId: pcList[i].pcId}})
+            //     }
+            // }
+            const [results, metadata] = await sequelize.query('update pcCafe_development.pcs p left join (select pcId, endDateTime from (select pcId, endDateTime,\
+                rank() over(partition by pcId order by endDateTime desc) endDateTimeRank\
+                from pcCafe_development.pcorders p) as a\
+                where endDateTimeRank = 1) p2\
+                on p.pcId = p2.pcId\
+            set pcStatus = 0\
+            where endDateTime < CURRENT_TIMESTAMP and pcStatus = 1')
+
+            console.log(results)
+            console.log(metadata)
+
+            return
+        } catch (error) {
+            console.log(error)
             error.status = 400
             throw error
         }

@@ -31,7 +31,10 @@ class ProductRepository {
             const products = await this.productModel.findAndCountAll({
                 offset,
                 limit,
-                where: { productStock: {[Op.gt]: 0} }
+                where: {
+                    productStock: {[Op.gt]: 0},
+                    // productType: "drink" && productStock: {[Op.gt]: 0},
+                }
             })
             return products
 

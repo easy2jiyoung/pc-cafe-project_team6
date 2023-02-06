@@ -1,5 +1,4 @@
-// const {sequelize, DatabaseError} = require('sequelize')
-// const {Review, sequelize} = require('../models/index.js')
+const { Op } = require("sequelize")
 
 class ProductRepository {
     constructor(ProductModel) {
@@ -27,20 +26,15 @@ class ProductRepository {
     }
 
     // 상품 조회
-    readProduct = async() => {
+    readProducts = async(limit, offset) => {
         try {
-            let pageNum = req.query.page;
-            let offset = 0;
-
-            if (pageNum > 1) {
-                offset = 8 * (pageNum - 1);
-            }
-
-            const products = await this.productModel.findAll({
+            const products = await this.productModel.findAndCountAll({
                 offset,
-                limit: 0
+                limit,
+                where: { productStock: {[Op.gt]: 0} }
             })
             return products
+
         } catch (error) {
             error.status = 400
             throw error

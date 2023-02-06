@@ -40,6 +40,11 @@
                     <div class="row">
                         <div class="row row-cols-4" id="productList"></div>
                     </div>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+    
+                        </ul>
+                    </nav>
                 </div>
                 <div class="col-3" id="cart">
                     <p style="font-size:25px; margin-top: 10px;">장바구니</p>
@@ -99,21 +104,26 @@
                 }
 
                 // 상품 목록 불러오기
+                const urlSearch = new URLSearchParams(location.search)
+                const page = Number(urlSearch.get('page'))
+
                 $.ajax({
                     type: 'GET',
-                    url: `/api/products`,
+                    url: `/api/products?page=${page || 1}`,
                     async: false,
                     success: function (response) {
-                        let productName
-                        let productPrice
-                        let productImgUrl
-                        let productType
-                        let temp_html
-                        let productId
-                        let productStock
-
-                        for (let i = 0; i < response.length; i++) {
-                            let { productName, productPrice, productImgUrl, productType, productId, productStock } = response[i]
+                        const lastPage = response.lastPage
+                        const allProduct = response.allProduct
+                        // console.log(response)
+                        for(let i = 1; i <= lastPage; i++) {
+                            let temp_html = `<li class="page-item"><a class="page-link" href="?page=${i}">${i}</a></li>`
+                            $('.pagination').append(temp_html)
+                        }
+                       
+                        // console.log(response.count)
+                        // console.log(response.rows)
+                        for (let i = 0; i < allProduct.rows.length; i++) {
+                            let { productName, productPrice, productImgUrl, productType, productId, productStock } =  allProduct.rows[i]
 
                             if (Number(productStock) > 0) {
                                 temp_html = `<div class="col">

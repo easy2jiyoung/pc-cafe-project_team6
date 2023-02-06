@@ -1,5 +1,6 @@
 const ProductRepository = require('../repositories/product.repository.js')
 const {Products} = require('../models/index.js')
+const { response } = require('express')
 
 class ProductService {
     productRepository = new ProductRepository(Products)
@@ -21,10 +22,15 @@ class ProductService {
     }
 
     // 상품 조회
-    readProduct = async() => {
+    readProducts = async(pageNum) => {
         try {
-            const allProduct = await this.productRepository.readProduct()
-            return allProduct
+            const limit = 8
+            const offset = (pageNum -1) * limit
+            const allProduct = await this.productRepository.readProducts(limit, offset)
+            const lastPage = Math.ceil(allProduct.count / limit)
+            // const pagination = {limit, offset, lastPage}
+            // response.send({pagination})
+            return { allProduct, lastPage }
         } catch (error) {
             throw error;
         }

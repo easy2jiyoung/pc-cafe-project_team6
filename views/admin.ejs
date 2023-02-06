@@ -4,13 +4,16 @@
 <head>
     <%- include('head.ejs') %>
 
-        <title></title>
+    <title></title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js" integrity="sha512-YeeA/Qxn5hYdkukScTCNNOhTrv1C2RubAGButJ1rmgQwZf/HdRaCGl+JAVkqsqaNRaYNHdheiuKKuPf9mDcqKg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
     <div class="col-1">
         <button type="button" class="btn btn-danger" onclick="logOut()">로그아웃</button>
     </div>
+    
+    <div id="socket"></div>
 
     <script>
         function logOut() {
@@ -26,5 +29,18 @@
                 }
             })
         }
+
+        $(document).ready(function () {
+            
+        })
+
+        // 소켓 방 입장
+        const socket = io.connect("/")
+        const userRole = '<%= user.role %>'
+        socket.emit('newRoom', userRole)
+
+        socket.on('newOrder', (message) => {
+            $('#socket').append(message)
+        })
     </script>
 </body>

@@ -17,7 +17,7 @@ async function auth_middleware(req, res, next) {
         // jwt.verify를 이용해 쿠키 토큰값 인증
         const { userId } = jwt.verify(token, "teamSparta6")
 
-        const user = await Users.findByPk(userId, { attributes: ['userId', 'name', 'points', 'role'], raw: true })
+        const user = await Users.findByPk(userId, { attributes: ['userId','id', 'name', 'points', 'role'], raw: true })
         res.locals.user = user;
 
         const pcOrder = await PCOrders.findAll({

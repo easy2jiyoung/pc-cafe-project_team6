@@ -10,7 +10,7 @@
     <link href="./css/index.css" rel="stylesheet" />
     <!-- jquery -->
     <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="js/updateMyInfo.js"></script>
+    <!-- <script src="js/updateMyInfo.js"></script> -->
     <style>
     input {color: orange;}
 
@@ -48,12 +48,12 @@
         </div>
         <div class="name">
           <span>이름 :</span>
-          <input id="name" type="text" placeholder="강하루" readonly/>
+          <input id="name" type="text" placeholder="<%= user.name %>" readonly/>
           <div id="nameError" class="error"></div>
         </div>
         <div class="userId">
           <span>ID :</span>
-          <input id="userId" type="text" placeholder="haru1004" readonly />
+            <input id="userId" type="text" placeholder = "<%= user.id %>" readonly />
           <div id="IdError" class="error"></div>
         </div>
         <div class="password">
@@ -101,4 +101,31 @@
         </div>
       </div>
 </body>
+<script>
+  function updateMyinfo() {
+
+const userId = '<%= user.userId %>'
+const name = '<%= user.name %>'
+const id = '<%= user.id %>'
+const email = $('#email').val();
+const password = $('#password').val();
+const confirmPassword = $('#passwordCheck').val();
+const phone = $('#phone').val();
+
+const userData = { id, name, email, password, confirmPassword, phone }
+console.log(userId)
+
+$.ajax({
+    url: `/api/users/update/${userId}`,
+    type: 'PUT',
+    data: userData,
+    success: function onData (data) {
+        alert('내 정보를 수정 했습니다.',data)
+    },
+    error: function onError (error) {
+        console.error(error);
+    }
+});
+}
+</script>
 </html>

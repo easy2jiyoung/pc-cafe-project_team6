@@ -15,6 +15,7 @@ function updateMyinfo() {
         // dataType:'json',
         data: userData,
         success: function onData (data) {
+            window.location.href='/'
             alert('내 정보를 수정 했습니다.',data)
         },
         error: function onError (error) {

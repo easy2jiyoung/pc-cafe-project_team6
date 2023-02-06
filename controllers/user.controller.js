@@ -131,65 +131,12 @@ class UserController {
 
       const hashpassword = bcrypt.hashSync(password, 12);
     
-      const re_email = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
-      const re_id = /^[a-zA-Z0-9]{4,12}$/;
-      const re_phone = /^[0-9]{3}-[0-9]{3,4}-[0-9]{4}$/;
-      const re_password =
-        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,15}$/; // 8 ~ 15자 영대소문자, 숫자, 특수문자 조합
-
-
-
       if (password !== confirmPassword) {
         const error = new Error(
           "새 비밀번호가 비밀번호 확인 값과 일치하지 않습니다."
         );
         error.status = 412;
         throw error;
-      }
-
-
-      if (email.search(re_email) === -1) {
-        res.status(412).send({
-          errorMessage: "이메일 형식이 올바르지 않습니다.",
-        });
-        return;
-      }
-      if (id.search(re_id) === -1) {
-        res.status(412).send({
-          errorMessage: "아이디 형식이 올바르지 않습니다.",
-        });
-        return;
-      }
-      if (phone.search(re_phone) === -1) {
-        res.status(412).send({
-          errorMessage:
-            "휴대폰 번호를 숫자, -을 포함해 휴대전화 번호 형식에 맞게 입력해주세요.",
-        });
-        return;
-      }
-      if (password.search(re_password) === -1) {
-        res.status(412).send({
-          errorMessage:
-            "비밀번호를 8~15자 영대소문자, 숫자, 특수문자 조합으로 입력해주세요.",
-        });
-        return;
-      }
-      if (password !== passwordCheck) {
-        res.status(412).send({ errorMessage: "비밀번호가 일치하지 않습니다." });
-        return;
-      }
-      if (name === "") {
-        res.status(412).send({ errorMessage: "이름이 올바르지 않습니다." });
-        return;
-      }
-
-      const existsUsers = await this.userService.findByEmailAndId(email, id);
-      console.log(existsUsers);
-      if (existsUsers.length) {
-        res
-          .status(412)
-          .send({ errorMessage: "이메일 또는 아이디가 이미 사용중입니다." });
-        return;
       }
 
       const updateMyinfo = await this.userService.updateUser(

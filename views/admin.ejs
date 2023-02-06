@@ -7,7 +7,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>관리자 첫 페이지</title>
+    <title>관리자 페이지</title>
 
     <link href="./css/admin.css" rel="stylesheet" />
     <script src="./js/admin.js"></script>
@@ -41,19 +41,4 @@
       </div>
     </div>
   </body>
-  <script>
-    function logOut() {
-        $.ajax({
-            type: 'GET',
-            url: '/api/users/logout',
-            success: function (response) {
-                sessionStorage.clear()
-                window.location.href = '/'
-            },
-            error: function (response) {
-                alert(response)
-            }
-        })
-    }
-</script>
 </html>

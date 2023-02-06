@@ -102,13 +102,11 @@ class UserController {
       // 에러 나면 if 안에꺼 빼기
       res.cookie("accessToken", token);
 
-      res
-        .status(200)
-        .json({
-          message: "PC방에 오신 것을 환영합니다.",
-          userId: userInfo.userId,
-          role: userInfo.role,
-        });
+      res.status(200).json({
+        message: "PC방에 오신 것을 환영합니다.",
+        userId: userInfo.userId,
+        role: userInfo.role,
+      });
     } catch (error) {
       console.error(error);
       res.status(error.status).send({ message: error.message });

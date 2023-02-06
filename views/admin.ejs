@@ -1,30 +1,44 @@
 <!DOCTYPE html>
 <html lang="ko">
-
-<head>
+  <head>
     <%- include('head.ejs') %>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>관리자 첫 페이지</title>
 
-        <title></title>
-</head>
-
-<body>
-    <div class="col-1">
-        <button type="button" class="btn btn-danger" onclick="logOut()">로그아웃</button>
+    <link href="./css/admin.css" rel="stylesheet" />
+    <script src="./js/admin.js"></script>
+  </head>
+  <body>
+    <div id="fullscreen">
+      <div id="screen1"></div>
+      <div id="screen2">
+        <div id="screen2-1">
+          <div class="container-wrap">
+            <ul class="tabs">
+              <li class="tab-link current" data-tab="tab-1">회원관리</li>
+              <li class="tab-link" data-tab="tab-2">상품목록관리</li>
+              <li class="tab-link" data-tab="tab-3">좌석관리</li>
+            </ul>
+            <div id="tab-1" class="tab-content current">tab content</div>
+            <div id="tab-2" class="tab-content">tab content2</div>
+            <div id="tab-3" class="tab-content">tab content3</div>
+          </div>
+        </div>
+        <div id="screen2-2">
+          <div id="eventlog">이벤트로그</div>
+        </div>
+      </div>
+      <div id="screen3">
+        <div id="btn-logout">
+          <button type="button" class="btn btn-danger" onclick="logOut()">
+            로그아웃
+          </button>
+        </div>
+      </div>
     </div>
-
-    <script>
-        function logOut() {
-            $.ajax({
-                type: 'GET',
-                url: '/api/users/logout',
-                success: function (response) {
-                    sessionStorage.clear()
-                    window.location.href = '/'
-                },
-                error: function (response) {
-                    alert(response)
-                }
-            })
-        }
-    </script>
-</body>
+  </body>
+</html>

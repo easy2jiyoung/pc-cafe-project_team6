@@ -1,28 +1,28 @@
 <div id="commonHeader">
-    <div class="row">
-        <div class="col-1">
-            <button type="button" class="btn btn-light">마이페이지</button>
-        </div>
-        <div class="col-1">
-            <button type="button" class="btn btn-danger" onclick="logOut()">로그아웃</button>
-        </div>
+  <div class="row">
+    <div class="col-1">
+      <button type="button" class="btn btn-light">마이페이지</button>
     </div>
+    <div class="col-1">
+      <button type="button" class="btn btn-danger" onclick="logOut()">
+        로그아웃
+      </button>
+    </div>
+  </div>
 </div>
 
-
 <script>
-    function logOut() {
-        $.ajax({
-            type: 'GET',
-            url: '/api/users/logout',
-            success: function (response) {
-                sessionStorage.clear()
-                window.location.href='/'
-            },
-            error: function (response) {
-                alert(response.responseJSON.message)
-            }
-        })
-    }
-
+  function logOut() {
+    $.ajax({
+      type: "GET",
+      url: "/api/users/logout",
+      success: function (response) {
+        sessionStorage.clear();
+        window.location.href = "/";
+      },
+      error: function (response) {
+        alert(response.responseJSON.message);
+      },
+    });
+  }
 </script>

@@ -45,7 +45,7 @@
                             <input id="loginPassword" type="password">
                         </div>
                     </div>
-                    <button type="button" class="btn btn-primary loginButton" onclick="login()">로그인</button>
+                    <button type="button" class="btn btn-primary" id="loginButton" onclick="login()">로그인</button>
                     <p style="margin-top:6px"><a href="/signup">회원가입</a></p>
                 </div>
 
@@ -112,6 +112,13 @@
             window.location.href = '/admin'
         }
 
+        // 패스워드 칸에서 엔터누르면 로그인 버튼 누르기
+        let passwordInput = document.getElementById('loginPassword')
+        passwordInput.addEventListener("keypress", function(event) {
+            if(event.key === 'Enter') {
+                document.getElementById('loginButton').click()
+            }
+        })
 
         // PC 목록 불러오기
         $.ajax({
@@ -171,7 +178,7 @@
                 }
             },
             error: function (response) {
-                alert(response)
+                alert(response.responseJSON.message)
             }
         })
     }
@@ -206,8 +213,6 @@
 
         let pointsRemaining  = userPoints - orderTime * 1000
 
-        console.log(orderTime, userPoints, pointsRemaining)
-
         // 확인 필요
         if (pointsRemaining < 0) {
             return alert('포인트가 부족합니다!')
@@ -228,8 +233,6 @@
         const endDateTime = luxon.DateTime.now().plus({hours: orderTime}).toFormat('yyyy-MM-dd HH:mm:ss')
         const deductedPoints = orderTime * 1000
 
-        console.log(startDateTime, endDateTime)
-
         $.ajax({
             type: 'POST',
             url: `/api/pcOrder/${userId}/${pcId}`,
@@ -242,7 +245,7 @@
                 window.location.href='/foodOrder'
             },
             error: function (response) {
-                alert(response.message)
+                alert(response.responseJSON.message)
             }
         })
     }

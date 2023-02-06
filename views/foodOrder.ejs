@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <%- include('head.ejs') %>
+
+    <link rel="stylesheet" href="css/foodOrder.css">
+
+    <title></title>
+</head>
+
+<body>
+    <%- include('header.ejs') %>
+
+    <div id="pcOrderInfo">
+        <p style="font-size:30px; margin-bottom: 0;">PC #<%= pcOrder.pcId %> %></p>
+        <p id="remainingTime"></p>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-9" id="productListAndTabs">
+                <div class="row" id="productTypeTabs">
+                    tabs
+                </div>
+                <div class="row">
+                    <div class="row row-cols-4" id="productList">
+                        <!-- <div class="col">
+                            <div class="card" style="width: 18rem;">
+                                <img src="..." class="card-img-top" alt="...">
+                                <div class="card-body">
+                                  <h5 class="card-title">Card title</h5>
+                                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card" style="width: 18rem;">
+                                <img src="..." class="card-img-top" alt="...">
+                                <div class="card-body">
+                                  <h5 class="card-title">Card title</h5>
+                                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card" style="width: 18rem;">
+                                <img src="..." class="card-img-top" alt="...">
+                                <div class="card-body">
+                                  <h5 class="card-title">Card title</h5>
+                                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card" style="width: 18rem;">
+                                <img src="..." class="card-img-top" alt="...">
+                                <div class="card-body">
+                                  <h5 class="card-title">Card title</h5>
+                                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="col">
+                            <div class="card" style="width: 18rem;">
+                                <img src="..." class="card-img-top" alt="...">
+                                <div class="card-body">
+                                  <h5 class="card-title">Card title</h5>
+                                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card" style="width: 18rem;">
+                                <img src="..." class="card-img-top" alt="...">
+                                <div class="card-body">
+                                  <h5 class="card-title">Card title</h5>
+                                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card" style="width: 18rem;">
+                                <img src="..." class="card-img-top" alt="...">
+                                <div class="card-body">
+                                  <h5 class="card-title">Card title</h5>
+                                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                                </div>
+                            </div>
+                        </div> -->
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-3" id="cart">
+                <p style="font-size:25px">장바구니</p>
+                <div class="container" id="cartDetails">
+                    <div class="row">
+                        <div class="card mb-3 cardProductDetails" style="max-width: 540px;">
+                            <div class="row g-0">
+                              <div class="col-md-4">
+                                <img src="..." class="img-fluid rounded-start cardProductDetailsImage" alt="...">
+                              </div>
+                              <div class="col-md-8">
+                                <div class="card-body">
+                                  <h5 class="card-title">상품 이름</h5>
+                                  <p class="card-text cardProductDetailsText">수량 :</p>
+                                  <p class="card-text cardProductDetailsText">가격 :</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+                <div id="pointsDetails">
+                    <p>보유 포인트: <%- user?.points %>p</p>
+                    <p id="pointsDeducted">차감 포인트: </p>
+                    <p id="pointsRemaining">잔여 포인트: </p>
+                </div>
+                <button type="button" class="btn btn-primary commonButton" onclick="createProductOrder()">결제하기</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        let endDateTime = '<%= pcOrder.endDateTime %>'
+        endDateTime = new Date(endDateTime)
+        console.log(endDateTime)
+
+        let countDown = setInterval(function() {
+            const endTime = endDateTime.getTime()
+            let now = new Date().getTime()
+
+            let diff = endTime - now
+
+            let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+            let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+            let seconds = Math.floor((diff % (1000 * 60)) / 1000)
+
+            document.getElementById('remainingTime').innerHTML = `잔여 시간: ${hours}:${minutes}:${seconds}`
+
+            if (diff <= 0) {
+                alert('이용시간이 끝났습니다!')
+                sessionStorage.clear()
+                window.location.href = '/'
+            }
+        }, 1000)
+
+
+        $(document).ready(function () {
+            $.ajax({
+            type: 'GET',
+            url: `/api/products`,
+            async: false,
+            success: function (response) {
+                let productName
+                let productPrice
+                let productImgUrl
+                let productType
+                let temp_html
+                let productId
+                let productStock
+
+                for(let i=0; i<response.length; i++) {
+                    let {productName, productPrice, productImgUrl, productType, productId, productStock} = response[i]
+
+                    if (Number(productStock) > 0){
+                        temp_html = `<div class="col">
+                                    <div class="card productCard" style="width: 18rem;">
+                                        <img src="${productImgUrl}" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                        <h5 class="card-title">${productName}</h5>
+                                        <p class="card-text">가격: ${productPrice}p</p>
+                                        <a href="#" class="btn btn-primary commonButton" onclick="addToCart('${productId}', '${productName}', '${productPrice}')">장바구니에 추가</a>
+                                        </div>
+                                    </div>
+                                </div>`
+                    
+                        $('#productList').append(temp_html)
+                    }
+                }    
+            }
+        })
+        })
+
+        // 장바구니 추가 버튼이 눌렸을 때
+        function addToCart(productId, productName, productPrice) {
+            let temp_html
+
+            // 장바구니가 처음에 없으면 session storage에 만든다
+            if (sessionStorage.getItem('cart') === null) {
+                sessionStorage.setItem('cart', JSON.stringify({}))
+            }
+
+            let cart = JSON.parse(sessionStorage.getItem('cart'))
+            console.log(cart)
+
+            // 장바구니에 동일한 아이템이 담겨있는지 확인
+            const index = cart.findIndex(element => element.productId === productId)
+            if (index > -1) {
+                // 동일한 아이템이 담겨있으면 구매량 1개 증가
+                cart[index].purchasedUnits = cart[index].purchasedUnits + 1
+
+                temp_html = `<div class="row">
+                                <div class="card mb-3 cardProductDetails" style="max-width: 540px;">
+                                    <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <img src="..." class="img-fluid rounded-start cardProductDetailsImage" alt="...">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                        <h5 class="card-title">상품 이름</h5>
+                                        <p class="card-text cardProductDetailsText">수량 :</p>
+                                        <p class="card-text cardProductDetailsText">가격 :</p>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>`
+
+            } else {
+                // 아이템을 처음 담았으면 items 배열에 추가
+                cart.push({productId: productId, productName: productName, productPrice: productPrice, purchasedUnits: 1})
+            }
+
+
+        }
+
+        // 결제하기 버튼이 눌렸을 때
+        function createProductOrder() {
+            let cart = sessionStorage.getItem('cart')
+            
+            // 장바구니에 아이템이 없으면
+            if (cart.length === 0) {
+                return alert('장바구니에 상품을 추가해주세요!')
+            }
+
+            $.ajax({
+            type: 'POST',
+            url: `/api/productOrder`,
+            async: false,
+            data: {},
+            success: function (response) {
+            
+            
+            }
+            })
+
+            sessionStorage.clear()
+        }
+    </script>
+</body>

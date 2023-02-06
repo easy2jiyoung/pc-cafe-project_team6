@@ -27,5 +27,5 @@ app.set("views", __dirname + "/views");
 app.use(express.static(path.join(__dirname + "/views")));
 
 http.listen(port, () => {
-  console.log(`${port} 포트가 열렸습니다!`);
-});
+    console.log(`${port} 포트가 열렸습니다!`);
+})

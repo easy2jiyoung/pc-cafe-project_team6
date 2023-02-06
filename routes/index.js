@@ -16,6 +16,10 @@ const PCOrderController = require('../controllers/pcOrder.controller.js')
 const pcOrderController = new PCOrderController()
 router.post('/pcOrder/:userId/:pcId', pcOrderController.postPCOrder)
 
+const ProductOrderController = require('../controllers/productOrder.controller.js')
+const productOrderController = new ProductOrderController()
+router.post('/productOrder/:userId/:pcId', productOrderController.postProductOrder)
+
 const adminRouter = require('./admin.routes')
 router.use('/admin', adminRouter)
 

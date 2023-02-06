@@ -1,0 +1,66 @@
+.col {
+    /* flex:0 */
+}
+
+#productListAndTabs {
+    /* width: 1000px; */
+    flex-shrink: 0;
+}
+
+#productTypeTabs {
+    background-color: aquamarine;
+    height: 100px
+}
+
+#productList {
+    background-color: antiquewhite;
+    height: 700px;
+}
+
+.productCard img {
+    max-height: 250px;
+    object-fit: contain;
+}
+
+.productCard {
+    background-color: #405b6e;
+}
+
+#cart {
+    background-color:darkgreen;
+    height: 800px;
+    /* width: 200px; */
+    flex-shrink: 0;
+    /* flex:0; */
+}
+
+#cartDetails {
+    background-color: darkcyan;
+    height: 600px
+}
+
+.cardProductDetails {
+    background-color: #405b6e;
+}
+
+.cardProductDetailsText {
+    margin-bottom: 0;
+}
+
+.cardProductDetailsImage {
+    max-height: 140px;
+    object-fit: contain;
+}
+
+#pointsDetails {
+    text-align: right;
+}
+
+#pointsDetails p {
+    margin-bottom: 0;
+}
+
+#pcOrderInfo {
+    text-align: right;
+    padding-right: 10px;
+}

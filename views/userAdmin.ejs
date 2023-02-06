@@ -90,8 +90,8 @@
             url: `/api/admin/users/${userId}`,
             async: false,
             success: function (response) {
-                
                 alert("회원 삭제가 완료되었습니다.")
+                location.reload()
             }
         })
     }  

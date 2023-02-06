@@ -131,18 +131,18 @@ class UserService {
   };
 
   //id로 나의 정보 수정
-  updateUser = async (userId, id, phone, email, password) => {
+  updateUser = async (userId, id, phone, email, hashpassword) => {
     try {
       const updateUserData = await this.userRepository.updateUser(
         userId,
         id,
         phone,
         email,
-        password
+        hashpassword
       );
       return {
         id: updateUserData.id,
-        password: updateUserData.password,
+        hashpassword: updateUserData.hashpassword,
         name: updateUserData.name,
         phone: updateUserData.phone,
         email: updateUserData.email,

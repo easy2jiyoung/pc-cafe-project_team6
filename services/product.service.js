@@ -28,8 +28,6 @@ class ProductService {
             const offset = (pageNum -1) * limit
             const allProduct = await this.productRepository.readProducts(limit, offset)
             const lastPage = Math.ceil(allProduct.count / limit)
-            // const pagination = {limit, offset, lastPage}
-            // response.send({pagination})
             return { allProduct, lastPage }
         } catch (error) {
             throw error;

@@ -112,16 +112,14 @@
                     url: `/api/products?page=${page || 1}`,
                     async: false,
                     success: function (response) {
+                        // 페이지네이션
                         const lastPage = response.lastPage
                         const allProduct = response.allProduct
-                        // console.log(response)
                         for(let i = 1; i <= lastPage; i++) {
                             let temp_html = `<li class="page-item"><a class="page-link" href="?page=${i}">${i}</a></li>`
                             $('.pagination').append(temp_html)
                         }
-                       
-                        // console.log(response.count)
-                        // console.log(response.rows)
+                        
                         for (let i = 0; i < allProduct.rows.length; i++) {
                             let { productName, productPrice, productImgUrl, productType, productId, productStock } =  allProduct.rows[i]
 

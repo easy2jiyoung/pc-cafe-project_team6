@@ -11,6 +11,7 @@ router.use('/products', productRouter)
 const PCController = require('../controllers/pc.controller.js')
 const pcController = new PCController()
 router.get('/pcs', pcController.getPCList)
+router.get('/pcs/updatePcStatus', pcController.updatePcStatus)
 
 const PCOrderController = require('../controllers/pcOrder.controller.js')
 const pcOrderController = new PCOrderController()

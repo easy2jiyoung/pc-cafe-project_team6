@@ -199,6 +199,20 @@ class UserService {
       throw error;
     }
   };
+
+  // (관리자) 포인트 변경
+  updatePoint = async (userId, points) => {
+    try {
+      const updatePoint = await this.userRepository.updatePoint(userId, points);
+
+      return {
+        userId: updatePoint.userId,
+        points: updatePoint.points,
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 module.exports = UserService;

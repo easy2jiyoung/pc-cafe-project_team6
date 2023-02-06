@@ -237,6 +237,20 @@ class UserController {
       return res.status(error.status).json({ message: error.message });
     }
   }
+
+  // (관리자) 포인트 변경
+  updateUserPoint = async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const { points } = req.body;
+
+      const updatePoint = await this.userService.updatePoint(userId, points);
+
+      res.status(200).send({ updatedPoint: updatePoint});
+    } catch (error) {
+      return res.status(error.status).json({ message: error.message });
+    }
+  }
 }
 
 module.exports = UserController;

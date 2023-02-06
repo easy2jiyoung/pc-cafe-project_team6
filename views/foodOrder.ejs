@@ -22,107 +22,28 @@
             <div class="row">
                 <div class="col-9" id="productListAndTabs">
                     <div class="row" id="productTypeTabs">
-                        tabs
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                              <a class="nav-link" id="allProductsTab" href="/foodOrder">전체 상품</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" id="foodTab" href="/foodOrder?type=food">먹거리</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" id="drinkTab" href="/foodOrder?type=drink">음료</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="timeTab" href="/foodOrder?type=time">이용시간</a>
+                            </li>
+                          </ul>
                     </div>
                     <div class="row">
-                        <div class="row row-cols-4" id="productList">
-                            <!-- <div class="col">
-                            <div class="card" style="width: 18rem;">
-                                <img src="..." class="card-img-top" alt="...">
-                                <div class="card-body">
-                                  <h5 class="card-title">Card title</h5>
-                                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card" style="width: 18rem;">
-                                <img src="..." class="card-img-top" alt="...">
-                                <div class="card-body">
-                                  <h5 class="card-title">Card title</h5>
-                                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card" style="width: 18rem;">
-                                <img src="..." class="card-img-top" alt="...">
-                                <div class="card-body">
-                                  <h5 class="card-title">Card title</h5>
-                                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card" style="width: 18rem;">
-                                <img src="..." class="card-img-top" alt="...">
-                                <div class="card-body">
-                                  <h5 class="card-title">Card title</h5>
-                                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="w-100"></div>
-                        <div class="col">
-                            <div class="card" style="width: 18rem;">
-                                <img src="..." class="card-img-top" alt="...">
-                                <div class="card-body">
-                                  <h5 class="card-title">Card title</h5>
-                                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card" style="width: 18rem;">
-                                <img src="..." class="card-img-top" alt="...">
-                                <div class="card-body">
-                                  <h5 class="card-title">Card title</h5>
-                                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card" style="width: 18rem;">
-                                <img src="..." class="card-img-top" alt="...">
-                                <div class="card-body">
-                                  <h5 class="card-title">Card title</h5>
-                                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div> -->
-
-                        </div>
+                        <div class="row row-cols-4" id="productList"></div>
                     </div>
                 </div>
                 <div class="col-3" id="cart">
-                    <p style="font-size:25px">장바구니</p>
-                    <div class="container" id="cartDetails">
-                        <div class="row">
-                            <div class="card mb-3 cardProductDetails" style="max-width: 540px;">
-                                <div class="row g-0">
-                                    <div class="col-md-4">
-                                        <img src="..." class="img-fluid rounded-start cardProductDetailsImage"
-                                            alt="...">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="card-body">
-                                            <h5 class="card-title">상품 이름</h5>
-                                            <p class="card-text cardProductDetailsText">수량 :</p>
-                                            <p class="card-text cardProductDetailsText">가격 :</p>
-                                            <span class="material-symbols-outlined deleteProductCart" onclick="deleteProductCart()">delete</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <p style="font-size:25px; margin-top: 10px;">장바구니</p>
+                    <div class="container" id="cartDetails"></div>
                     <div id="pointsDetails">
                         <p>보유 포인트: <%- user?.points %>p</p>
                         <p id="pointsDeducted">차감 포인트: 0p</p>
@@ -161,6 +82,23 @@
 
 
             $(document).ready(function () {
+                // Active tab 바꾸기
+                const [_, currentLocation] = window.location.href.split('http://localhost:1004/foodOrder')
+                if(currentLocation === ''){
+                    $('.active').removeClass('active')
+                    $('#allProductsTab').addClass('active')
+                } else if (currentLocation === '?type=food') {
+                    $('.active').removeClass('active')
+                    $('#foodTab').addClass('active')
+                } else if (currentLocation === '?type=drink') {
+                    $('.active').removeClass('active')
+                    $('#drinkTab').addClass('active')
+                } else if (currentLocation === '?type=time') {
+                    $('.active').removeClass('active')
+                    $('#timeTab').addClass('active')
+                }
+
+                // 상품 목록 불러오기
                 $.ajax({
                     type: 'GET',
                     url: `/api/products`,
@@ -180,11 +118,11 @@
                             if (Number(productStock) > 0) {
                                 temp_html = `<div class="col">
                                     <div class="card productCard" style="width: 18rem;">
-                                        <img src="${productImgUrl}" class="card-img-top" alt="...">
+                                        <img src="${productImgUrl}" class="card-img-top">
                                         <div class="card-body">
                                         <h5 class="card-title">${productName}</h5>
                                         <p class="card-text">가격: ${productPrice}p</p>
-                                        <a href="#" class="btn btn-primary commonButton" onclick="addToCart('${productId}', '${productName}', '${productPrice}', '${productImgUrl}')">장바구니에 추가</a>
+                                        <a class="btn btn-primary commonButton" onclick="addToCart('${productId}', '${productName}', '${productPrice}', '${productImgUrl}')">장바구니에 추가</a>
                                         </div>
                                     </div>
                                 </div>`
@@ -204,21 +142,21 @@
                         let {productId, productName, productPrice, purchasedUnits, productImgUrl} = cart[i]
 
                         let temp_html = `<div class="row">
-                                <div class="card mb-3 cardProductDetails" style="max-width: 540px;">
-                                    <div class="row g-0">
-                                    <div class="col-md-4">
-                                        <img src="${productImgUrl}" class="img-fluid rounded-start cardProductDetailsImage" alt="...">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="card-body">
-                                        <h5 class="card-title">${productName}</h5>
-                                        <p class="card-text cardProductDetailsText" id="productQty${productId}">수량: ${purchasedUnits}</p>
-                                        <p class="card-text cardProductDetailsText">총 가격: ${productPrice}</p>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
-                            </div>`
+                                            <div class="card mb-3 cardProductDetails" style="max-width: 540px;">
+                                                <div class="row g-0">
+                                                <div class="col-md-4">
+                                                    <img src="${productImgUrl}" class="img-fluid rounded-start cardProductDetailsImage">
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="card-body">
+                                                    <h5 class="card-title">${productName}<span class="material-symbols-outlined deleteProductCart" onclick="deleteProductCart('${productId}')">delete</span></h5>
+                                                    <p class="card-text cardProductDetailsText" id="productQty${productId}">수량: ${purchasedUnits}</p>
+                                                    <p class="card-text cardProductDetailsText">총 가격: ${productPrice}</p>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>`
 
                         $('#cartDetails').append(temp_html)
 
@@ -266,11 +204,11 @@
                                 <div class="card mb-3 cardProductDetails" style="max-width: 540px;">
                                     <div class="row g-0">
                                     <div class="col-md-4">
-                                        <img src="${productImgUrl}" class="img-fluid rounded-start cardProductDetailsImage" alt="...">
+                                        <img src="${productImgUrl}" class="img-fluid rounded-start cardProductDetailsImage">
                                     </div>
                                     <div class="col-md-8">
                                         <div class="card-body">
-                                        <h5 class="card-title">${productName}</h5>
+                                        <h5 class="card-title">${productName}<span class="material-symbols-outlined deleteProductCart" onclick="deleteProductCart('${productId}')">delete</span></h5>
                                         <p class="card-text cardProductDetailsText" id="productQty${productId}">수량: 1</p>
                                         <p class="card-text cardProductDetailsText">총 가격: ${productPrice}</p>
                                         </div>
@@ -289,8 +227,22 @@
                     remainingPoints -= pointsDeducted
                     $('#pointsRemaining').text(`잔여 포인트: ${remainingPoints}p`)
                 }
+            }
 
+            // 장바구니 상품 삭제 버튼이 눌렸을 때
+            function deleteProductCart(productId) {
+                let cart = JSON.parse(sessionStorage.getItem('cart'))
 
+                for (let i=0; i<cart.length; i++) {
+                    console.log(cart[i])
+                    if (cart[i].productId === productId) {
+                        cart[i]
+                        cart.splice(i,1)
+                        sessionStorage.setItem('cart', JSON.stringify(cart))
+                        location.reload()
+                        return
+                    }
+                }
             }
 
             // 결제하기 버튼이 눌렸을 때

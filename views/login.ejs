@@ -178,7 +178,7 @@
                 }
             },
             error: function (response) {
-                alert(response)
+                alert(response.responseJSON.message)
             }
         })
     }
@@ -213,8 +213,6 @@
 
         let pointsRemaining  = userPoints - orderTime * 1000
 
-        console.log(orderTime, userPoints, pointsRemaining)
-
         // 확인 필요
         if (pointsRemaining < 0) {
             return alert('포인트가 부족합니다!')
@@ -235,8 +233,6 @@
         const endDateTime = luxon.DateTime.now().plus({hours: orderTime}).toFormat('yyyy-MM-dd HH:mm:ss')
         const deductedPoints = orderTime * 1000
 
-        console.log(startDateTime, endDateTime)
-
         $.ajax({
             type: 'POST',
             url: `/api/pcOrder/${userId}/${pcId}`,
@@ -249,7 +245,7 @@
                 window.location.href='/foodOrder'
             },
             error: function (response) {
-                alert(response.message)
+                alert(response.responseJSON.message)
             }
         })
     }

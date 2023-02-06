@@ -85,7 +85,8 @@
         let userRole = '<%= user?.role %>'
 
         // console.log('endDateTime', endDateTime)
-        // console.log('endDateTime === undefined', endDateTime === undefined)
+        // console.log('endDateTime === {}', endDateTime === {})
+        // console.log(!endDateTime)
         // console.log('Date.now()', Date.now())
         // console.log('endDateTime < Date.now()',new Date(endDateTime) < Date.now())
         // console.log('endDateTime > Date.now()',new Date(endDateTime) > Date.now())
@@ -98,7 +99,7 @@
             
             // console.log(endDateTime,!endDateTime)
             // console.log('endDateTime === undefined || new Date(endDateTime) < Date.now()',endDateTime === undefined || new Date(endDateTime) < Date.now())
-            if (endDateTime === undefined || new Date(endDateTime) < Date.now()) {
+            if (!endDateTime || new Date(endDateTime) < Date.now()) {
                 document.getElementById('divLogin').style.display = 'none'
                 document.getElementById('divPcOrder').style.display = 'block'
                 document.getElementById('selectPC').style.display = 'block'

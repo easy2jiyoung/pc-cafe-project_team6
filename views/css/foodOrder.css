@@ -39,6 +39,19 @@
     height: 600px
 }
 
+.cardProductDetails {
+    background-color: #405b6e;
+}
+
+.cardProductDetailsText {
+    margin-bottom: 0;
+}
+
+.cardProductDetailsImage {
+    max-height: 140px;
+    object-fit: contain;
+}
+
 #pointsDetails {
     text-align: right;
 }

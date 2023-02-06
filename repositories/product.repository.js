@@ -29,7 +29,17 @@ class ProductRepository {
     // 상품 조회
     readProduct = async() => {
         try {
-            const products = await this.productModel.findAll({})
+            let pageNum = req.query.page;
+            let offset = 0;
+
+            if (pageNum > 1) {
+                offset = 8 * (pageNum - 1);
+            }
+
+            const products = await this.productModel.findAll({
+                offset,
+                limit: 0
+            })
             return products
         } catch (error) {
             error.status = 400

@@ -65,7 +65,7 @@
                                         <td>${phone}</td>
                                         <td>${email}</td>
                                         <td>${points}</td>
-                                        <td><button onclick="pointUpdate()">포인트 충전</button></td>
+                                        <td><button onclick="pointUpdate(${userId})">포인트 충전</button></td>
                                         <td><button onclick="userDelete(${userId})">삭제</button></td>
                                     </tr>`
                     $('#user-list').append(temp_html);
@@ -78,8 +78,8 @@
 
 <script>
     // 포인트 충전
-    function pointUpdate() {
-
+    function pointUpdate(userId) {
+        
         alert("포인트 충전이 완료되었습니다.")
     }
 

@@ -29,7 +29,8 @@ class ProductController {
     // 상품 조회
     productList = async (req, res) => {
         try {
-            const products = await this.productService.readProduct()
+            const pageNum = req.query.page || 1
+            const products = await this.productService.readProducts(pageNum)
             res.status(200).json(products)
         } catch (error) {
             console.log(error)

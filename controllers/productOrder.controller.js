@@ -7,9 +7,9 @@ class ProductOrderController {
     postProductOrder = async (req, res) => {
         try {
             const {userId} = req.params
-            const {orders} = req.body
+            const {orders, remainingPoints} = req.body
 
-            await this.productOrderService.postProductOrder(userId, orders)
+            await this.productOrderService.postProductOrder(userId, orders, remainingPoints)
             
             return res.status(201).json({message: '구매 내용이 성공적으로 등록되었습니다.'})
         } catch (error) {

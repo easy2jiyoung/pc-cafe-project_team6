@@ -4,73 +4,74 @@
 <head>
     <%- include('head.ejs') %>
 
-    <link rel="stylesheet" href="css/login.css">
+        <link rel="stylesheet" href="css/login.css">
 
-    <title></title>
+        <title></title>
 </head>
 
 <body>
     <% if (user?.userId) { %>
         <%- include('header.ejs') %>
-    <% } %>
-    
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-8 divPcListContainer">
-                PC 목록
-                <div class="divPcList">
-                    <p id="selectPC" style="font-size:30px">컴퓨터를 선택해주세요.</p>
-                    <div class="row" id="divPcRow0">
-                    </div>
-                    <div class="row" id="divPcRow1">
-                    </div>
-                    <div class="row" id="divPcRow2">
-                    </div>
-                    <div class="row" id="divPcRow3">
-                    </div>
-                </div>
-            </div>
-            <div class="col-4">
-                로그인
-                <div id="divLogin">
-                    <div class="row">
-                        <label for="loginId" class="col-3 col-form-label loginText">ID</label>
-                        <div class="col">
-                            <input id="loginId">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <label for="loginPassword" class="col-3 col-form-label loginText">패스워드</label>
-                        <div class="col">
-                            <input id="loginPassword" type="password">
-                        </div>
-                    </div>
-                    <button type="button" class="btn btn-primary" id="loginButton" onclick="login()">로그인</button>
-                    <p style="margin-top:6px"><a href="/signup">회원가입</a></p>
-                </div>
+            <% } %>
 
-                <div id="divPcOrder">
-                    <div class="container" id="pcOrderContainer">
-                        <p style="font-size: 40px;" id="selectedPcNum">PC #</p>
-                        <div class="row">
-                            <label for="pcOrderTime" class="col-4 col-form-label loginText">이용할 시간:</label>
-                            <div class="col-2">
-                                <input id="pcOrderTime" type="number" style="text-align: center;" min="1" max="12" onkeyup="pointsDeducted()" onmouseup="pointsDeducted()">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-8 divPcListContainer">
+                            <div class="divPcList">
+                                <p id="selectPC" style="font-size:30px">컴퓨터를 선택해주세요.</p>
+                                <div class="row" id="divPcRow0">
+                                </div>
+                                <div class="row" id="divPcRow1">
+                                </div>
+                                <div class="row" id="divPcRow2">
+                                </div>
+                                <div class="row" id="divPcRow3">
+                                </div>
                             </div>
                         </div>
-                        <div id="userPoints">
-                            <p>보유 포인트: <%- user?.points %>p</p>
-                            <p id="pointsDeducted">차감 포인트: </p>
-                            <p id="pointsRemaining">잔여 포인트: </p>
+                        <div class="col-4">
+                            <div id="divLogin">
+                                <div class="row">
+                                    <label for="loginId" class="col-3 col-form-label loginText">ID</label>
+                                    <div class="col">
+                                        <input id="loginId">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label for="loginPassword" class="col-3 col-form-label loginText">패스워드</label>
+                                    <div class="col">
+                                        <input id="loginPassword" type="password">
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-primary" id="loginButton"
+                                    onclick="login()">로그인</button>
+                                <p style="margin-top:6px"><a href="/signup">회원가입</a></p>
+                            </div>
 
-                            <button type="button" class="btn btn-primary commonButton" onclick="postPcOrder()">결제하기</button>
+                            <div id="divPcOrder">
+                                <div class="container" id="pcOrderContainer">
+                                    <p style="font-size: 40px;" id="selectedPcNum">PC #</p>
+                                    <div class="row">
+                                        <label for="pcOrderTime" class="col-4 col-form-label loginText">이용할 시간:</label>
+                                        <div class="col-2">
+                                            <input id="pcOrderTime" type="number" style="text-align: center;" min="1"
+                                                max="12" onkeyup="pointsDeducted()" onmouseup="pointsDeducted()">
+                                        </div>
+                                    </div>
+                                    <div id="userPoints">
+                                        <p>보유 포인트: <%- user?.points %>p</p>
+                                        <p id="pointsDeducted">차감 포인트: </p>
+                                        <p id="pointsRemaining">잔여 포인트: </p>
+
+                                        <button type="button" class="btn btn-primary commonButton"
+                                            onclick="postPcOrder()">결제하기</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
 
-    </div>
+                </div>
 
 </body>
 
@@ -96,7 +97,7 @@
         } else if (userRole === 'customer') {
             // 고객으로 로그인 되어있으면:
             // pcOrder가 존재하지 않거나 
-            
+
             // console.log(endDateTime,!endDateTime)
             // console.log('endDateTime === undefined || new Date(endDateTime) < Date.now()',endDateTime === undefined || new Date(endDateTime) < Date.now())
             if (!endDateTime || new Date(endDateTime) < Date.now()) {
@@ -105,7 +106,7 @@
                 document.getElementById('selectPC').style.display = 'block'
             } else if (new Date(endDateTime) > Date.now()) {
                 // 고객이 이용시간을 결제했고 현재 시간이 이용 마감 시간 전이면:
-                window.location.href='/foodOrder'
+                window.location.href = '/foodOrder'
             }
         } else if (userRole === 'admin') {
             // 관리자로 로그인 되어있으면:
@@ -114,45 +115,54 @@
 
         // 패스워드 칸에서 엔터누르면 로그인 버튼 누르기
         let passwordInput = document.getElementById('loginPassword')
-        passwordInput.addEventListener("keypress", function(event) {
-            if(event.key === 'Enter') {
+        passwordInput.addEventListener("keypress", function (event) {
+            if (event.key === 'Enter') {
                 document.getElementById('loginButton').click()
             }
         })
 
-        // PC 목록 불러오기
+        // 사용 가능한 PC 업데이트
         $.ajax({
             type: 'GET',
-            url: `/api/pcs`,
+            url: `/api/pcs/updatePcStatus`,
             async: false,
             success: function (response) {
-                let pcId
-                let pcStatus
-                let temp_html
-                let divPcRow
-                const userId = '<%= user.userId %>'
-                
-                for(let i=0; i<response.length; i++) {
-                    pcId = response[i].pcId
-                    pcStatus = response[i].pcStatus
-                    divPcRow = `divPcRow${Math.floor(i/4)}`
+                // PC 목록 불러오기
+                $.ajax({
+                    type: 'GET',
+                    url: `/api/pcs`,
+                    async: false,
+                    success: function (response) {
+                        const userId = '<%= user?.userId %>'
 
-                    if (pcStatus===true) {
-                        temp_html = `<div class="col-2 divPc">
+                        for (let i = 0; i < response.length; i++) {
+                            let pcId = response[i].pcId
+                            let pcStatus = response[i].pcStatus
+                            let divPcRow = `divPcRow${Math.floor(i / 4)}`
+
+                            if (pcStatus === true) {
+                                let temp_html = `<div class="col-2 divPc">
                                         <img src="./images/pcDisabledIcon.png">
                                         PC ${pcId}
                                     </div>`
-                        $('#'+divPcRow).append(temp_html)
-                    } else if (pcStatus===false) {
-                        temp_html = `<div class="col-2 divPc">
+                                $('#' + divPcRow).append(temp_html)
+                            } else if (pcStatus === false) {
+                                let temp_html = `<div class="col-2 divPc">
                                         <img class="${userId ? 'pcAvailable' : ''}" onclick="${userId ? `selectPc(${pcId})` : ''}" src="./images/pcEnabledIcon.png">
                                         PC ${pcId}
                                     </div>`
-                        $('#'+divPcRow).append(temp_html)
-                    }
-                }
+                                $('#' + divPcRow).append(temp_html)
+                            }
+                        }
+                    },
+                });
             },
-        });
+            error: function (response) {
+                console.log(response)
+            }
+        })
+
+
 
     })
 
@@ -161,7 +171,7 @@
         const id = $('#loginId').val()
         const password = $('#loginPassword').val()
 
-        if (!id || !password) {return alert('아이디와 패스워드를 입력해주세요.')}
+        if (!id || !password) { return alert('아이디와 패스워드를 입력해주세요.') }
 
         $.ajax({
             type: 'POST',
@@ -172,9 +182,9 @@
             },
             success: function (response) {
                 if (response.role === 'admin') {
-                    window.location.href='/admin'
+                    window.location.href = '/admin'
                 } else {
-                    window.location.href='/'
+                    window.location.href = '/'
                 }
             },
             error: function (response) {
@@ -188,12 +198,12 @@
         let orderTime = $('#pcOrderTime').val()
         orderTime = Number(orderTime)
 
-        let userPoints = '<%= user.points %>'
+        let userPoints = '<%= user?.points %>'
         userPoints = Number(userPoints)
 
-        let pointsRemaining  = userPoints - orderTime * 1000
+        let pointsRemaining = userPoints - orderTime * 1000
 
-        document.getElementById('pointsDeducted').innerHTML = '차감 포인트: '+ orderTime * 1000 + 'p'
+        document.getElementById('pointsDeducted').innerHTML = '차감 포인트: ' + orderTime * 1000 + 'p'
         document.getElementById('pointsRemaining').innerHTML = '잔여 포인트: ' + pointsRemaining + 'p'
 
     }
@@ -211,7 +221,7 @@
         let userPoints = '<%= user?.points %>'
         userPoints = Number(userPoints)
 
-        let pointsRemaining  = userPoints - orderTime * 1000
+        let pointsRemaining = userPoints - orderTime * 1000
 
         // 확인 필요
         if (pointsRemaining < 0) {
@@ -222,7 +232,7 @@
             return alert('이용 시간은 1시간부터 12시간까지입니다.')
         }
 
-        const userId = '<%= user.userId %>'
+        const userId = '<%= user?.userId %>'
         const [_, pcId] = $('#selectedPcNum').text().split('PC #')
 
         if (!pcId) {
@@ -230,7 +240,7 @@
         }
 
         const startDateTime = luxon.DateTime.now().toFormat('yyyy-MM-dd HH:mm:ss')
-        const endDateTime = luxon.DateTime.now().plus({hours: orderTime}).toFormat('yyyy-MM-dd HH:mm:ss')
+        const endDateTime = luxon.DateTime.now().plus({ hours: orderTime }).toFormat('yyyy-MM-dd HH:mm:ss')
         const deductedPoints = orderTime * 1000
 
         $.ajax({
@@ -242,7 +252,9 @@
                 deductedPoints: deductedPoints
             },
             success: function (response) {
-                window.location.href='/foodOrder'
+                const socketMessage = [{userId, pcId, purchasedItem: '이용시간', qty: orderTime, userPoints, deductedPoints, remainingPoints: pointsRemaining, logTime: startDateTime}]
+                socket.emit('newOrder', JSON.stringify(socketMessage))
+                window.location.href = '/foodOrder'
             },
             error: function (response) {
                 alert(response.responseJSON.message)

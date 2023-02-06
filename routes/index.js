@@ -18,7 +18,7 @@ router.post('/pcOrder/:userId/:pcId', pcOrderController.postPCOrder)
 
 const ProductOrderController = require('../controllers/productOrder.controller.js')
 const productOrderController = new ProductOrderController()
-router.post('/productOrder/:userId/:pcId', productOrderController.postProductOrder)
+router.post('/productOrder/:userId', productOrderController.postProductOrder)
 
 const adminRouter = require('./admin.routes')
 router.use('/admin', adminRouter)

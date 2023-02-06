@@ -106,8 +106,8 @@ class UserController {
         .status(200)
         .json({
           message: "PC방에 오신 것을 환영합니다.",
-          userId: userId,
-          role: role,
+          userId: userInfo.userId,
+          role: userInfo.role,
         });
     } catch (error) {
       console.error(error);

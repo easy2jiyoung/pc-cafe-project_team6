@@ -17,7 +17,6 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-8 divPcListContainer">
-                            PC 목록
                             <div class="divPcList">
                                 <p id="selectPC" style="font-size:30px">컴퓨터를 선택해주세요.</p>
                                 <div class="row" id="divPcRow0">
@@ -31,7 +30,6 @@
                             </div>
                         </div>
                         <div class="col-4">
-                            로그인
                             <div id="divLogin">
                                 <div class="row">
                                     <label for="loginId" class="col-3 col-form-label loginText">ID</label>
@@ -135,7 +133,7 @@
                     url: `/api/pcs`,
                     async: false,
                     success: function (response) {
-                        const userId = '<%= user.userId %>'
+                        const userId = '<%= user?.userId %>'
 
                         for (let i = 0; i < response.length; i++) {
                             let pcId = response[i].pcId
@@ -200,7 +198,7 @@
         let orderTime = $('#pcOrderTime').val()
         orderTime = Number(orderTime)
 
-        let userPoints = '<%= user.points %>'
+        let userPoints = '<%= user?.points %>'
         userPoints = Number(userPoints)
 
         let pointsRemaining = userPoints - orderTime * 1000
@@ -234,7 +232,7 @@
             return alert('이용 시간은 1시간부터 12시간까지입니다.')
         }
 
-        const userId = '<%= user.userId %>'
+        const userId = '<%= user?.userId %>'
         const [_, pcId] = $('#selectedPcNum').text().split('PC #')
 
         if (!pcId) {
@@ -254,7 +252,7 @@
                 deductedPoints: deductedPoints
             },
             success: function (response) {
-                const socketMessage = [{userId, purchasedItem: '이용시간', qty: orderTime, userPoints, deductedPoints, remainingPoints: pointsRemaining, logTime: startDateTime}]
+                const socketMessage = [{userId, pcId, purchasedItem: '이용시간', qty: orderTime, userPoints, deductedPoints, remainingPoints: pointsRemaining, logTime: startDateTime}]
                 socket.emit('newOrder', JSON.stringify(socketMessage))
                 window.location.href = '/foodOrder'
             },

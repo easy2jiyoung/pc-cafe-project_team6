@@ -267,6 +267,24 @@
                     async: false,
                     data: {orders: cart},
                     success: function (response) {
+                        let socketMessage = []
+                        cart = JSON.parse(cart)
+                        cart.forEach(element => {
+                            let item = {}
+                            item.userId = userId
+                            item.pcId = '<%= pcOrder.pcId %>'
+                            item.purchasedItem = element.productName
+                            item.qty = element.purchasedUnits,
+                            item.userPoints = '<%= user.points %>'
+                            item.deductedPoints = element.productPrice
+                            item.remainingPoints = remainingPoints
+                            item.logTime = new Date
+                            
+                            socketMessage.push(item)
+                        })
+                        
+                        socket.emit('newOrder', JSON.stringify(socketMessage))
+
                         sessionStorage.clear()
                         alert('결제되었습니다!')
                         location.reload()

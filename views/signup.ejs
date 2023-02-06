@@ -14,75 +14,6 @@
     <style></style>
   </head>
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const input_email = document.querySelector("input[type=text][id=email]");
-      const input_emailError = document.querySelector("div[id=emailError]");
-      const input_name = document.querySelector("input[type=text][id=name]");
-      const input_nameError = document.querySelector("div[id=nameError]");
-      const input_id = document.querySelector("input[type=text][id=id]");
-      const input_IdError = document.querySelector("div[id=IdError]");
-      const input_password = document.querySelector(
-        "input[type=password][id=password]"
-      );
-      const input_passwordError = document.querySelector(
-        "div[id=passwordError]"
-      );
-      const input_phone = document.querySelector("input[type=text][id=phone]");
-      const input_phoneCheckError = document.querySelector(
-        "div[id=phoneCheckError]"
-      );
-
-      const checkEmail = (value) => {
-        return value.indexOf("@") > 1 && value.split("@")[1].indexOf(".") > 1;
-      };
-      const CheckPassword = new RegExp(
-        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,15}$/
-      );
-
-      input_email.addEventListener("keyup", (event) => {
-        const inputed_email = event.currentTarget.value;
-        if (checkEmail(inputed_email)) {
-          input_emailError.style.color = "green";
-          input_emailError.textContent = `이메일 형식입니다: ${inputed_email}`;
-        } else {
-          input_emailError.style.color = "red";
-          input_emailError.textContent = `이메일 형식이 아닙니다: ${inputed_email}`;
-        }
-      });
-      input_name.addEventListener("keyup", (event) => {
-        const inputed_name = event.currentTarget.value.length;
-        if (inputed_name > 0) {
-          input_nameError.textContent = "";
-        } else {
-          input_nameError.style.color = "red";
-          input_nameError.textContent = "이름을 입력해 주세요";
-        }
-      });
-      console.log(input_id);
-      input_id.addEventListener("keyup", (event) => {
-        const inputed_Id = event.currentTarget.value.length;
-        if (inputed_Id >= 4 && inputed_Id <= 12) {
-          console.log(inputed_Id >= 4 && inputed_Id <= 12);
-          input_IdError.textContent = "";
-        } else {
-          console.log(inputed_Id >= 4 && inputed_Id <= 12);
-          input_IdError.style.color = "red";
-          input_IdError.textContent = "ID는 4~12 자까지 가능합니다.";
-        }
-      });
-      console.log(input_password);
-      input_password.addEventListener("keyup", (event) => {
-        const inputed_password = event.currentTarget.value;
-        if (CheckPassword.test(inputed_password)) {
-          input_passwordError.style.color = "green";
-          input_passwordError.textContent = "올바른 비밀번호 형식입니다.";
-        } else {
-          input_passwordError.style.color = "red";
-          input_passwordError.textContent =
-            "비밀번호는 8 ~ 15자 영대소문자, 숫자, 특수문자 조합입니다.";
-        }
-      });
-    });
     function signUpEvent() {
       const email = $("#email").val();
       const name = $("#name").val();
@@ -108,7 +39,7 @@
         url: "/api/users/signup",
         data: { email, name, id, password, passwordCheck, phone, role, points },
         success: function (response) {
-          location.href = "login";
+          location.href = "/";
           alert("회원가입 성공!");
         },
         error: function (error) {
@@ -163,7 +94,7 @@
           type="text"
           size="1"
           maxlength="13"
-          placeholder="휴대폰 번호를 입력해주세요."
+          placeholder="휴대폰 번호를 입력해주세요.( - 포함 )"
         />
         <div id="phoneCheckError" class="error"></div>
       </div>
@@ -177,7 +108,7 @@
           회원가입
         </button>
         <p></p>
-        <button id="goBackButton" onclick="goBackCheck()">뒤로가기</button>
+        <button onclick="history.back()">뒤로가기</button>
       </div>
       <div id="guideText">
         <span>&#127872;포인트 충전은 카운터로&#127872;</span>

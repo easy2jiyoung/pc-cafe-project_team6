@@ -1,3 +1,4 @@
+const bcrypt = require("bcrypt");
 const UserService = require("../services/user.service.js");
 const { Op } = require("sequelize");
 const jwt = require("jsonwebtoken");
@@ -15,6 +16,10 @@ class UserController {
       const re_phone = /^[0-9]{3}-[0-9]{3,4}-[0-9]{4}$/;
       const re_password =
         /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,15}$/; // 8 ~ 15자 영대소문자, 숫자, 특수문자 조합
+
+      // 비밀번호 암호화
+      const hashpassword = bcrypt.hashSync(password, 12);
+      console.log(hashpassword);
 
       if (email.search(re_email) === -1) {
         res.status(412).send({
@@ -62,7 +67,7 @@ class UserController {
 
       const registerInfo = await this.userService.registerUser(
         id,
-        password,
+        hashpassword,
         phone,
         name,
         email,
@@ -83,12 +88,18 @@ class UserController {
     const { id, password } = req.body;
 
     try {
-      const userInfo = await this.userService.findOneUser(id, password);
-
+      const userInfo = await this.userService.findOneUser(id);
+      const match = await bcrypt.compare(password, userInfo.password);
+      console.log(userInfo.password);
+      if (!match) {
+        const error = new Error("패스워드를 확인해주세요");
+        error.status = 404;
+        throw error;
+      }
       const token = jwt.sign({ userId: userInfo.userId }, "teamSparta6", {
         expiresIn: "1d",
       });
-
+      // 에러 나면 if 안에꺼 빼기
       res.cookie("accessToken", token);
 
       res.status(200).send("PC방에 오신 것을 환영합니다.");

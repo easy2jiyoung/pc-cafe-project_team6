@@ -7,10 +7,16 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>관리자 첫 페이지</title>
+    <title>관리자 페이지</title>
 
     <link href="./css/admin.css" rel="stylesheet" />
     <script src="./js/admin.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js"
+      integrity="sha512-YeeA/Qxn5hYdkukScTCNNOhTrv1C2RubAGButJ1rmgQwZf/HdRaCGl+JAVkqsqaNRaYNHdheiuKKuPf9mDcqKg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
   </head>
   <body>
     <div id="fullscreen">
@@ -29,7 +35,10 @@
           </div>
         </div>
         <div id="screen2-2">
-          <div id="eventlog">이벤트로그</div>
+          <div id="eventlog">
+            <p style="font-size: 25px">이벤트로그</p>
+            <div id="logs"></div>
+          </div>
         </div>
       </div>
       <div id="screen3">
@@ -41,19 +50,4 @@
       </div>
     </div>
   </body>
-  <script>
-    function logOut() {
-        $.ajax({
-            type: 'GET',
-            url: '/api/users/logout',
-            success: function (response) {
-                sessionStorage.clear()
-                window.location.href = '/'
-            },
-            error: function (response) {
-                alert(response)
-            }
-        })
-    }
-</script>
 </html>

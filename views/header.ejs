@@ -11,18 +11,23 @@
   </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js" integrity="sha512-YeeA/Qxn5hYdkukScTCNNOhTrv1C2RubAGButJ1rmgQwZf/HdRaCGl+JAVkqsqaNRaYNHdheiuKKuPf9mDcqKg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
-  function logOut() {
-    $.ajax({
-      type: "GET",
-      url: "/api/users/logout",
-      success: function (response) {
-        sessionStorage.clear();
-        window.location.href = "/";
-      },
-      error: function (response) {
-        alert(response.responseJSON.message);
-      },
-    });
-  }
+    const socket = io.connect("/")
+    const userRole = '<%= user.role %>'
+    socket.emit('newRoom', userRole)
+    
+    function logOut() {
+        $.ajax({
+            type: 'GET',
+            url: '/api/users/logout',
+            success: function (response) {
+                sessionStorage.clear()
+                window.location.href='/'
+            },
+            error: function (response) {
+                alert(response.responseJSON.message)
+            }
+        })
+    }
 </script>

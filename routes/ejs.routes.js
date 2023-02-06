@@ -16,16 +16,25 @@ router.get('/signup',(req,res) => {
     res.render('signup.ejs')
 })
 
-router.get('/admin', (req,res) => {
-    res.render('admin.ejs')
+router.get('/admin', auth_middleware, (req,res) => {
+    if (res.locals.user.role === 'admin') {
+        return res.render('admin.ejs')
+    }
+    return res.render('login.ejs', {user: res.locals.user, pcOrder: res.locals.pcOrder})
 })
 
 router.get('/foodOrder', auth_middleware, (req,res) => {
-    res.render('foodOrder.ejs', {user: res.locals.user, pcOrder: res.locals.pcOrder})
+    if (res.locals.user.role === 'customer') {
+        return res.render('foodOrder.ejs', {user: res.locals.user, pcOrder: res.locals.pcOrder})
+    }
+    return res.render('login.ejs', {user: res.locals.user, pcOrder: res.locals.pcOrder})
 })
 
-router.get('/updateMyInfo',(req,res)=>{
-    res.render('updateMyInfo.ejs')
+router.get('/updateMyInfo', auth_middleware, (req,res)=>{
+    if (res.locals.user.role === 'customer') {
+        return res.render('updateMyInfo.ejs', {user: res.locals.user, pcOrder: res.locals.pcOrder})
+    }
+    return res.render('login.ejs', {user: res.locals.user, pcOrder: res.locals.pcOrder})
 })
 
 module.exports = router

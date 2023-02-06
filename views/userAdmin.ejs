@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <%- include('head.ejs') %>
+
+        <title></title>
+    <style href="./css/userAdmin.css" rel="stylesheet"></style>
+</head>
+
+<body>
+    <div class="col-1">
+        <button type="button" class="btn btn-danger" onclick="logOut()">로그아웃</button>
+    </div>
+    <br/>
+    <div>회원목록 조회</div>
+    <table>
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>아이디</th>
+                <th>이름</th>
+                <th>휴대전화</th>
+                <th>이메일</th>
+                <th>포인트</th>
+                <th>포인트 충전</th>
+                <th>회원 관리</th>
+             </tr>
+        </thead>
+        <tbody id="user-list">
+        </tbody>
+    </table>
+</body>
+
+
+<script>
+    function logOut() {
+        $.ajax({
+            type: 'GET',
+            url: '/api/users/logout',
+            success: function (response) {
+                sessionStorage.clear()
+                window.location.href = '/'
+            },
+            error: function (response) {
+                alert(response)
+            }
+        })
+    }
+</script>
+
+<script>
+    $.ajax({
+            type: 'GET',
+            url: `/api/admin/users`,
+            async: false,
+            success: function (response) {
+                for (let i = 0; i < response.length; i++) {
+                    let { userId, id, name, phone, email, points } = response[i]
+
+                    let temp_html = `<tr>
+                                        <td>${userId}</td>
+                                        <td>${id}</td>
+                                        <td>${name}</td>
+                                        <td>${phone}</td>
+                                        <td>${email}</td>
+                                        <td>${points}</td>
+                                        <td><button onclick="pointUpdate()">포인트 충전</button></td>
+                                        <td><button onclick="userDelete(${userId})">삭제</button></td>
+                                    </tr>`
+                    $('#user-list').append(temp_html);
+                }
+
+                
+            },
+        });
+</script>
+
+<script>
+    // 포인트 충전
+    function pointUpdate() {
+
+        alert("포인트 충전이 완료되었습니다.")
+    }
+
+    // 회원 삭제
+    function userDelete(userId) {
+        $.ajax({
+            type: 'DELETE',
+            url: `/api/admin/users/${userId}`,
+            async: false,
+            success: function (response) {
+                
+                alert("회원 삭제가 완료되었습니다.")
+            }
+        })
+    }  
+  </script>
+</html>

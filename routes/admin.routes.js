@@ -5,4 +5,8 @@ const router = express.Router();
 
 router.get('/', UserController.getUserInfo);
 
+router.get('/users', UserController.getUserInfo);
+
+router.delete('/users/:userId', UserController.deleteUser)
+
 module.exports = router;

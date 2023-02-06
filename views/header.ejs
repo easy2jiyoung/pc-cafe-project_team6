@@ -16,6 +16,7 @@
             type: 'GET',
             url: '/api/users/logout',
             success: function (response) {
+                sessionStorage.clear()
                 window.location.href='/'
             },
             error: function (response) {

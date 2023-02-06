@@ -4,9 +4,27 @@
 <head>
     <%- include('head.ejs') %>
 
-    <title></title>
+        <title></title>
 </head>
 
 <body>
-    <%- include('header.ejs') %>
+    <div class="col-1">
+        <button type="button" class="btn btn-danger" onclick="logOut()">로그아웃</button>
+    </div>
+
+    <script>
+        function logOut() {
+            $.ajax({
+                type: 'GET',
+                url: '/api/users/logout',
+                success: function (response) {
+                    sessionStorage.clear()
+                    window.location.href = '/'
+                },
+                error: function (response) {
+                    alert(response)
+                }
+            })
+        }
+    </script>
 </body>

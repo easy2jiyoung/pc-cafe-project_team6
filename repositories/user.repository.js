@@ -48,7 +48,7 @@ class UserRepository {
 
       return oneUser;
     } catch (error) {
-      error.status = 400;
+      error.status = error.status ?? 400;
       throw error;
     }
   };
@@ -145,7 +145,7 @@ class UserRepository {
 
       return userIdUpdatedPassword;
     } catch (error) {
-      error.status = 400;
+      error.status = error.status ?? 400;
       throw error;
     }
   };

@@ -27,10 +27,10 @@ class ProductRepository {
     }
 
     // 상품 조회 (페이지네이션)
-    readProducts = async(limit, offset) => {
+    readProducts = async(limit, offset, type) => {
         try {
             let products
-            if (type) { 
+            if (type === "all") { 
                 products = await this.productModel.findAndCountAll({
                     offset,
                     limit,
@@ -39,28 +39,28 @@ class ProductRepository {
                     }
                 })
                 console.log("all",type, products)
+            } else if (type === "food") {
+                products = await this.productModel.findAndCountAll({
+                    offset,
+                    limit,
+                    where: {
+                        productType: "먹거리",
+                        productStock: {[Op.gt]: 0}
+                    }
+                })
+                console.log("eat"+ products)
+            } else if (type === "drink") {
+                products = await this.productModel.findAndCountAll({
+                    offset,
+                    limit,
+                    where: {
+                        productType: "음료",
+                        productStock: {[Op.gt]: 0}
+                    }
+                })
+                console.log(type+ products)
             } 
-            // else if (type === "food") {
-            //     products = await this.productModel.findAndCountAll({
-            //         offset,
-            //         limit,
-            //         where: {
-            //             productType: "먹거리",
-            //             productStock: {[Op.gt]: 0}
-            //         }
-            //     })
-            //     console.log("eat"+ products)
-            // } else if (type === "drink") {
-            //     products = await this.productModel.findAndCountAll({
-            //         offset,
-            //         limit,
-            //         where: {
-            //             productType: "음료",
-            //             productStock: {[Op.gt]: 0}
-            //         }
-            //     })
-            //     console.log(type+ products)
-            // } else if (type === "time") {
+            // else if (type === "time") {
             //     products = await this.productModel.findAndCountAll({
             //         offset,
             //         limit,
@@ -69,11 +69,9 @@ class ProductRepository {
             //             productStock: {[Op.gt]: 0}
             //         }
             //     })
-
             // }
             // console.log(products)
             return products
-
         } catch (error) {
             error.status = 400
             throw error

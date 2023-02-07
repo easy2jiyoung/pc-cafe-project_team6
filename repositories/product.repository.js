@@ -48,7 +48,7 @@ class ProductRepository {
     allProductsList = async() => {
         try {
             const products = await this.productModel.findAll({
-                attributes:['productName','productStock','productPrice','productType'],
+                attributes:['productName','productStock','productPrice','productType','productImgUrl'],
                 order: [['productName', 'ASC']],
                 raw:true
             })

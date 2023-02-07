@@ -10,15 +10,24 @@
     <title>관리자 페이지</title>
 
     <link href="./css/admin.css" rel="stylesheet" />
-    <script src="./js/admin.js"></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js"
       integrity="sha512-YeeA/Qxn5hYdkukScTCNNOhTrv1C2RubAGButJ1rmgQwZf/HdRaCGl+JAVkqsqaNRaYNHdheiuKKuPf9mDcqKg=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
+    <script src="./js/admin.js"></script>
   </head>
   <body>
+    <div style="text-align:center; font-size:30px;">
+        <span>PCoding Cafe 관리자</span>
+        <span id="btn-logout">
+            <button type="button" class="btn btn-danger" onclick="logOut()">
+              로그아웃
+            </button>
+          </span>
+    </div>
+    
     <div id="fullscreen">
       <div id="screen1"></div>
       <div id="screen2">
@@ -58,11 +67,7 @@
         </div>
       </div>
       <div id="screen3">
-        <div id="btn-logout">
-          <button type="button" class="btn btn-danger" onclick="logOut()">
-            로그아웃
-          </button>
-        </div>
+        
       </div>
     </div>
   </body>
@@ -75,12 +80,12 @@
               for (let i = 0; i < response.length; i++) {
                   let { userId, id, name, phone, email, points } = response[i]
 
-                  let temp_html = `<tr>
+                  let temp_html = `<tr id="userId${userId}">
                                       <td>${id}</td>
                                       <td>${name}</td>
                                       <td>${phone}</td>
                                       <td>${email}</td>
-                                      <td>${points}</td>
+                                      <td id="userPoints${userId}">${points}</td>
                                       <td><button onclick="pointUpdate(${userId})">포인트 변경</button></td>
                                       <td><button onclick="userDelete(${userId})">삭제</button></td>
                                   </tr>`
@@ -90,8 +95,7 @@
               
           },
       });
-</script>
-<script>
+
   // 포인트 충전
   function pointUpdate(userId) {
     let pointInput = prompt("얼마나 변경하시겠습니까?");
@@ -102,7 +106,7 @@
         data: { points },
         success: function (data) {
             alert(points+'로 변경하였습니다.', data)
-            location.reload()
+            $(`#userPoints${userId}`).text(points)
         },
     })
   }
@@ -117,12 +121,46 @@
               async: false,
               success: function (response) {
                   alert("삭제가 완료되었습니다.");
-                  location.reload()
+                  $(`#userId${userId}`).remove()
               }
           })
       } else {
           alert("취소합니다.");
       }
-  }  
+  }
+
+  // 소켓 방 입장
+const socket = io.connect("/");
+const userRole = "<%= user.role %>";
+socket.emit("newRoom", userRole);
+
+socket.on("newOrder", (message) => {
+  message = JSON.parse(message);
+  console.log(message);
+  for (item of message) {
+    let {
+      userId,
+      pcId,
+      purchasedItem,
+      qty,
+      userPoints,
+      deductedPoints,
+      remainingPoints,
+      logTime,
+    } = item;
+    logTime = new Date(logTime);
+    logTime = logTime.toLocaleString("ko-KR");
+
+    let temp_html;
+    if (purchasedItem === "이용시간") {
+      temp_html = `<p>${logTime}&emsp;PC #${pcId}의 이용시간이 ${qty}시간 결제되었습니다. (차감 포인트: ${deductedPoints}p)</p>`;
+    } else {
+      temp_html = `<p>${logTime}&emsp;PC #${pcId}이 ${purchasedItem} ${qty}개를 구매하셨습니다. (차감 포인트: ${deductedPoints}p)</p>`;
+    }
+
+    $("#logs").prepend(temp_html);
+  }
+});
+
 </script>
 </html>

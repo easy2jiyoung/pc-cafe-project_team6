@@ -1,6 +1,7 @@
 const ProductRepository = require('../repositories/product.repository.js')
 const {Products} = require('../models/index.js')
 const { response } = require('express')
+const { type } = require('os')
 
 class ProductService {
     productRepository = new ProductRepository(Products)
@@ -21,14 +22,24 @@ class ProductService {
         }
     }
 
-    // 상품 조회
-    readProducts = async(pageNum) => {
+    // 상품 조회 (페이지네이션)
+    readProducts = async(pageNum, type) => {
         try {
             const limit = 8
             const offset = (pageNum -1) * limit
-            const allProduct = await this.productRepository.readProducts(limit, offset)
+            const allProduct = await this.productRepository.readProducts(limit, offset, type)
             const lastPage = Math.ceil(allProduct.count / limit)
-            return { allProduct, lastPage }
+            return { allProduct, lastPage}
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    // 상품 전체 조회 (관리자 페이지)
+    allProductsList = async() => {
+        try {
+            const products = await this.productRepository.allProductsList()
+            return products
         } catch (error) {
             throw error;
         }

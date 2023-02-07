@@ -1,3 +1,4 @@
+const { type } = require("os")
 const { Op } = require("sequelize")
 
 class ProductRepository {
@@ -17,7 +18,7 @@ class ProductRepository {
             }, {
                 raw: true
             })
-            return {status: 201, success: true, message: "상품이 등록되었습니다."}
+            return newProduct
         } catch (error) {
             error.name = "database error"
             error.status = 404
@@ -25,19 +26,49 @@ class ProductRepository {
         }
     }
 
-    // 상품 조회
-    readProducts = async(limit, offset) => {
+    // 상품 조회 (페이지네이션)
+    readProducts = async(limit, offset, type) => {
         try {
-            const products = await this.productModel.findAndCountAll({
-                offset,
-                limit,
-                where: {
-                    productStock: {[Op.gt]: 0},
-                    // productType: "drink" && productStock: {[Op.gt]: 0},
-                }
+            let products
+            const tabType = {offset, limit, where: {productType: type, productStock: {[Op.gt]: 0 }}}
+            if (type === "먹거리") {
+                products = await this.productModel.findAndCountAll({
+                    ...tabType
+                })
+            } else if (type === "음료") {
+                products = await this.productModel.findAndCountAll({
+                    ...tabType
+                })
+            } 
+            else if (type === "이용시간") {
+                products = await this.productModel.findAndCountAll({
+                    ...tabType
+                })
+            } else {
+                products = await this.productModel.findAndCountAll({
+                    offset,
+                    limit,
+                    where: {
+                        productStock: {[Op.gt]: 0 }
+                    }
+                })
+            }
+            return products
+        } catch (error) {
+            error.status = 400
+            throw error
+        }
+    }
+
+    // 전체 상품 조회 (관리자 페이지)
+    allProductsList = async() => {
+        try {
+            const products = await this.productModel.findAll({
+                attributes:['productName','productStock','productPrice','productType','productImgUrl', 'productId'],
+                order: [['productName', 'ASC']],
+                raw:true
             })
             return products
-
         } catch (error) {
             error.status = 400
             throw error

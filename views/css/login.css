@@ -1,108 +1,114 @@
 #commonHeader {
-    background-color: #2c394b;
-    width: 100%;
-    height: 100px;
-    display: grid;
-    grid-template-columns: 1fr 4fr 1fr;
+  background-color: #2c394b;
+  width: 100%;
+  height: 100px;
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr;
 }
 
 #commonHeader h1 {
-    padding: 30px 0px 0px 50px;
-    width: 400px;
+  padding: 30px 0px 0px 50px;
+  width: 400px;
 }
 
 body {
-    font-weight: 200;
+  font-weight: 200;
 }
 
 #divLogin {
-    padding-top: 80%;
+  padding-top: 80%;
 }
 
 .loginText {
-    /* width: 20%; */
+  /* width: 20%; */
 }
 
 #loginButton {
-    background-color: #FF4C29;
-    border-color: #FF4C29;
+  background-color: #ff4c29;
+  border-color: #ff4c29;
+  width: 130px;
 }
 
 #loginButton:hover,
 #loginButton:active,
 #loginButton:focus {
-    background-color: #e44525 !important;
-    border-color: #e44525 !important;
-    box-shadow: 0 2px 2px rgb(228, 69, 37, 0.075) !important;
+  background-color: #e44525 !important;
+  border-color: #e44525 !important;
+  box-shadow: 0 2px 2px rgb(228, 69, 37, 0.075) !important;
+}
+
+#linkbutton {
+  text-align: center;
+  margin-top: 15px;
 }
 
 .divPcListContainer {
-    display: flex;
-    justify-content: center;
-    /* max-width: 1200px; */
+  display: flex;
+  justify-content: center;
+  /* max-width: 1200px; */
 }
 
 .divPcList {
-    max-width: 1000px;
-    position: relative;
-    padding-top: 15%;
-    text-align: center;
-    align-items: center;
-    /* margin: 0 auto; */
+  max-width: 1000px;
+  position: relative;
+  padding-top: 15%;
+  text-align: center;
+  align-items: center;
+  /* margin: 0 auto; */
 }
 
 #divPcRow0,
 #divPcRow1,
 #divPcRow2,
 #divPcRow3 {
-    max-width: 670px;
-    position: relative;
-    margin: 0 auto;
+  max-width: 670px;
+  position: relative;
+  margin: 0 auto;
 }
 
 .divPc {
-    max-width: 120px;
-    position: relative;
-    margin: 0 auto;
-    text-align: center;
+  max-width: 120px;
+  position: relative;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .divPc image {
-    display: block;
-    width: 60%;
-    margin-left: auto;
-    margin-right: auto;
+  display: block;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #pcOrderContainer {
-    max-width: 400px;
-    margin-left: 0;
-    margin-right: 0;
+  max-width: 400px;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 #divPcOrder {
-    padding-top: 60%;
-    display: none;
+  padding-top: 60%;
+  display: none;
 }
 
 #userPoints {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 #userPoints p {
-    margin-bottom: 0;
-    text-align: right;
+  margin-bottom: 0;
+  text-align: right;
 }
 
 #userPoints button {
-    margin-top: 10px;
-    margin-left: 260px
+  margin-top: 10px;
+  margin-left: 260px;
 }
 
 #selectPC {
-    display: none
+  display: none;
 }
 
 .pcAvailable {
-    cursor: pointer
+  cursor: pointer;
 }

@@ -129,6 +129,8 @@ class UserController {
       const { userId } = req.params;
       const { id, phone, email, password, confirmPassword } = req.body;
 
+      const hashpassword = bcrypt.hashSync(password, 12);
+    
       if (password !== confirmPassword) {
         const error = new Error(
           "새 비밀번호가 비밀번호 확인 값과 일치하지 않습니다."
@@ -142,7 +144,7 @@ class UserController {
         id,
         phone,
         email,
-        password
+        hashpassword
       );
       res.status(200).json({ message: "내 정보를 업데이트 완료 했습니다." });
     } catch (error) {
@@ -233,6 +235,20 @@ class UserController {
       const deleteUser = await this.userService.deleteUser(userId);
 
       res.status(200).send({removedId: deleteUser});
+    } catch (error) {
+      return res.status(error.status).json({ message: error.message });
+    }
+  }
+
+  // (관리자) 포인트 변경
+  updateUserPoint = async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const { points } = req.body;
+
+      const updatePoint = await this.userService.updatePoint(userId, points);
+
+      res.status(200).send({ updatedPoint: updatePoint});
     } catch (error) {
       return res.status(error.status).json({ message: error.message });
     }

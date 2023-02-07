@@ -131,18 +131,18 @@ class UserService {
   };
 
   //id로 나의 정보 수정
-  updateUser = async (userId, id, phone, email, password) => {
+  updateUser = async (userId, id, phone, email, hashpassword) => {
     try {
       const updateUserData = await this.userRepository.updateUser(
         userId,
         id,
         phone,
         email,
-        password
+        hashpassword
       );
       return {
         id: updateUserData.id,
-        password: updateUserData.password,
+        hashpassword: updateUserData.hashpassword,
         name: updateUserData.name,
         phone: updateUserData.phone,
         email: updateUserData.email,
@@ -199,6 +199,20 @@ class UserService {
       throw error;
     }
   };
+
+  // (관리자) 포인트 변경
+  updatePoint = async (userId, points) => {
+    try {
+      const updatePoint = await this.userRepository.updatePoint(userId, points);
+
+      return {
+        userId: updatePoint.userId,
+        points: updatePoint.points,
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 module.exports = UserService;

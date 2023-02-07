@@ -22,7 +22,7 @@ class ProductService {
         }
     }
 
-    // 상품 조회
+    // 상품 조회 (페이지네이션)
     readProducts = async(pageNum) => {
         try {
             const limit = 8
@@ -30,6 +30,16 @@ class ProductService {
             const allProduct = await this.productRepository.readProducts(limit, offset)
             const lastPage = Math.ceil(allProduct.count / limit)
             return { allProduct, lastPage}
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    // 상품 전체 조회 (관리자 페이지)
+    allProductsList = async() => {
+        try {
+            const products = await this.productRepository.allProductsList()
+            return products
         } catch (error) {
             throw error;
         }

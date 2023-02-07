@@ -68,13 +68,13 @@ class UserRepository {
   };
 
   //id로 나의 정보 수정
-  updateUser = async (userId, id, phone, email, password) => {
+  updateUser = async (userId, id, phone, email, hashpassword) => {
     try {
       const updateUserData = await this.userModel.update(
         {
           phone: phone,
           email: email,
-          password: password,
+          password: hashpassword,
         },
         {
           where: { userId: userId },
@@ -163,6 +163,19 @@ class UserRepository {
       throw error;
     }
   };
+
+  updatePoint = async (userId , points) => {
+    try {
+      const userUpdatePoint = await this.userModel.update(
+        { points: points }, { where: { userId } }
+      )
+      
+      return userUpdatePoint;
+    } catch (error) {
+      error.status = 400;
+      throw error;
+    }
+  }
 }
 
 module.exports = UserRepository;

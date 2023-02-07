@@ -1,131 +1,166 @@
 <!doctype html>
 <html lang="ko">
-  <head>
+
+<head>
     <%- include('head.ejs') %>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>정보 수정</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link href="./css/signup.css" rel="stylesheet" />
-    <link href="./css/index.css" rel="stylesheet" />
-    <!-- jquery -->
-    <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <!-- <script src="js/updateMyInfo.js"></script> -->
-    <style>
-    input {color: orange;}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>정보 수정</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+        <link href="./css/signup.css" rel="stylesheet" />
+        <link href="./css/index.css" rel="stylesheet" />
+        <!-- jquery -->
+        <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <!-- <script src="js/updateMyInfo.js"></script> -->
+        <style>
+            input {
+                color: orange;
+            }
 
-    .update {
-    text-align: center;
-    }
+            .update {
+                text-align: center;
+            }
 
-    .updateButton {
-      width: 100%;
-      cursor: pointer;
-    }
+            .updateButton {
+                width: 100%;
+                cursor: pointer;
+            }
 
-    button {
-      cursor: pointer;
-      height: 30px;
-      margin: 10px 0px 10px 0px;
-    }
+            button {
+                cursor: pointer;
+                height: 30px;
+                margin: 10px 0px 10px 0px;
+            }
 
-    </style>
-    <script src="js/updateMyInfo.js"></script>
-</head> 
+            #userInfo p {
+                font-size: 15px;
+            }
+        </style>
+        <script src="js/updateMyInfo.js"></script>
+</head>
 
-  <body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-    
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+
     <div>
-        <h1 id="mytitle">PC방 이름</h1>
-      </div>
-      <div class="wrapper">
-        <div class="title"><h1 style="font-size: 21px">내 정보 수정</h1></div>
+        <h1 id="mytitle">PCoding Cafe</h1>
+        <div id="userInfo" style="position:relative; left:700px;">
+            <p>보유 포인트: <%= user.points %>p</p>
+            <p id="remainingTime"></p>
+        </div>
+    </div>
+    
+    <div class="wrapper">
+        <div class="title">
+            <h1 style="font-size: 21px">내 정보 수정</h1>
+        </div>
         <div class="email">
-          <span>Email :</span>
-          <input id="email" type="text" placeholder="이메일을 입력해 주세요." />
-          <div id="emailError" class="error"></div>
+            <span>Email :</span>
+            <input id="email" type="text" placeholder="이메일을 입력해 주세요." />
+            <div id="emailError" class="error"></div>
         </div>
         <div class="name">
-          <span>이름 :</span>
-          <input id="name" type="text" placeholder="<%= user.name %>" readonly/>
-          <div id="nameError" class="error"></div>
+            <span>이름 :</span>
+            <input id="name" type="text" placeholder="<%= user.name %>" readonly />
+            <div id="nameError" class="error"></div>
         </div>
         <div class="userId">
-          <span>ID :</span>
-            <input id="userId" type="text" placeholder = "<%= user.id %>" readonly />
-          <div id="IdError" class="error"></div>
+            <span>ID :</span>
+            <input id="userId" type="text" placeholder="<%= user.id %>" readonly />
+            <div id="IdError" class="error"></div>
         </div>
         <div class="password">
-          <span>PW :</span>
-          <input
-            id="password"
-            type="password"
-            placeholder="비밀번호를 입력해 주세요."
-          />
-          <div id="passwordError" class="error"></div>
+            <span>PW :</span>
+            <input id="password" type="password" placeholder="비밀번호를 입력해 주세요." />
+            <div id="passwordError" class="error"></div>
         </div>
         <div class="passwordCheck">
-          <span>PW 확인 :</span>
-          <input
-            id="passwordCheck"
-            type="password"
-            placeholder="비밀번호를 다시 입력해 주세요."
-          />
-          <div id="passwordCheckError" class="error"></div>
+            <span>PW 확인 :</span>
+            <input id="passwordCheck" type="password" placeholder="비밀번호를 다시 입력해 주세요." />
+            <div id="passwordCheckError" class="error"></div>
         </div>
         <div class="phone">
-          <span>휴대폰 번호 :</span>
-          <input
-            id="phone"
-            type="text"
-            size="1"
-            maxlength="11"
-            placeholder="휴대폰 번호를 입력해주세요.(숫자만)"
-          />
-          <div id="phoneCheckError" class="error"></div>
+            <span>휴대폰 번호 :</span>
+            <input id="phone" type="text" size="1" maxlength="11" placeholder="휴대폰 번호를 입력해주세요.(숫자만)" />
+            <div id="phoneCheckError" class="error"></div>
         </div>
         <div class="line"></div>
         <div class="update">
-          <!-- class 추가했는데 버튼이 미리 클릭된 것 처럼 나옴 -->
-          <button class="btn btn-primary commonButton" id="updateButton" onclick="updateMyinfo()" >
-            수정하기
-          </button>
-          <p></p>
-          <button class="btn btn-primary" id="goBackButton" href='/'>
-            뒤로가기
-          </button>
+            <!-- class 추가했는데 버튼이 미리 클릭된 것 처럼 나옴 -->
+            <button class="btn btn-primary commonButton" id="updateButton" onclick="updateMyinfo()">
+                수정하기
+            </button>
+            <p></p>
+            <button class="btn btn-primary" id="goBackButton" onclick="location.href='/'">
+                뒤로가기
+            </button>
         </div>
         <div id="guideText">
-          <span>&#127872;포인트 충전은 카운터로&#127872;</span>
+            <span>&#127872;포인트 충전은 카운터로&#127872;</span>
         </div>
-      </div>
+    </div>
 </body>
 <script>
-  function updateMyinfo() {
+    function updateMyinfo() {
 
-const userId = '<%= user.userId %>'
-const name = '<%= user.name %>'
-const id = '<%= user.id %>'
-const email = $('#email').val();
-const password = $('#password').val();
-const confirmPassword = $('#passwordCheck').val();
-const phone = $('#phone').val();
+        const userId = '<%= user.userId %>'
+        const name = '<%= user.name %>'
+        const id = '<%= user.id %>'
+        const email = $('#email').val();
+        const password = $('#password').val();
+        const confirmPassword = $('#passwordCheck').val();
+        const phone = $('#phone').val();
 
-const userData = { id, name, email, password, confirmPassword, phone }
-console.log(userId)
+        const userData = { id, name, email, password, confirmPassword, phone }
+        console.log(userId)
 
-$.ajax({
-    url: `/api/users/update/${userId}`,
-    type: 'PUT',
-    data: userData,
-    success: function onData (data) {
-        alert('내 정보를 수정 했습니다.',data)
-    },
-    error: function onError (error) {
-        console.error(error);
+        $.ajax({
+            url: `/api/users/update/${userId}`,
+            type: 'PUT',
+            data: userData,
+            success: function onData(data) {
+                window.location.href = '/'
+                alert('정보 수정 완료', data)
+            },
+            error: function onError(error) {
+                console.error(error);
+            }
+        });
     }
-});
-}
+
+    let endDateTime = "<%= pcOrder.endDateTime %>";
+    endDateTime = new Date(endDateTime);
+    if (isNaN(endDateTime)) {
+        document.getElementById(
+          "remainingTime"
+        ).innerHTML = `잔여 시간: 0`
+    } else {
+        let countDown = setInterval(function () {
+        const endTime = endDateTime.getTime();
+        let now = new Date().getTime();
+
+        let diff = endTime - now;
+
+        let hours = Math.floor(
+          (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById(
+          "remainingTime"
+        ).innerHTML = `잔여 시간: ${hours}:${minutes}:${seconds}`;
+
+        if (diff <= 0) {
+          alert("이용시간이 끝났습니다!");
+          sessionStorage.clear();
+          window.location.href = "/";
+        }
+      }, 1000);
+    }
 </script>
+
 </html>

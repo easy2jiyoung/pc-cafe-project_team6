@@ -15,8 +15,11 @@ router.post('/image', setUpload('file'), productController.imageUpload)
 // 상품 등록
 router.post('/', productController.addNewProduct)
 
-// 상품 조회
+// 상품 조회 (페이지네이션)
 router.get('/', productController.productList)
+
+// 전체 상품 조회 (관리자 페이지 전용)
+router.get('/getAll', productController.allProductsList)
 
 // 상품 상세 조회
 router.get('/:productId', productController.oneProduct)

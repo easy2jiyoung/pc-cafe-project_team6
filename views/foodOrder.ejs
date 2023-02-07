@@ -4,17 +4,20 @@
 <head>
     <%- include('head.ejs') %>
 
-        <link rel="stylesheet" href="css/foodOrder.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0" />
+        <link rel="stylesheet" href="css/foodOrder.css" />
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0" />
 
-        <title></title>
+        <title>PC #<%= pcOrder.pcId %></title>
 </head>
 
 <body>
     <%- include('header.ejs') %>
 
         <div id="pcOrderInfo">
-            <p style="font-size:30px; margin-bottom: 0;">PC #<%= pcOrder.pcId %> %></p>
+            <p style="font-size: 30px; margin-bottom: 0">
+                PC #<%= pcOrder.pcId %> %>
+            </p>
             <p id="remainingTime"></p>
         </div>
 
@@ -25,82 +28,90 @@
                         <ul class="nav nav-tabs" >
                             <li class="nav-item">
                                 <a class="nav-link" id="allProductsTab" href="/foodOrder">전체 상품</a>
+                                <a class="nav-link" id="allProductsTab" href="/foodOrder">전체 상품</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" id="foodTab" href="/foodOrder?type=food">먹거리</a>
                                 <a class="nav-link" id="foodTab" href="/foodOrder?type=먹거리">먹거리</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" id="drinkTab" href="/foodOrder?type=drink">음료</a>
                                 <a class="nav-link" id="drinkTab" href="/foodOrder?type=drink">음료</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="timeTab" href="/foodOrder?type=time">이용시간</a>
                             </li>
                         </ul>
+                        </ul>
                     </div>
                     <div class="row">
                         <div class="row row-cols-4" id="productList"></div>
                     </div>
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-    
-                        </ul>
+                    <nav id="css-pagination" aria-label="Page navigation example">
+                        <ul class="pagination"></ul>
                     </nav>
                 </div>
+                
+                
                 <div class="col-3" id="cart">
-                    <p style="font-size:25px; margin-top: 10px;">장바구니</p>
+                    <p style="font-size: 25px; margin-top: 10px">장바구니</p>
                     <div class="container" id="cartDetails"></div>
                     <div id="pointsDetails">
                         <p>보유 포인트: <%- user?.points %>p</p>
                         <p id="pointsDeducted">차감 포인트: 0p</p>
                         <p id="pointsRemaining">잔여 포인트: <%- user?.points %>p</p>
                     </div>
-                    <button type="button" class="btn btn-primary commonButton"
-                        onclick="createProductOrder()">결제하기</button>
+                    <button type="button" class="btn btn-primary commonButton" onclick="createProductOrder()">
+                        결제하기
+                    </button>
                 </div>
             </div>
         </div>
 
-
         <script>
-            let endDateTime = '<%= pcOrder.endDateTime %>'
-            endDateTime = new Date(endDateTime)
-            console.log(endDateTime)
+            let endDateTime = "<%= pcOrder.endDateTime %>";
+            endDateTime = new Date(endDateTime);
 
             let countDown = setInterval(function () {
-                const endTime = endDateTime.getTime()
-                let now = new Date().getTime()
+                const endTime = endDateTime.getTime();
+                let now = new Date().getTime();
 
-                let diff = endTime - now
+                let diff = endTime - now;
 
-                let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-                let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
-                let seconds = Math.floor((diff % (1000 * 60)) / 1000)
+                let hours = Math.floor(
+                    (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+                );
+                let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-                document.getElementById('remainingTime').innerHTML = `잔여 시간: ${hours}:${minutes}:${seconds}`
+                document.getElementById(
+                    "remainingTime"
+                ).innerHTML = `잔여 시간: ${hours}:${minutes}:${seconds}`;
 
                 if (diff <= 0) {
-                    alert('이용시간이 끝났습니다!')
-                    sessionStorage.clear()
-                    window.location.href = '/'
+                    alert("이용시간이 끝났습니다!");
+                    sessionStorage.clear();
+                    window.location.href = "/";
                 }
-            }, 1000)
-
+            }, 1000);
 
             $(document).ready(function () {
                 // Active tab 바꾸기
-                const [_, currentLocation] = window.location.href.split('http://localhost:1004/foodOrder')
-                if(currentLocation === ''){
-                    $('.active').removeClass('active')
-                    $('#allProductsTab').addClass('active')
-                } else if (currentLocation === '?type=food') {
-                    $('.active').removeClass('active')
-                    $('#foodTab').addClass('active')
-                } else if (currentLocation === '?type=drink') {
-                    $('.active').removeClass('active')
-                    $('#drinkTab').addClass('active')
-                } else if (currentLocation === '?type=time') {
-                    $('.active').removeClass('active')
-                    $('#timeTab').addClass('active')
+                const [_, currentLocation] = window.location.href.split(
+                    "http://localhost:1004/foodOrder"
+                );
+                if (currentLocation === "") {
+                    $(".active").removeClass("active");
+                    $("#allProductsTab").addClass("active");
+                } else if (currentLocation === "?type=food") {
+                    $(".active").removeClass("active");
+                    $("#foodTab").addClass("active");
+                } else if (currentLocation === "?type=drink") {
+                    $(".active").removeClass("active");
+                    $("#drinkTab").addClass("active");
+                } else if (currentLocation === "?type=time") {
+                    $(".active").removeClass("active");
+                    $("#timeTab").addClass("active");
                 }
 
                 // 상품 목록 불러오기
@@ -114,11 +125,11 @@
                     async: false,
                     success: function (response) {
                         // 페이지네이션
-                        const lastPage = response.lastPage
-                        const allProduct = response.allProduct
-                        for(let i = 1; i <= lastPage; i++) {
-                            let temp_html = `<li class="page-item"><a class="page-link" href="?page=${i}">${i}</a></li>`
-                            $('.pagination').append(temp_html)
+                        const lastPage = response.lastPage;
+                        const allProduct = response.allProduct;
+                        for (let i = 1; i <= lastPage; i++) {
+                            let temp_html = `<li class="page-item"><a class="page-link" href="?page=${i}">${i}</a></li>`;
+                            $(".pagination").append(temp_html);
                         }
 
                         // 상품 탭
@@ -139,7 +150,14 @@
                         //     </li>
 
                         for (let i = 0; i < allProduct.rows.length; i++) {
-                            let { productName, productPrice, productImgUrl, productType, productId, productStock } =  allProduct.rows[i]
+                            let {
+                                productName,
+                                productPrice,
+                                productImgUrl,
+                                productType,
+                                productId,
+                                productStock,
+                            } = allProduct.rows[i];
 
                             if (Number(productStock) > 0) {
                                 temp_html = `<div class="col">
@@ -151,21 +169,27 @@
                                         <a class="btn btn-primary commonButton" onclick="addToCart('${productId}', '${productName}', '${productPrice}', '${productImgUrl}')">장바구니에 추가</a>
                                         </div>
                                     </div>
-                                </div>`
+                                </div>`;
 
-                                $('#productList').append(temp_html)
+                                $("#productList").append(temp_html);
                             }
                         }
-                    }
-                })
+                    },
+                });
 
                 // 장바구니에 무엇이 담겼으면 장바구니 카드 만들어주기
-                let cart = JSON.parse(sessionStorage.getItem('cart'))
-                let pointsDeducted = 0
-                let userPoints = '<%- user?.points %>'
+                let cart = JSON.parse(sessionStorage.getItem("cart"));
+                let pointsDeducted = 0;
+                let userPoints = "<%- user?.points %>";
                 if (cart !== null) {
-                    for(let i=0; i<cart.length; i++) {
-                        let {productId, productName, productPrice, purchasedUnits, productImgUrl} = cart[i]
+                    for (let i = 0; i < cart.length; i++) {
+                        let {
+                            productId,
+                            productName,
+                            productPrice,
+                            purchasedUnits,
+                            productImgUrl,
+                        } = cart[i];
 
                         let temp_html = `<div class="row">
                                             <div class="card mb-3 cardProductDetails" style="max-width: 540px;">
@@ -182,49 +206,63 @@
                                                 </div>
                                                 </div>
                                             </div>
-                                        </div>`
+                                        </div>`;
 
-                        $('#cartDetails').append(temp_html)
+                        $("#cartDetails").append(temp_html);
 
-                        pointsDeducted += Number(productPrice)
+                        pointsDeducted += Number(productPrice);
                     }
-                    $('#pointsDeducted').text(`차감 포인트: ${pointsDeducted}p`)
-                    $('#pointsRemaining').text(`잔여 포인트: ${Number(userPoints)-pointsDeducted}p`)
+                    $("#pointsDeducted").text(`차감 포인트: ${pointsDeducted}p`);
+                    $("#pointsRemaining").text(
+                        `잔여 포인트: ${Number(userPoints) - pointsDeducted}p`
+                    );
                 }
-            })
+            });
 
             // 장바구니 추가 버튼이 눌렸을 때
             function addToCart(productId, productName, productPrice, productImgUrl) {
-                let temp_html
-                let userPoints = '<%= user.points %>'
+                let temp_html;
+                let userPoints = "<%= user.points %>";
 
                 // 장바구니가 처음에 없으면 session storage에 만든다
-                if (sessionStorage.getItem('cart') === null) {
-                    sessionStorage.setItem('cart', JSON.stringify([]))
+                if (sessionStorage.getItem("cart") === null) {
+                    sessionStorage.setItem("cart", JSON.stringify([]));
                 }
 
-                let cart = JSON.parse(sessionStorage.getItem('cart'))
-                console.log(cart)
+                let cart = JSON.parse(sessionStorage.getItem("cart"));
+                console.log(cart);
 
                 // 장바구니에 동일한 아이템이 담겨있는지 확인
-                const index = cart.findIndex(element => element.productId === productId)
+                const index = cart.findIndex(
+                    (element) => element.productId === productId
+                );
                 if (index > -1) {
                     // 동일한 아이템이 담겨있으면 구매량 1개 증가
-                    cart[index].purchasedUnits = cart[index].purchasedUnits + 1
-                    sessionStorage.setItem('cart', JSON.stringify(cart))
+                    cart[index].purchasedUnits = cart[index].purchasedUnits + 1;
+                    sessionStorage.setItem("cart", JSON.stringify(cart));
 
-                    document.getElementById(`productQty${productId}`).innerHTML = `수량: ${cart[index].purchasedUnits}`
+                    document.getElementById(
+                        `productQty${productId}`
+                    ).innerHTML = `수량: ${cart[index].purchasedUnits}`;
 
-                    let pointsDeducted = Number($('#pointsDeducted').text().split('차감 포인트: ')[1].split('p')[0])
-                    pointsDeducted += Number(productPrice)
-                    $('#pointsDeducted').text(`차감 포인트: ${pointsDeducted}p`)
+                    let pointsDeducted = Number(
+                        $("#pointsDeducted").text().split("차감 포인트: ")[1].split("p")[0]
+                    );
+                    pointsDeducted += Number(productPrice);
+                    $("#pointsDeducted").text(`차감 포인트: ${pointsDeducted}p`);
 
-                    let remainingPoints = Number(userPoints) - pointsDeducted
-                    $('#pointsRemaining').text(`잔여 포인트: ${remainingPoints}p`)
+                    let remainingPoints = Number(userPoints) - pointsDeducted;
+                    $("#pointsRemaining").text(`잔여 포인트: ${remainingPoints}p`);
                 } else {
                     // 아이템을 처음 담았으면 items 배열에 추가
-                    cart.push({ productId: productId, productName: productName, productPrice: productPrice, purchasedUnits: 1, productImgUrl: productImgUrl})
-                    sessionStorage.setItem('cart', JSON.stringify(cart))
+                    cart.push({
+                        productId: productId,
+                        productName: productName,
+                        productPrice: productPrice,
+                        purchasedUnits: 1,
+                        productImgUrl: productImgUrl,
+                    });
+                    sessionStorage.setItem("cart", JSON.stringify(cart));
 
                     temp_html = `<div class="row">
                                 <div class="card mb-3 cardProductDetails" style="max-width: 540px;">
@@ -241,85 +279,91 @@
                                     </div>
                                     </div>
                                 </div>
-                            </div>`
+                            </div>`;
 
-                    $('#cartDetails').append(temp_html)
+                    $("#cartDetails").append(temp_html);
 
-                    let pointsDeducted = Number($('#pointsDeducted').text().split('차감 포인트: ')[1].split('p')[0])
-                    pointsDeducted += Number(productPrice)
-                    $('#pointsDeducted').text(`차감 포인트: ${pointsDeducted}p`)
+                    let pointsDeducted = Number(
+                        $("#pointsDeducted").text().split("차감 포인트: ")[1].split("p")[0]
+                    );
+                    pointsDeducted += Number(productPrice);
+                    $("#pointsDeducted").text(`차감 포인트: ${pointsDeducted}p`);
 
-                    let remainingPoints = Number(userPoints) - pointsDeducted
-                    $('#pointsRemaining').text(`잔여 포인트: ${remainingPoints}p`)
+                    let remainingPoints = Number(userPoints) - pointsDeducted;
+                    $("#pointsRemaining").text(`잔여 포인트: ${remainingPoints}p`);
                 }
             }
 
             // 장바구니 상품 삭제 버튼이 눌렸을 때
             function deleteProductCart(productId) {
-                let cart = JSON.parse(sessionStorage.getItem('cart'))
+                let cart = JSON.parse(sessionStorage.getItem("cart"));
 
-                for (let i=0; i<cart.length; i++) {
-                    console.log(cart[i])
+                for (let i = 0; i < cart.length; i++) {
+                    console.log(cart[i]);
                     if (cart[i].productId === productId) {
-                        cart[i]
-                        cart.splice(i,1)
-                        sessionStorage.setItem('cart', JSON.stringify(cart))
-                        location.reload()
-                        return
+                        cart[i];
+                        cart.splice(i, 1);
+                        sessionStorage.setItem("cart", JSON.stringify(cart));
+                        location.reload();
+                        return;
                     }
                 }
             }
 
             // 결제하기 버튼이 눌렸을 때
             function createProductOrder() {
-                let cart = sessionStorage.getItem('cart')
+                let cart = sessionStorage.getItem("cart");
 
                 // 장바구니에 아이템이 없으면
                 if (cart.length === 0) {
-                    return alert('장바구니에 상품을 추가해주세요!')
+                    return alert("장바구니에 상품을 추가해주세요!");
                 }
 
                 // 포인트가 부족하면
-                let remainingPoints = Number($('#pointsRemaining').text().split('잔여 포인트: ')[1].split('p')[0])
-                if(remainingPoints<0) {
-                    return alert('포인트가 부족합니다!')
+                let remainingPoints = Number(
+                    $("#pointsRemaining").text().split("잔여 포인트: ")[1].split("p")[0]
+                );
+                if (remainingPoints < 0) {
+                    return alert("포인트가 부족합니다!");
                 }
 
-                const userId = '<%= user.userId %>'
+                const userId = "<%= user.userId %>";
                 $.ajax({
-                    type: 'POST',
+                    type: "POST",
                     url: `/api/productOrder/${userId}`,
                     async: false,
-                    data: {orders: cart, remainingPoints},
+                    data: { orders: cart, remainingPoints },
                     success: function (response) {
-                        let socketMessage = []
-                        cart = JSON.parse(cart)
-                        cart.forEach(element => {
-                            let item = {}
-                            item.userId = userId
-                            item.pcId = '<%= pcOrder.pcId %>'
-                            item.purchasedItem = element.productName
-                            item.qty = element.purchasedUnits,
-                            item.userPoints = '<%= user.points %>'
-                            item.deductedPoints = element.productPrice
-                            item.remainingPoints = remainingPoints
-                            item.logTime = new Date
-                            
-                            socketMessage.push(item)
-                        })
-                        
-                        socket.emit('newOrder', JSON.stringify(socketMessage))
+                        let socketMessage = [];
+                        cart = JSON.parse(cart);
+                        cart.forEach((element) => {
+                            let item = {};
+                            item.userId = userId;
+                            item.pcId = "<%= pcOrder.pcId %>";
+                            item.purchasedItem = element.productName;
+                            (item.qty = element.purchasedUnits),
+                                (item.userPoints = "<%= user.points %>");
+                            item.deductedPoints = element.productPrice;
+                            item.remainingPoints = remainingPoints;
+                            item.logTime = new Date();
 
-                        sessionStorage.clear()
-                        alert('결제되었습니다!')
-                        location.reload()
+                            socketMessage.push(item);
+                        });
+
+                        socket.emit("newOrder", JSON.stringify(socketMessage));
+
+                        sessionStorage.clear();
+                        alert("결제되었습니다!");
+                        location.reload();
                     },
                     error: function (response) {
-                        alert(response.responseJSON.message)
-                    }
-                })
+                        alert(response.responseJSON.message);
+                    },
+                });
 
-                sessionStorage.clear()
+                sessionStorage.clear();
             }
         </script>
 </body>
+
+</html>

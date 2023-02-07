@@ -1,97 +1,105 @@
 .col {
-    /* flex:0 */
+  /* flex:0 */
 }
 
 #productListAndTabs {
-    /* width: 1000px; */
-    flex-shrink: 0;
+  /* width: 1000px; */
+  flex-shrink: 0;
 }
 
 #productTypeTabs {
-    height: 42px;
-    color: rgb(238, 238, 238);
+  height: 42px;
+  color: rgb(238, 238, 238);
 }
 
 #productTypeTabs .nav-tabs .nav-link {
-    background-color: #2C394B;
-    border-color: #2C394B;
-    color: rgb(238, 238, 238);
-    margin-right: 3px;
+  background-color: #2c394b;
+  border-color: #2c394b;
+  color: rgb(238, 238, 238);
+  margin-right: 3px;
 }
 
 #productTypeTabs .nav-link.active {
-    background-color: #405b6e;
-    border-color: #405b6e;
-    color: #FF4C29;
+  background-color: #405b6e;
+  border-color: #405b6e;
+  color: #ff4c29;
 }
 
 #productTypeTabs .nav-tabs {
-    border-bottom: 0px;
+  border-bottom: 0px;
 }
 
 #productList {
-    background-color: #2C394B;
-    height: 758px;
+  background-color: #2c394b;
+  height: 750px;
 }
 
 .productCard img {
-    max-height: 250px;
-    object-fit: contain;
+  max-height: 180px;
+  object-fit: contain;
 }
 
 .productCard {
-    background-color: #405b6e;
-    margin-top: 8px;
+  background-color: #405b6e;
+  margin: 13px 0px 0px 35px;
 }
 
 #cart {
-    background-color:#2C394B;
-    height: 800px;
-    /* width: 200px; */
-    flex-shrink: 0;
-    /* flex:0; */
+  background-color: #2c394b;
+  height: 800px;
+  /* width: 200px; */
+  flex-shrink: 0;
+  /* flex:0; */
 }
 
 #cartDetails {
-    height: 600px;
-    overflow: auto;
+  height: 600px;
+  overflow: auto;
 }
 
 .cardProductDetails {
-    background-color: #405b6e;
-    display: inline-block;
+  background-color: #405b6e;
+  display: inline-block;
 }
 
 .cardProductDetails h5 {
-    position: relative;
+  position: relative;
 }
 
 .deleteProductCart {
-    position: absolute;
-    right: 0;
-    color: rgb(206, 3, 3);
-    cursor: pointer;
+  position: absolute;
+  right: 0;
+  color: rgb(206, 3, 3);
+  cursor: pointer;
 }
 
 .cardProductDetailsText {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .cardProductDetailsImage {
-    max-height: 100px;
-    object-fit: contain;
+  max-height: 100px;
+  object-fit: contain;
 }
 
 #pointsDetails {
-    text-align: right;
+  text-align: right;
 }
 
 #pointsDetails p {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 #pcOrderInfo {
-    text-align: right;
-    padding-right: 10px;
+  text-align: right;
+  padding-right: 10px;
 }
 
+.page-item {
+  margin: 30px 0px 0px 15px;
+}
+
+#css-pagination {
+  display: flex;
+  justify-content: center;
+}

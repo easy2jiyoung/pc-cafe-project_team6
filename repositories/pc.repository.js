@@ -24,22 +24,6 @@ class PCRepository {
     // PC status 업데이트
     updatePcStatus = async () => {
         try {
-            // const pcList = await this.pcModel.findAll({attributes:['pcId','pcStatus'], raw:true})
-
-            // for(let i=0; i<pcList.length; i++) {
-            //     let pcOrder = await this.pcOrderModel.findOne({
-            //         where: {pcId: pcList[i].pcId},
-            //         order: [['endDateTime','DESC']],
-            //         raw: true
-            //     })
-            //     // console.log(pcOrder)
-            //     // console.log(`pcId: ${pcList[i].pcId} >>>`,new Date(pcOrder?.endDateTime), new Date)
-            //     // console.log(new Date(pcOrder?.endDateTime) < Date.now())
-
-            //     if (new Date(pcOrder?.endDateTime) < Date.now()) {
-            //         await this.pcModel.update({pcStatus: false}, {where:{pcId: pcList[i].pcId}})
-            //     }
-            // }
             const [results, metadata] = await sequelize.query('update pcCafe_development.pcs p left join (select pcId, endDateTime from (select pcId, endDateTime,\
                 rank() over(partition by pcId order by endDateTime desc) endDateTimeRank\
                 from pcCafe_development.pcorders p) as a\

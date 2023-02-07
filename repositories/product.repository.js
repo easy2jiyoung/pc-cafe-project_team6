@@ -26,7 +26,7 @@ class ProductRepository {
         }
     }
 
-    // 상품 조회
+    // 상품 조회 (페이지네이션)
     readProducts = async(limit, offset) => {
         try {
             let products
@@ -74,6 +74,21 @@ class ProductRepository {
             // console.log(products)
             return products
 
+        } catch (error) {
+            error.status = 400
+            throw error
+        }
+    }
+
+    // 전체 상품 조회 (관리자 페이지)
+    allProductsList = async() => {
+        try {
+            const products = await this.productModel.findAll({
+                attributes:['productName','productStock','productPrice','productType','productImgUrl'],
+                order: [['productName', 'ASC']],
+                raw:true
+            })
+            return products
         } catch (error) {
             error.status = 400
             throw error

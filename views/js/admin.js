@@ -16,3 +16,17 @@ $(document).ready(function () {
     $("#" + tab_id).addClass("current");
   });
 });
+
+function logOut() {
+  $.ajax({
+    type: "GET",
+    url: "/api/users/logout",
+    success: function (response) {
+      sessionStorage.clear();
+      window.location.href = "/";
+    },
+    error: function (response) {
+      alert(response);
+    },
+  });
+}

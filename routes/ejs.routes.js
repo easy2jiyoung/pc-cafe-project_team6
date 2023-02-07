@@ -77,13 +77,6 @@ router.get("/updateMyInfo", auth_middleware, (req, res) => {
 });
 
 
-router.get('/findPassword', (req,res)=>{
-    return res.render('findPassword.ejs', {user: res.locals.user, pcOrder: res.locals.pcOrder})
-})
-
-router.get('/rePasswordSetting', (req,res)=>{
-        return res.render('rePasswordSetting.ejs', {user: res.locals.user, pcOrder: res.locals.pcOrder})
-})
 
 module.exports = router;
 

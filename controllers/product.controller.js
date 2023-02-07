@@ -30,10 +30,10 @@ class ProductController {
     productList = async (req, res) => {
         try {
             const pageNum = req.query.page || 1
-            const products = await this.productService.readProducts(pageNum)
+            const type = req.query.type
+            const products = await this.productService.readProducts(pageNum, type)
             res.status(200).json(products)
         } catch (error) {
-            console.log(error)
             return res.status(error.status).json({message: error.message})
         }
     }

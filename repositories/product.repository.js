@@ -1,3 +1,4 @@
+const { type } = require("os")
 const { Op } = require("sequelize")
 
 class ProductRepository {
@@ -26,18 +27,33 @@ class ProductRepository {
     }
 
     // 상품 조회 (페이지네이션)
-    readProducts = async(limit, offset) => {
+    readProducts = async(limit, offset, type) => {
         try {
-            const products = await this.productModel.findAndCountAll({
-                offset,
-                limit,
-                where: {
-                    productStock: {[Op.gt]: 0},
-                    // productType: "drink" && productStock: {[Op.gt]: 0},
-                }
-            })
+            let products
+            const tabType = {offset, limit, where: {productType: type, productStock: {[Op.gt]: 0 }}}
+            if (type === "먹거리") {
+                products = await this.productModel.findAndCountAll({
+                    ...tabType
+                })
+            } else if (type === "음료") {
+                products = await this.productModel.findAndCountAll({
+                    ...tabType
+                })
+            } 
+            else if (type === "이용시간") {
+                products = await this.productModel.findAndCountAll({
+                    ...tabType
+                })
+            } else {
+                products = await this.productModel.findAndCountAll({
+                    offset,
+                    limit,
+                    where: {
+                        productStock: {[Op.gt]: 0 }
+                    }
+                })
+            }
             return products
-
         } catch (error) {
             error.status = 400
             throw error

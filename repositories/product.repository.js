@@ -17,7 +17,7 @@ class ProductRepository {
             }, {
                 raw: true
             })
-            return {status: 201, success: true, message: "상품이 등록되었습니다."}
+            return newProduct
         } catch (error) {
             error.name = "database error"
             error.status = 404
@@ -48,7 +48,7 @@ class ProductRepository {
     allProductsList = async() => {
         try {
             const products = await this.productModel.findAll({
-                attributes:['productName','productStock','productPrice','productType','productImgUrl'],
+                attributes:['productName','productStock','productPrice','productType','productImgUrl', 'productId'],
                 order: [['productName', 'ASC']],
                 raw:true
             })

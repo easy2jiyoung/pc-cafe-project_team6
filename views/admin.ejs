@@ -63,6 +63,7 @@
                                                 <th scope="col">개당 가격</th>
                                                 <th scope="col">수량</th>
                                                 <th scope="col">상품 종류</th>
+                                                <th scope="col">상품 삭제</th>
                                             </tr>
                                         </thead>
                                         <tbody id="products">
@@ -238,13 +239,14 @@
         async: false,
         success: function (response) {
             for (let i=0; i<response.length; i++) {
-                let {productName, productPrice, productStock, productType, productImgUrl} = response[i]
+                let {productName, productPrice, productStock, productType, productImgUrl, productId} = response[i]
 
                 let temp_html = `<tr>
                                     <td><span class="hiddentxt"><a href="${productImgUrl}">${productName}</a></span><span class="hiddenimg"><img src="${productImgUrl}" width="250" /></span></td>
                                     <td>${productPrice}</td>
                                     <td>${productStock}</td>
                                     <td>${productType}</td>
+                                    <td><button type="button" class="btn btn-danger" onclick="deleteProduct(${productId})">삭제</button></td>
                                 </tr>`
                 $('#products').append(temp_html)
             }
@@ -291,14 +293,22 @@
                     },
                     success: function (response) {
                         alert('상품이 등록 되었습니다!')
+                        const productId = response.productId
 
                         let temp_html = `<tr>
-                                    <td>${productName}</td>
+                                    <td><span class="hiddentxt"><a href="${imageUrl}">${productName}</a></span><span class="hiddenimg"><img src="${imageUrl}" width="250" /></span></td>
                                     <td>${productPrice}</td>
                                     <td>${productStock}</td>
                                     <td>${productType}</td>
+                                    <td><button type="button" class="btn btn-danger" onclick="deleteProduct(${productId})">삭제</button></td>
                                 </tr>`
                         $('#products').prepend(temp_html)
+
+                        $('#inputProductName').val('')
+                        $('#inputProductStock').val('')
+                        $('#inputProductPrice').val('')
+                        $('#inputProductType').val('')
+                        $('#inputProductImage').val('')
                     }, error: function (response) {
                         return alert(response.responseJSON.message)
                     }
@@ -307,6 +317,11 @@
                 return alert(response.responseJSON.message)
             }
         })
+    }
+
+    // 상품 삭제
+    function deleteProduct (productId) {
+        
     }
 </script>
 

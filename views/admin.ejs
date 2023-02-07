@@ -126,7 +126,36 @@
 
                         </div>
                     </div>
-                    <div id="tab-3" class="tab-content">tab content3</div>
+                    <div id="tab-3" class="tab-content">
+                        <div class="container-fluid">
+                            <div class="row">
+                              <div class="col-8 divPcListContainer">
+                                <div class="divPcList">
+                                  <p id="selectPC" style="font-size: 30px">컴퓨터를 선택해주세요.</p>
+                                  <div class="row" id="divPcRow0"></div>
+                                  <div class="row" id="divPcRow1"></div>
+                                  <div class="row" id="divPcRow2"></div>
+                                  <div class="row" id="divPcRow3"></div>
+                                </div>
+                              </div>
+                              <div class="col-4">
+                                <div id="divLogin">
+                                  <div class="row">
+                                  </div>
+                                </div>
+                      
+                                <div id="divPcOrder">
+                                  <div class="container" id="pcOrderContainer">
+                                    <p style="font-size: 40px" id="selectedPcNum">PC #</p>
+                                    <div class="row">
+                                        <button type="button" class="btn btn-primary commonButton" id="logoutPC"
+                                        onclick="logoutPC()">PC 종료</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
                 </div>
             </div>
             <div id="screen2-2">
@@ -156,8 +185,8 @@
                                       <td>${phone}</td>
                                       <td>${email}</td>
                                       <td id="userPoints${userId}">${points}</td>
-                                      <td><button onclick="pointUpdate(${userId})">포인트 변경</button></td>
-                                      <td><button onclick="userDelete(${userId})">삭제</button></td>
+                                      <td><button class="btn btn-warning" onclick="pointUpdate(${userId})">포인트 변경</button></td>
+                                      <td><button class="btn btn-danger" onclick="userDelete(${userId})">삭제</button></td>
                                   </tr>`
                 $('#user-list').append(temp_html);
             }
@@ -322,6 +351,66 @@
     // 상품 삭제
     function deleteProduct (productId) {
         
+    }
+</script>
+<script>
+    // PC 목록 불러오기
+    $.ajax({
+        type: "GET",
+        url: `/api/pcs`,
+        async: false,
+        success: function (response) {
+          let pcId;
+          let pcStatus;
+          let temp_html;
+          let divPcRow;
+          const userId = "<%= user?.userId %>";
+
+          for (let i = 0; i < response.length; i++) {
+            pcId = response[i].pcId;
+            pcStatus = response[i].pcStatus;
+            divPcRow = `divPcRow${Math.floor(i / 4)}`;
+
+            if (pcStatus === true) {
+              temp_html = `<div class="col-2 divPc">
+                                        <img onclick="${
+                userId ? `selectPc(${pcId})` : ""
+              }" src="./images/pcDisabledIcon.png">
+                                        PC ${pcId}
+                                    </div>`;
+              $("#" + divPcRow).append(temp_html);
+            } else if (pcStatus === false) {
+              temp_html = `<div class="col-2 divPc">
+                                        <img class="${
+                                          userId ? "pcAvailable" : ""
+                                        }" src="./images/pcEnabledIcon.png">
+                                        PC ${pcId}
+                                    </div>`;
+              $("#" + divPcRow).append(temp_html);
+            }
+          }
+        },
+      });
+
+    // PC 클릭시 PC 번호 저장
+    function selectPc(pcId) {
+      document.getElementById("selectedPcNum").innerHTML = `PC #${pcId}`;
+    }
+
+    // 로그아웃 PC
+    function logoutPC() {
+        let pcId = document.getElementById("selectedPcNum").innerHTML;
+        pcId = pcId.split("PC #")[1]
+        let pcStatus = 0;
+        let updatedPCstatus = confirm("해당 PC를 종료하시겠습니까?");
+        $.ajax({
+            type: 'PUT',
+            url: `/api/pcs/${pcId}`,
+            data: { pcStatus },
+            success: function (data) {
+                alert(pcId +'번의 PC를 종료하였습니다.')
+            }
+        })
     }
 </script>
 

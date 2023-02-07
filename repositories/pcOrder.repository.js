@@ -32,6 +32,10 @@ class PCOrderRepository {
             throw(error)
         }
     }
+
+    UpdateUsingPC = async () => {
+       
+    }
 }
 
 module.exports = PCOrderRepository;

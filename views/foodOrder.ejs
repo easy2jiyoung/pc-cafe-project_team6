@@ -33,10 +33,10 @@
                                 <a class="nav-link" id="foodTab" href="/foodOrder?type=먹거리">먹거리</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="drinkTab" href="/foodOrder?type=drink">음료</a>
+                                <a class="nav-link" id="drinkTab" href="/foodOrder?type=음료">음료</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="timeTab" href="/foodOrder?type=time">이용시간</a>
+                                <a class="nav-link" id="timeTab" href="/foodOrder?type=이용시간">이용시간</a>
                             </li>
                         </ul>
                     </div>
@@ -124,26 +124,9 @@
                         const lastPage = response.lastPage;
                         const allProduct = response.allProduct;
                         for (let i = 1; i <= lastPage; i++) {
-                            let temp_html = `<li class="page-item"><a class="page-link" href="?page=${i}">${i}</a></li>`;
+                            let temp_html = `<li class="page-item"><a class="page-link" href="?page=${i}&type=${type}">${i}</a></li>`;
                             $(".pagination").append(temp_html);
                         }
-
-                        // 상품 탭
-                        // const tab = function (tabName) {
-                            
-                        // }
-                        // <li class="nav-item">
-                        //       <a class="nav-link" id="allProductsTab">전체 상품</a>
-                        //     </li>
-                        //     <li class="nav-item">
-                        //       <a class="nav-link" id="foodTab" href="/foodOrder?type=food">먹거리</a>
-                        //     </li>
-                        //     <li class="nav-item">
-                        //       <a class="nav-link" id="drinkTab" href="/foodOrder?type=drink">음료</a>
-                        //     </li>
-                        //     <li class="nav-item">
-                        //         <a class="nav-link" id="timeTab" href="/foodOrder?type=time">이용시간</a>
-                        //     </li>
 
                         for (let i = 0; i < allProduct.rows.length; i++) {
                             let {

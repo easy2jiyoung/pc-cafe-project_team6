@@ -31,11 +31,9 @@ class ProductController {
         try {
             const pageNum = req.query.page || 1
             const type = req.query.type
-            console.log("😀",type)
             const products = await this.productService.readProducts(pageNum, type)
             res.status(200).json(products)
         } catch (error) {
-            console.log(error)
             return res.status(error.status).json({message: error.message})
         }
     }

@@ -224,7 +224,7 @@
           </div>
         </div>
       </div>
-      <div id="screen3"></div>
+      <!-- <div id="screen3"></div> -->
     </div>
   </body>
   <script>
@@ -441,7 +441,6 @@
           let pcStatus;
           let temp_html;
           let divPcRow;
-          const userId = "<%= user?.userId %>";
 
           for (let i = 0; i < response.length; i++) {
             pcId = response[i].pcId;
@@ -450,17 +449,13 @@
 
             if (pcStatus === true) {
               temp_html = `<div class="col-2 divPc">
-                                        <img onclick="${
-                userId ? `selectPc(${pcId})` : ""
-              }" src="./images/pcDisabledIcon.png">
+                                        <img onclick="${`selectPc(${pcId})`}" src="./images/pcDisabledIcon.png" id="pc${pcId}">
                                         PC ${pcId}
                                     </div>`;
               $("#" + divPcRow).append(temp_html);
             } else if (pcStatus === false) {
               temp_html = `<div class="col-2 divPc">
-                                        <img class="${
-                                          userId ? "pcAvailable" : ""
-                                        }" src="./images/pcEnabledIcon.png">
+                                        <img class="pcAvailable" src="./images/pcEnabledIcon.png" id="pc${pcId}">
                                         PC ${pcId}
                                     </div>`;
               $("#" + divPcRow).append(temp_html);
@@ -486,6 +481,8 @@
             data: { pcStatus },
             success: function (data) {
                 alert(pcId +'번의 PC를 종료하였습니다.')
+                document.getElementById(`pc${pcId}`).setAttribute('src','./images/pcEnabledIcon.png')
+                document.getElementById(`pc${pcId}`).setAttribute('onclick', '')
             }
         })
     }

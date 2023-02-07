@@ -90,47 +90,7 @@ class UserService {
     }
   };
 
-  // 유저 생성
-  createUser = async (
-    userId,
-    id,
-    password,
-    name,
-    phone,
-    email,
-    role,
-    points,
-    createdAt,
-    updatedAt
-  ) => {
-    const createUserData = await this.userRepository.createUser(
-      userId,
-      id,
-      password,
-      name,
-      phone,
-      email,
-      role,
-      points,
-      createdAt,
-      updatedAt
-    );
-
-    return {
-      userId: createUserData.userId,
-      id: createUserData.id,
-      password: createUserData.password,
-      name: createUserData.name,
-      phone: createUserData.phone,
-      email: createUserData.email,
-      role: createUserData.role,
-      points: createUserData.points,
-      createdAt: createUserData.createdAt,
-      updatedAt: createUserData.updatedAt,
-    };
-  };
-
-  //id로 나의 정보 수정
+  // id로 나의 정보 수정
   updateUser = async (userId, id, phone, email, hashpassword) => {
     try {
       const updateUserData = await this.userRepository.updateUser(

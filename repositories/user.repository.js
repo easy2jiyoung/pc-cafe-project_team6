@@ -53,20 +53,6 @@ class UserRepository {
     }
   };
 
-  // 유저 생성
-  createUser = async (id, password, name, phone, email, role, points) => {
-    const createUserData = await this.userModel.create({
-      id,
-      password,
-      name,
-      phone,
-      email,
-      role,
-      points,
-    });
-    return createUserData;
-  };
-
   //id로 나의 정보 수정
   updateUser = async (userId, id, phone, email, hashpassword) => {
     try {

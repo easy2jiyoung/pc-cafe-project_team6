@@ -76,4 +76,7 @@ router.get("/updateMyInfo", auth_middleware, (req, res) => {
   });
 });
 
+
+
 module.exports = router;
+

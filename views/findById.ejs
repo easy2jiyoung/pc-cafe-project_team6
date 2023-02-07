@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <%- include('head.ejs') %>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1.0, user-scalable=0"
+    />
+    <title>아이디 찾기 페이지</title>
+
+    <link href="/css/findById.css" rel="stylesheet" />
+    <script src="/js/findById.js"></script>
+  </head>
+
+  <script></script>
+  <body>
+    <div>
+      <h1 id="mytitle">Pcoding Cafe</h1>
+    </div>
+    <div class="wrapper">
+      <div class="title"><h1 style="font-size: 21px">아이디 찾기</h1></div>
+      <div class="name">
+        <span>이름 :</span>
+        <input id="name" type="text" placeholder="이름을 입력해 주세요." />
+        <div id="nameError" class="error"></div>
+      </div>
+      <div class="phone">
+        <span>휴대폰 번호 :</span>
+        <input
+          id="phone"
+          type="text"
+          size="1"
+          maxlength="13"
+          placeholder="휴대폰 번호를 입력해주세요.( - 포함 )"
+        />
+        <div id="phoneCheckError" class="error"></div>
+      </div>
+      <div class="line"></div>
+      <div class="findId">
+        <button
+          class="btn btn-primary commonButton"
+          id="findIdButton"
+          onclick="findIdEvent()"
+        >
+          아이디 찾기
+        </button>
+        <p></p>
+        <button onclick="location.href='findByPs'">비밀번호 찾기</button>
+        <button onclick="history.back()">뒤로가기</button>
+      </div>
+      <div id="guideText">
+        <span>&#127872;포인트 충전은 카운터로&#127872;</span>
+      </div>
+    </div>
+  </body>
+</html>

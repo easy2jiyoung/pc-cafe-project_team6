@@ -9,12 +9,10 @@
   </head>
 
   <body>
-    <% if (user?.userId) { %>
-        <%- include('header.ejs') %>
-    <% } else { %>
-        <div id="commonHeader">
-            <h1>PCoding Cafe</h1>
-          </div>
+    <% if (user?.userId) { %> <%- include('header.ejs') %> <% } else { %>
+    <div id="commonHeader">
+      <h1>PCoding Cafe</h1>
+    </div>
     <% } %>
 
     <div class="container-fluid">
@@ -46,15 +44,37 @@
                 <input id="loginPassword" type="password" />
               </div>
             </div>
-            <button
-              type="button"
-              class="btn btn-primary"
-              id="loginButton"
-              onclick="login()"
-            >
-              로그인
-            </button>
-            <p style="margin-top: 6px"><a href="/signup">회원가입</a></p>
+            <div id="linkbutton">
+              <button
+                type="button"
+                class="btn btn-primary"
+                id="loginButton"
+                onclick="login()"
+              >
+                로그인
+              </button>
+              <p style="margin-top: 6px"></p>
+              <a
+                style="text-decoration-line: none; color: white"
+                ;
+                href="/signup"
+                >회원가입</a
+              >
+              <p></p>
+              <a
+                style="text-decoration-line: none; color: white"
+                ;
+                href="/users/findById"
+                >아이디 찾기</a
+              >
+              <p></p>
+              <a
+                style="text-decoration-line: none; color: white"
+                ;
+                href="/users/findByPs"
+                >비밀번호 찾기</a
+              >
+            </div>
           </div>
 
           <div id="divPcOrder">

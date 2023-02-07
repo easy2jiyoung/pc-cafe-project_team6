@@ -22,20 +22,20 @@
             <div class="row">
                 <div class="col-9" id="productListAndTabs">
                     <div class="row" id="productTypeTabs">
-                        <ul class="nav nav-tabs">
+                        <ul class="nav nav-tabs" >
                             <li class="nav-item">
-                              <a class="nav-link" id="allProductsTab" href="/foodOrder">전체 상품</a>
+                                <a class="nav-link" id="allProductsTab" href="/foodOrder">전체 상품</a>
                             </li>
                             <li class="nav-item">
-                              <a class="nav-link" id="foodTab" href="/foodOrder?type=food">먹거리</a>
+                                <a class="nav-link" id="foodTab" href="/foodOrder?type=먹거리">먹거리</a>
                             </li>
                             <li class="nav-item">
-                              <a class="nav-link" id="drinkTab" href="/foodOrder?type=drink">음료</a>
+                                <a class="nav-link" id="drinkTab" href="/foodOrder?type=drink">음료</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="timeTab" href="/foodOrder?type=time">이용시간</a>
                             </li>
-                          </ul>
+                        </ul>
                     </div>
                     <div class="row">
                         <div class="row row-cols-4" id="productList"></div>
@@ -106,10 +106,11 @@
                 // 상품 목록 불러오기
                 const urlSearch = new URLSearchParams(location.search)
                 const page = Number(urlSearch.get('page'))
+                const type = urlSearch.get('type')
 
                 $.ajax({
                     type: 'GET',
-                    url: `/api/products?page=${page || 1}`,
+                    url: `/api/products?page=${page || 1}&type=${type}`,
                     async: false,
                     success: function (response) {
                         // 페이지네이션
@@ -119,7 +120,24 @@
                             let temp_html = `<li class="page-item"><a class="page-link" href="?page=${i}">${i}</a></li>`
                             $('.pagination').append(temp_html)
                         }
-                        
+
+                        // 상품 탭
+                        // const tab = function (tabName) {
+                            
+                        // }
+                        // <li class="nav-item">
+                        //       <a class="nav-link" id="allProductsTab">전체 상품</a>
+                        //     </li>
+                        //     <li class="nav-item">
+                        //       <a class="nav-link" id="foodTab" href="/foodOrder?type=food">먹거리</a>
+                        //     </li>
+                        //     <li class="nav-item">
+                        //       <a class="nav-link" id="drinkTab" href="/foodOrder?type=drink">음료</a>
+                        //     </li>
+                        //     <li class="nav-item">
+                        //         <a class="nav-link" id="timeTab" href="/foodOrder?type=time">이용시간</a>
+                        //     </li>
+
                         for (let i = 0; i < allProduct.rows.length; i++) {
                             let { productName, productPrice, productImgUrl, productType, productId, productStock } =  allProduct.rows[i]
 

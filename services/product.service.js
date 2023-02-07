@@ -1,6 +1,7 @@
 const ProductRepository = require('../repositories/product.repository.js')
 const {Products} = require('../models/index.js')
 const { response } = require('express')
+const { type } = require('os')
 
 class ProductService {
     productRepository = new ProductRepository(Products)
@@ -28,7 +29,7 @@ class ProductService {
             const offset = (pageNum -1) * limit
             const allProduct = await this.productRepository.readProducts(limit, offset)
             const lastPage = Math.ceil(allProduct.count / limit)
-            return { allProduct, lastPage }
+            return { allProduct, lastPage}
         } catch (error) {
             throw error;
         }

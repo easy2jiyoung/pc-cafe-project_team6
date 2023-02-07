@@ -30,6 +30,8 @@ class ProductController {
     productList = async (req, res) => {
         try {
             const pageNum = req.query.page || 1
+            const type = req.query.type
+            console.log("😀",type)
             const products = await this.productService.readProducts(pageNum)
             res.status(200).json(products)
         } catch (error) {

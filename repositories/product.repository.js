@@ -1,3 +1,4 @@
+const { type } = require("os")
 const { Op } = require("sequelize")
 
 class ProductRepository {
@@ -28,14 +29,49 @@ class ProductRepository {
     // 상품 조회
     readProducts = async(limit, offset) => {
         try {
-            const products = await this.productModel.findAndCountAll({
-                offset,
-                limit,
-                where: {
-                    productStock: {[Op.gt]: 0},
-                    // productType: "drink" && productStock: {[Op.gt]: 0},
-                }
-            })
+            let products
+            if (type) { 
+                products = await this.productModel.findAndCountAll({
+                    offset,
+                    limit,
+                    where: {
+                        productStock: {[Op.gt]: 0},
+                    }
+                })
+                console.log("all",type, products)
+            } 
+            // else if (type === "food") {
+            //     products = await this.productModel.findAndCountAll({
+            //         offset,
+            //         limit,
+            //         where: {
+            //             productType: "먹거리",
+            //             productStock: {[Op.gt]: 0}
+            //         }
+            //     })
+            //     console.log("eat"+ products)
+            // } else if (type === "drink") {
+            //     products = await this.productModel.findAndCountAll({
+            //         offset,
+            //         limit,
+            //         where: {
+            //             productType: "음료",
+            //             productStock: {[Op.gt]: 0}
+            //         }
+            //     })
+            //     console.log(type+ products)
+            // } else if (type === "time") {
+            //     products = await this.productModel.findAndCountAll({
+            //         offset,
+            //         limit,
+            //         where: {
+            //             productType: "이용시간",
+            //             productStock: {[Op.gt]: 0}
+            //         }
+            //     })
+
+            // }
+            // console.log(products)
             return products
 
         } catch (error) {

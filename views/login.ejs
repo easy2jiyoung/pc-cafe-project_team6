@@ -151,7 +151,7 @@
           let pcStatus;
           let temp_html;
           let divPcRow;
-          const userId = "<%= user.userId %>";
+          const userId = "<%= user?.userId %>";
 
           for (let i = 0; i < response.length; i++) {
             pcId = response[i].pcId;
@@ -214,7 +214,7 @@
       let orderTime = $("#pcOrderTime").val();
       orderTime = Number(orderTime);
 
-      let userPoints = "<%= user.points %>";
+      let userPoints = "<%= user?.points %>";
       userPoints = Number(userPoints);
 
       let pointsRemaining = userPoints - orderTime * 1000;
@@ -249,7 +249,7 @@
         return alert("이용 시간은 1시간부터 12시간까지입니다.");
       }
 
-      const userId = "<%= user.userId %>";
+      const userId = "<%= user?.userId %>";
       const [_, pcId] = $("#selectedPcNum").text().split("PC #");
 
       if (!pcId) {

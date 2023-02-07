@@ -72,7 +72,7 @@ ul.tabs {
 
 ul.tabs li {
   background: none;
-  color: #222;
+  color: rgb(238, 238, 238);
   display: inline-block;
   text-align: center;
   padding: 10px 15px;
@@ -81,14 +81,14 @@ ul.tabs li {
 }
 
 ul.tabs li.current {
-  background: #e48d8d;
-  color: #222;
+  background: #2c394b;
+  color: rgb(238, 238, 238);
   /* margin-bottom: 10px; */
 }
 
 .tab-content {
   display: none;
-  background: #e48d8d;
+  background: #2c394b;
   padding: 15px;
   overflow: auto;
 }
@@ -111,4 +111,16 @@ ul.tabs li.current {
 
 #logs {
     overflow: auto;
+}
+
+th, td {
+    color: rgb(238, 238, 238)
+}
+
+td {
+    font-weight: 200;
+}
+
+tr {
+    border-color: #eeeeee7e;
 }

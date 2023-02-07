@@ -26,11 +26,22 @@ class ProductController {
         }
     }
 
-    // 상품 조회
+    // 상품 조회 (페이지네이션)
     productList = async (req, res) => {
         try {
             const pageNum = req.query.page || 1
             const products = await this.productService.readProducts(pageNum)
+            res.status(200).json(products)
+        } catch (error) {
+            console.log(error)
+            return res.status(error.status).json({message: error.message})
+        }
+    }
+
+    // 전체 상품 조회 (관리자 페이지)
+    allProductsList = async (req, res) => {
+        try {
+            const products = await this.productService.allProductsList()
             res.status(200).json(products)
         } catch (error) {
             console.log(error)

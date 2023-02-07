@@ -183,7 +183,7 @@
 
     // 회원 삭제
     function userDelete(userId) {
-        let result = confirm("해당 회원을 삭제 하시겠습니까?");
+        let result = confirm("해당 회원을 삭제하시겠습니까?");
         if (result) {
             $.ajax({
                 type: 'DELETE',
@@ -234,25 +234,25 @@
 
     // 상품 조회
     $.ajax({
-        type: 'GET',
-        url: `/api/products/getAll`,
-        async: false,
-        success: function (response) {
-            for (let i=0; i<response.length; i++) {
-                let {productName, productPrice, productStock, productType, productImgUrl, productId} = response[i]
-
-                let temp_html = `<tr>
-                                    <td><span class="hiddentxt"><a href="${productImgUrl}">${productName}</a></span><span class="hiddenimg"><img src="${productImgUrl}" width="250" /></span></td>
-                                    <td>${productPrice}</td>
-                                    <td>${productStock}</td>
-                                    <td>${productType}</td>
-                                    <td><button type="button" class="btn btn-danger" onclick="deleteProduct(${productId})">삭제</button></td>
-                                </tr>`
-                $('#products').append(temp_html)
-            }
-        }, error: function (response) {
-            return alert(response.responseJSON.message)
-        }
+    type: 'GET',
+    url: `/api/products/getAll`,
+    async: false,
+    success: function (response) {
+        for (let i = 0; i < response.length; i++) {
+            let {productName, productPrice, productStock, productType, productImgUrl, productId} = response[i]
+            let temp_html = `<tr id="productId${productId}">
+                                <td><span class="hiddentxt"><a href="${productImgUrl}">${productName}</a></span><span class="hiddenimg"><img src="${productImgUrl}" width="250" /></span></td>
+                                <td>${productPrice}</td>
+                                <td>${productStock}</td>
+                                <td>${productType}</td>
+                                <td><button type="button" class="btn btn-danger" onclick="deleteProduct(${productId})">삭제</button></td>
+                            </tr>`
+            
+            $('#products').append(temp_html)
+        }   
+    }, error: function (response) {
+        return alert(response.responseJSON.message)
+    }
     })
 
     // 상품 등록
@@ -295,7 +295,7 @@
                         alert('상품이 등록 되었습니다!')
                         const productId = response.productId
 
-                        let temp_html = `<tr>
+                        let temp_html = `<tr id="productid${productId}">
                                     <td><span class="hiddentxt"><a href="${imageUrl}">${productName}</a></span><span class="hiddenimg"><img src="${imageUrl}" width="250" /></span></td>
                                     <td>${productPrice}</td>
                                     <td>${productStock}</td>
@@ -320,8 +320,21 @@
     }
 
     // 상품 삭제
-    function deleteProduct (productId) {
-        
+    function deleteProduct(productId) {
+        let result = confirm("해당 상품을 삭제하시겠습니까?");
+        if (result) {
+            $.ajax({
+                type: 'DELETE',
+                url: `/api/products/${productId}`,
+                async: false,
+                success: function (response) {
+                    alert("상품이 삭제되었습니다.");
+                    $(`#productId${productId}`).remove()
+                }
+            })
+        } else {
+            alert("삭제 취소")
+        }
     }
 </script>
 

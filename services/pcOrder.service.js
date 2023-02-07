@@ -14,6 +14,11 @@ class PCOrderService {
             throw(error)
         }
     }
+
+    getUsingPC = async () => {
+      return await this.pcOrderRepository.getUsingPC();
+        
+    }
 }
 
 module.exports = PCOrderService;

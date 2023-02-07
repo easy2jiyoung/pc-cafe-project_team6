@@ -25,6 +25,16 @@ class PCService {
             throw error
         }
     }
+
+    logoutPCstatus = async (pcId, pcStatus) => {
+        try {
+            const logoutPCInfo = await this.pcRepository.logoutPCstatus(pcId, pcStatus);
+
+            return
+        } catch (error) {
+            throw error; 
+        }
+    }
 }
 
 module.exports = PCService;

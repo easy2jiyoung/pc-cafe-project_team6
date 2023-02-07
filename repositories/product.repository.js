@@ -30,19 +30,31 @@ class ProductRepository {
     readProducts = async(limit, offset, type) => {
         try {
             let products
-            const tabType = {offset, limit, where: {productType: type, productStock: {[Op.gt]: 0 }}}
-            if (type === "먹거리") {
+            const tabType = {offset, limit}
+            if (type === "food") {
                 products = await this.productModel.findAndCountAll({
-                    ...tabType
+                    ...tabType,
+                    where: {
+                        productType: "먹거리",
+                        productStock: {[Op.gt]: 0 }
+                    }
                 })
-            } else if (type === "음료") {
+            } else if (type === "drink") {
                 products = await this.productModel.findAndCountAll({
-                    ...tabType
+                    ...tabType,
+                    where: {
+                        productType: "음료",
+                        productStock: {[Op.gt]: 0 }
+                    }
                 })
             } 
-            else if (type === "이용시간") {
+            else if (type === "time") {
                 products = await this.productModel.findAndCountAll({
-                    ...tabType
+                    ...tabType,
+                    where: {
+                        productType: "이용시간",
+                        productStock: {[Op.gt]: 0 }
+                    }
                 })
             } else {
                 products = await this.productModel.findAndCountAll({

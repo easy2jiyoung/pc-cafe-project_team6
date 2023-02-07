@@ -24,6 +24,20 @@ class PCController {
             res.status(error.status).json({message: error.message})
         }
     }
+
+    // PC 로그아웃
+    logoutPCstatus = async (req, res) => {
+        try {
+            const { pcId } = req.params;
+            const { pcStatus } = req.body;
+            const logoutPC = await this.pcService.logoutPCstatus(pcId, pcStatus);
+
+            res.status(200).send({ logoutPC: logoutPC })
+        } catch (error) {
+            console.log(error);
+            res.status(error.status).json({message: error.message})
+        }
+    }
 }
 
 module.exports = PCController

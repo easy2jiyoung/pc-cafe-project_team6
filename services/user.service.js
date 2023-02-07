@@ -122,9 +122,9 @@ class UserService {
   };
 
   // 이름과 핸드폰 번호로 아이디 찾기
-  findByNameAndPhone = async (name, phone) => {
+  findByIdNameAndPhone = async (name, phone) => {
     try {
-      const id = await this.userRepository.findByNameAndPhone(name, phone);
+      const id = await this.userRepository.findByIdNameAndPhone(name, phone);
 
       return id;
     } catch (error) {

@@ -1,155 +1,212 @@
 <!DOCTYPE html>
 <html lang="ko">
-
-<head>
+  <head>
     <%- include('head.ejs') %>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <title>관리자 페이지</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>관리자 페이지</title>
 
-        <link href="./css/admin.css" rel="stylesheet" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js"
-            integrity="sha512-YeeA/Qxn5hYdkukScTCNNOhTrv1C2RubAGButJ1rmgQwZf/HdRaCGl+JAVkqsqaNRaYNHdheiuKKuPf9mDcqKg=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="./js/admin.js"></script>
-</head>
+    <link href="./css/admin.css" rel="stylesheet" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js"
+      integrity="sha512-YeeA/Qxn5hYdkukScTCNNOhTrv1C2RubAGButJ1rmgQwZf/HdRaCGl+JAVkqsqaNRaYNHdheiuKKuPf9mDcqKg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="./js/admin.js"></script>
+  </head>
 
-<body>
-    <div style="text-align:center; font-size:30px;">
-        <span>PCoding Cafe 관리자</span>
-        <span id="btn-logout">
-            <button type="button" class="btn btn-danger" onclick="logOut()">
-                로그아웃
-            </button>
-        </span>
+  <body>
+    <div style="text-align: center; font-size: 30px">
+      <span>PCoding Cafe 관리자</span>
+      <span id="btn-logout">
+        <button type="button" class="btn btn-danger" onclick="logOut()">
+          로그아웃
+        </button>
+      </span>
     </div>
 
     <div id="fullscreen">
-        <div id="screen1"></div>
-        <div id="screen2">
-            <div id="screen2-1">
-                <div class="container-wrap">
-                    <ul class="tabs">
-                        <li class="tab-link current" data-tab="tab-1">회원관리</li>
-                        <li class="tab-link" data-tab="tab-2">상품목록관리</li>
-                        <li class="tab-link" data-tab="tab-3">좌석관리</li>
-                    </ul>
-                    <div id="tab-1" class="tab-content current">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">아이디</th>
-                                    <th scope="col">이름</th>
-                                    <th scope="col">휴대전화</th>
-                                    <th scope="col">이메일</th>
-                                    <th scope="col">포인트</th>
-                                    <th scope="col">포인트 변경</th>
-                                    <th scope="col">회원 관리</th>
-                                </tr>
-                            </thead>
-                            <tbody id="user-list">
-                            </tbody>
-                        </table>
+      <div id="screen1"></div>
+      <div id="screen2">
+        <div id="screen2-1">
+          <div class="container-wrap">
+            <ul class="tabs">
+              <li class="tab-link current" data-tab="tab-1">회원관리</li>
+              <li class="tab-link" data-tab="tab-2">상품목록관리</li>
+              <li class="tab-link" data-tab="tab-3">좌석관리</li>
+            </ul>
+            <div id="tab-1" class="tab-content current">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">아이디</th>
+                    <th scope="col">이름</th>
+                    <th scope="col">휴대전화</th>
+                    <th scope="col">이메일</th>
+                    <th scope="col">포인트</th>
+                    <th scope="col">포인트 변경</th>
+                    <th scope="col">회원 관리</th>
+                  </tr>
+                </thead>
+                <tbody id="user-list"></tbody>
+              </table>
+            </div>
+            <div id="tab-2" class="tab-content">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col" id="productList">
+                    <h4>상품 목록</h4>
+                    <table class="table" style="overflow: scroll">
+                      <thead>
+                        <tr>
+                          <th scope="col">상품 이름</th>
+                          <th scope="col">개당 가격</th>
+                          <th scope="col">수량</th>
+                          <th scope="col">상품 종류</th>
+                        </tr>
+                      </thead>
+                      <tbody id="products"></tbody>
+                    </table>
+                  </div>
+                  <div class="col" id="addProduct">
+                    <h4>상품 등록</h4>
+                    <div class="input-group mb-3 row">
+                      <label
+                        for="inputProductName"
+                        class="col-sm-3 col-form-label"
+                        >상품 이름</label
+                      >
+                      <div class="col-sm-9">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="inputProductName"
+                        />
+                      </div>
                     </div>
-                    <div id="tab-2" class="tab-content">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col" id="productList">
-                                    <h4>상품 목록</h4>
-                                    <table class="table" style="overflow:scroll">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">상품 이름</th>
-                                                <th scope="col">개당 가격</th>
-                                                <th scope="col">수량</th>
-                                                <th scope="col">상품 종류</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="products">
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="col" id="addProduct">
-                                    <h4>상품 등록</h4>
-                                    <div class="input-group mb-3 row">
-                                        <label for="inputProductName" class="col-sm-3 col-form-label">상품 이름</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="inputProductName">
-                                        </div>
-                                    </div>
-                                    <div class="input-group mb-3 row">
-                                        <label for="inputProductStock" class="col-sm-3 col-form-label">수량</label>
-                                        <div class="col-sm-9">
-                                            <input type="number" class="form-control" id="inputProductStock" min="1">
-                                        </div>
-                                    </div>
-                                    <div class="input-group mb-3 row">
-                                        <label for="inputProductPrice" class="col-sm-3 col-form-label">개당 가격 (p)</label>
-                                        <div class="col-sm-9">
-                                            <input type="number" class="form-control" id="inputProductPrice" min="100"
-                                                step="100" value="1000">
-                                        </div>
-                                    </div>
-                                    <div class="input-group mb-3 row">
-                                        <label for="dropdownType" class="col-sm-3 col-form-label">상품 종류</label>
-                                        <div class="col-sm-9">
-                                            <div class="dropdown">
-                                                <button class="btn btn-secondary dropdown-toggle" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false"
-                                                    id="inputProductType">
-                                                    상품 종류 선택
-                                                </button>
-                                                <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item" id="dropdownFood"
-                                                            onclick="$('#inputProductType').text($(this).text()); $('#inputProductType').val($(this).text())">먹거리</a>
-                                                    </li>
-                                                    <li><a class="dropdown-item" id="dropdownDrink"
-                                                            onclick="$('#inputProductType').text($(this).text()); $('#inputProductType').val($(this).text())">음료</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="input-group mb-3 row">
-                                        <label for="inputProductImage" class="col-sm-3 col-form-label">상품 이미지</label>
-                                        <div class="col-sm-9">
-                                            <input class="form-control" type="file" accept="image/*"
-                                                id="inputProductImage">
-                                        </div>
-                                    </div>
-
-                                    <button type="button" class="btn btn-primary commonButton" id="registerProduct"
-                                        onclick="registerProduct()">상품 등록</button>
-                                </div>
-                            </div>
-
+                    <div class="input-group mb-3 row">
+                      <label
+                        for="inputProductStock"
+                        class="col-sm-3 col-form-label"
+                        >수량</label
+                      >
+                      <div class="col-sm-9">
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="inputProductStock"
+                          min="1"
+                        />
+                      </div>
+                    </div>
+                    <div class="input-group mb-3 row">
+                      <label
+                        for="inputProductPrice"
+                        class="col-sm-3 col-form-label"
+                        >개당 가격 (p)</label
+                      >
+                      <div class="col-sm-9">
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="inputProductPrice"
+                          min="100"
+                          step="100"
+                          value="1000"
+                        />
+                      </div>
+                    </div>
+                    <div class="input-group mb-3 row">
+                      <label for="dropdownType" class="col-sm-3 col-form-label"
+                        >상품 종류</label
+                      >
+                      <div class="col-sm-9">
+                        <div class="dropdown">
+                          <button
+                            class="btn btn-secondary dropdown-toggle"
+                            type="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                            id="inputProductType"
+                          >
+                            상품 종류 선택
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li>
+                              <a
+                                class="dropdown-item"
+                                id="dropdownFood"
+                                onclick="$('#inputProductType').text($(this).text()); $('#inputProductType').val($(this).text())"
+                                >먹거리</a
+                              >
+                            </li>
+                            <li>
+                              <a
+                                class="dropdown-item"
+                                id="dropdownDrink"
+                                onclick="$('#inputProductType').text($(this).text()); $('#inputProductType').val($(this).text())"
+                                >음료</a
+                              >
+                            </li>
+                          </ul>
                         </div>
+                      </div>
                     </div>
-                    <div id="tab-3" class="tab-content">tab content3</div>
-                </div>
-            </div>
-            <div id="screen2-2">
-                <div id="eventlog">
-                    <p style="font-size: 25px">이벤트로그</p>
-                    <div id="logs"></div>
-                </div>
-            </div>
-        </div>
-        <div id="screen3">
+                    <div class="input-group mb-3 row">
+                      <label
+                        for="inputProductImage"
+                        class="col-sm-3 col-form-label"
+                        >상품 이미지</label
+                      >
+                      <div class="col-sm-9">
+                        <input
+                          class="form-control"
+                          type="file"
+                          accept="image/*"
+                          id="inputProductImage"
+                        />
+                      </div>
+                    </div>
 
+                    <button
+                      type="button"
+                      class="btn btn-primary commonButton"
+                      id="registerProduct"
+                      onclick="registerProduct()"
+                    >
+                      상품 등록
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="tab-3" class="tab-content">tab content3</div>
+          </div>
         </div>
+        <div id="screen2-2">
+          <div id="eventlog">
+            <p style="font-size: 25px">이벤트로그</p>
+            <div id="logs"></div>
+          </div>
+        </div>
+      </div>
+      <div id="screen3"></div>
     </div>
-</body>
-<script>
+  </body>
+  <script>
     $.ajax({
-        type: 'GET',
-        url: `/api/admin`,
-        async: false,
-        success: function (response) {
-            for (let i = 0; i < response.length; i++) {
-                let { userId, id, name, phone, email, points } = response[i]
+      type: "GET",
+      url: `/api/admin`,
+      async: false,
+      success: function (response) {
+        for (let i = 0; i < response.length; i++) {
+          let { userId, id, name, phone, email, points } = response[i];
 
-                let temp_html = `<tr id="userId${userId}">
+          let temp_html = `<tr id="userId${userId}">
                                       <td>${id}</td>
                                       <td>${name}</td>
                                       <td>${phone}</td>
@@ -157,45 +214,43 @@
                                       <td id="userPoints${userId}">${points}</td>
                                       <td><button onclick="pointUpdate(${userId})">포인트 변경</button></td>
                                       <td><button onclick="userDelete(${userId})">삭제</button></td>
-                                  </tr>`
-                $('#user-list').append(temp_html);
-            }
-
-
-        },
+                                  </tr>`;
+          $("#user-list").append(temp_html);
+        }
+      },
     });
 
     // 포인트 충전
     function pointUpdate(userId) {
-        let pointInput = prompt("얼마나 변경하시겠습니까?");
-        const points = pointInput;
-        $.ajax({
-            type: 'PUT',
-            url: `/api/admin/${userId}`,
-            data: { points },
-            success: function (data) {
-                alert(points + '로 변경하였습니다.', data)
-                $(`#userPoints${userId}`).text(points)
-            },
-        })
+      let pointInput = prompt("얼마나 변경하시겠습니까?");
+      const points = pointInput;
+      $.ajax({
+        type: "PUT",
+        url: `/api/admin/${userId}`,
+        data: { points },
+        success: function (data) {
+          alert(points + "로 변경하였습니다.", data);
+          $(`#userPoints${userId}`).text(points);
+        },
+      });
     }
 
     // 회원 삭제
     function userDelete(userId) {
-        let result = confirm("해당 회원을 삭제 하시겠습니까?");
-        if (result) {
-            $.ajax({
-                type: 'DELETE',
-                url: `/api/admin/${userId}`,
-                async: false,
-                success: function (response) {
-                    alert("삭제가 완료되었습니다.");
-                    $(`#userId${userId}`).remove()
-                }
-            })
-        } else {
-            alert("취소합니다.");
-        }
+      let result = confirm("해당 회원을 삭제 하시겠습니까?");
+      if (result) {
+        $.ajax({
+          type: "DELETE",
+          url: `/api/admin/${userId}`,
+          async: false,
+          success: function (response) {
+            alert("삭제가 완료되었습니다.");
+            $(`#userId${userId}`).remove();
+          },
+        });
+      } else {
+        alert("취소합니다.");
+      }
     }
 
     // 소켓 방 입장
@@ -204,110 +259,124 @@
     socket.emit("newRoom", userRole);
 
     socket.on("newOrder", (message) => {
-        message = JSON.parse(message);
-        console.log(message);
-        for (item of message) {
-            let {
-                userId,
-                pcId,
-                purchasedItem,
-                qty,
-                userPoints,
-                deductedPoints,
-                remainingPoints,
-                logTime,
-            } = item;
-            logTime = new Date(logTime);
-            logTime = logTime.toLocaleString("ko-KR");
+      message = JSON.parse(message);
+      console.log(message);
+      for (item of message) {
+        let {
+          userId,
+          pcId,
+          purchasedItem,
+          qty,
+          userPoints,
+          deductedPoints,
+          remainingPoints,
+          logTime,
+        } = item;
+        logTime = new Date(logTime);
+        logTime = logTime.toLocaleString("ko-KR");
 
-            let temp_html;
-            if (purchasedItem === "이용시간") {
-                temp_html = `<p>${logTime}&emsp;PC #${pcId}의 이용시간이 ${qty}시간 결제되었습니다. (차감 포인트: ${deductedPoints}p)</p>`;
-            } else {
-                temp_html = `<p>${logTime}&emsp;PC #${pcId}이 ${purchasedItem} ${qty}개를 구매하셨습니다. (차감 포인트: ${deductedPoints}p)</p>`;
-            }
-
-            $("#logs").prepend(temp_html);
+        let temp_html;
+        if (purchasedItem === "이용시간") {
+          temp_html = `<p>${logTime}&emsp;PC #${pcId}의 이용시간이 ${qty}시간 결제되었습니다. (차감 포인트: ${deductedPoints}p)</p>`;
+        } else {
+          temp_html = `<p>${logTime}&emsp;PC #${pcId}이 ${purchasedItem} ${qty}개를 구매하셨습니다. (차감 포인트: ${deductedPoints}p)</p>`;
         }
+
+        $("#logs").prepend(temp_html);
+      }
     });
 
     // 상품 조회
     $.ajax({
-        type: 'GET',
-        url: `/api/products/getAll`,
-        async: false,
-        success: function (response) {
-            for (let i=0; i<response.length; i++) {
-                let {productName, productPrice, productStock, productType, productImgUrl} = response[i]
+      type: "GET",
+      url: `/api/products/getAll`,
+      async: false,
+      success: function (response) {
+        for (let i = 0; i < response.length; i++) {
+          let {
+            productName,
+            productPrice,
+            productStock,
+            productType,
+            productImgUrl,
+          } = response[i];
 
-                let temp_html = `<tr>
-                                    <td><span class="hiddentxt"><a href="${productImgUrl}">${productName}</a></span><span class="hiddenimg"><img src="${productImgUrl}" width="250" /></span></td>
+          let temp_html = `<tr>
+                                    <td><span class="hiddentxt" src="${productImgUrl}">${productName}</span></td>
                                     <td>${productPrice}</td>
                                     <td>${productStock}</td>
                                     <td>${productType}</td>
-                                </tr>`
-                $('#products').append(temp_html)
-            }
-        }, error: function (response) {
-            return alert(response.responseJSON.message)
+                                </tr>`;
+          $("#products").append(temp_html);
         }
-    })
+      },
+      error: function (response) {
+        return alert(response.responseJSON.message);
+      },
+    });
 
     // 상품 등록
     function registerProduct() {
-        const productName = $('#inputProductName').val()
-        const productStock = $('#inputProductStock').val()
-        const productPrice = $('#inputProductPrice').val()
-        const productType = $('#inputProductType').val()
-        const productImage = document.getElementById('inputProductImage').files[0]
+      const productName = $("#inputProductName").val();
+      const productStock = $("#inputProductStock").val();
+      const productPrice = $("#inputProductPrice").val();
+      const productType = $("#inputProductType").val();
+      const productImage =
+        document.getElementById("inputProductImage").files[0];
 
+      if (
+        !productName ||
+        !productStock ||
+        !productPrice ||
+        !productType ||
+        !productImage
+      ) {
+        return alert("모든 상품 정보를 입력해주세요!");
+      }
 
-        if (!productName || !productStock || !productPrice || !productType || !productImage) {
-            return alert('모든 상품 정보를 입력해주세요!')
-        }
+      let inputImage = new FormData();
+      inputImage.append("file", productImage);
 
-        let inputImage = new FormData()
-        inputImage.append('file', productImage)
+      $.ajax({
+        type: "POST",
+        url: "/api/products/image",
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: inputImage,
+        success: function (response) {
+          let imageUrl = response.productImgUrl;
 
-        $.ajax({
-            type: 'POST',
-            url: '/api/products/image',
-            cache: false,
-            contentType: false,
-            processData: false,
-            data: inputImage,
+          $.ajax({
+            type: "POST",
+            url: "/api/products",
+            data: {
+              productName,
+              productStock: Number(productStock),
+              productPrice: Number(productPrice),
+              productImgUrl: imageUrl,
+              productType,
+            },
             success: function (response) {
-                let imageUrl = response.productImgUrl
+              alert("상품이 등록 되었습니다!");
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/api/products',
-                    data: {
-                        productName,
-                        productStock: Number(productStock),
-                        productPrice: Number(productPrice),
-                        productImgUrl: imageUrl,
-                        productType
-                    },
-                    success: function (response) {
-                        alert('상품이 등록 되었습니다!')
-
-                        let temp_html = `<tr>
+              let temp_html = `<tr>
                                     <td>${productName}</td>
                                     <td>${productPrice}</td>
                                     <td>${productStock}</td>
                                     <td>${productType}</td>
-                                </tr>`
-                        $('#products').prepend(temp_html)
-                    }, error: function (response) {
-                        return alert(response.responseJSON.message)
-                    }
-                })
-            }, error: function (response) {
-                return alert(response.responseJSON.message)
-            }
-        })
+                                </tr>`;
+              $("#products").prepend(temp_html);
+            },
+            error: function (response) {
+              return alert(response.responseJSON.message);
+            },
+          });
+        },
+        error: function (response) {
+          return alert(response.responseJSON.message);
+        },
+      });
     }
-</script>
-
+  </script>
 </html>

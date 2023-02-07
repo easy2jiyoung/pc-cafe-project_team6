@@ -41,26 +41,19 @@ span {
 
 .wrapper {
   padding: 10px;
+  margin-top: 70px;
 }
 
-.email span {
-  padding-left: 38px;
+.title {
+  margin-bottom: 50px;
 }
 
 .name span {
-  padding-left: 61px;
+  padding-left: 63px;
 }
 
 .userId span {
-  padding-left: 78px;
-}
-
-.password span {
-  padding-left: 65px;
-}
-
-.passwordCheck span {
-  padding-left: 20px;
+  padding-left: 30px;
 }
 
 div {
@@ -73,33 +66,13 @@ div {
   font-weight: 700;
 }
 
-.email input {
-  width: 85%;
-  float: right;
-}
-
 .name input {
   width: 85%;
   float: right;
 }
 
-.userId input {
-  width: 85%;
-  float: right;
-}
-
-.password input {
-  width: 85%;
-  float: right;
-}
-
-.passwordCheck input {
-  width: 85%;
-  float: right;
-}
-
 .phone > span {
-  padding-right: 10px;
+  padding-right: 22px;
 }
 
 .phone {
@@ -108,14 +81,13 @@ div {
 
 #phone {
   width: 85%;
-  float: right;
 }
 
-.signUp {
+.findId {
   text-align: center;
 }
 
-.signUp button {
+.findId button {
   width: 20%;
   cursor: pointer;
 }

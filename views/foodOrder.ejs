@@ -30,23 +30,23 @@
                                 <a class="nav-link" id="allProductsTab" href="/foodOrder">전체 상품</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="foodTab" href="/foodOrder?type=먹거리">먹거리</a>
+                                <a class="nav-link" id="foodTab" href="/foodOrder?type=food">먹거리</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="drinkTab" href="/foodOrder?type=음료">음료</a>
+                                <a class="nav-link" id="drinkTab" href="/foodOrder?type=drink">음료</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="timeTab" href="/foodOrder?type=이용시간">이용시간</a>
+                                <a class="nav-link" id="timeTab" href="/foodOrder?type=time">이용시간</a>
                             </li>
                         </ul>
                     </div>
                     <div class="row">
                         <div class="row row-cols-4" id="productList"></div>
                     </div>
-                    <nav id="css-pagination" aria-label="Page navigation example">
-                        <ul class="pagination"></ul>
-                    </nav>
-                </div>
+                        <nav id="css-pagination" aria-label="Page navigation example">
+                            <ul class="pagination"></ul>
+                        </nav>
+                    </div>
                 
                 
                 <div class="col-3" id="cart">
@@ -114,6 +114,7 @@
                 const urlSearch = new URLSearchParams(location.search)
                 const page = Number(urlSearch.get('page'))
                 const type = urlSearch.get('type')
+                console.log(type)
 
                 $.ajax({
                     type: 'GET',
@@ -124,7 +125,10 @@
                         const lastPage = response.lastPage;
                         const allProduct = response.allProduct;
                         for (let i = 1; i <= lastPage; i++) {
-                            let temp_html = `<li class="page-item"><a class="page-link" href="?page=${i}&type=${type}">${i}</a></li>`;
+                            let temp_html = 
+                            `<li class="page-item">
+                                <a class="page-link" href="?page=${i}&type=${type}">${i}</a>
+                            </li>`;
                             $(".pagination").append(temp_html);
                         }
 

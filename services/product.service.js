@@ -26,7 +26,7 @@ class ProductService {
     readProducts = async(pageNum, type) => {
         try {
             const limit = 8
-            const offset = (pageNum -1) * limit
+            const offset = (pageNum - 1) * limit
             const allProduct = await this.productRepository.readProducts(limit, offset, type)
             const lastPage = Math.ceil(allProduct.count / limit)
             return { allProduct, lastPage}

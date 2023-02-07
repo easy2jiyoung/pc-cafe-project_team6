@@ -15,6 +15,32 @@ $(document).ready(function () {
     $(this).addClass("current");
     $("#" + tab_id).addClass("current");
   });
+
+  const xOffset = 50;
+  const yOffset = 150;
+
+  $(document).on("mouseover", ".hiddentxt", function (e) {
+    //마우스 오버시
+
+    $("body").append(
+      "<p id='preview'><img src='" +
+        $(this).attr("src") +
+        "' width='300px' /></p>"
+    ); //보여줄 이미지를 선언
+
+    $("#preview")
+      .css("top", e.pageY - xOffset + "px")
+
+      .css("left", e.pageX + yOffset + "px")
+
+      .fadeIn("fast"); //미리보기 화면 설정 셋팅
+  });
+
+  $(document).on("mouseout", ".hiddentxt", function () {
+    //마우스 아웃시
+
+    $("#preview").remove();
+  });
 });
 
 function logOut() {

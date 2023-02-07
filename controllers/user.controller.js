@@ -153,13 +153,13 @@ class UserController {
   };
 
   // 이름과 핸드폰 번호로 아이디 찾기
-  findByNameAndPhone = async (req, res) => {
+  findByIdNameAndPhone = async (req, res) => {
     try {
       const { name, phone } = req.params;
-
-      const id = await this.userService.findByNameAndPhone(name, phone);
-
-      if (id === undefined) {
+      console.log(req.params)
+      const id = await this.userService.findByIdNameAndPhone(name, phone);
+      console.log('컨트롤러',id)
+      if (name === undefined) {
         const error = new Error(
           "해당 이름과 핸드폰으로 등록된 계정이 없습니다."
         );
@@ -167,8 +167,9 @@ class UserController {
         throw error;
       }
 
-      res.status(200).json(id);
+      res.status(200).send(id);
     } catch (error) {
+      console.log(error)
       return res.status(error.status).json({ message: error.message });
     }
   };

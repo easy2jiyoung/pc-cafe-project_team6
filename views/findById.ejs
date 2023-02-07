@@ -54,4 +54,28 @@
       </div>
     </div>
   </body>
+  <script>
+    function findIdEvent() {
+
+      const name = $('#name').val()
+      const phone = $('#phone').val()
+
+      const userData = {name,phone}
+      console.log(name,phone)
+
+        $.ajax({
+                url: `/api/users/findBy/${name}/${phone}`,
+                type: 'GET',
+                async:false,
+                success: function onData(id) {
+                 const userId = id[0].id
+                 alert(`id는 ${userId} 입니다`)
+                },
+                error: function onError(error) {
+                    console.error(error);
+                }
+            });
+    }
+  
+  </script>
 </html>

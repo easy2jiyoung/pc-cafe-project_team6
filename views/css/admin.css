@@ -128,6 +128,7 @@ tr {
 
 .hiddenimg {
     display: none;
+    overflow:visible;
 }
 
 .hiddentxt {
@@ -142,5 +143,10 @@ tr {
 .hiddentxt:hover~.hiddenimg {
     display: block;
     position: absolute;
-    z-index: 2
+    z-index: 2;
+    overflow: visible;
+}
+
+#tab-2 {
+    position:relative;
 }

@@ -241,8 +241,8 @@
             for (let i=0; i<response.length; i++) {
                 let {productName, productPrice, productStock, productType, productImgUrl, productId} = response[i]
 
-                let temp_html = `<tr>
-                                    <td><span class="hiddentxt"><a href="${productImgUrl}">${productName}</a></span><span class="hiddenimg"><img src="${productImgUrl}" width="250" /></span></td>
+                let temp_html = `<tr id="productId${productId}">
+                                    <td><div style="position:relative"><span class="hiddentxt"><a href="${productImgUrl}">${productName}</a></span><span class="hiddenimg"><img src="${productImgUrl}" width="250" /></span></div></td>
                                     <td>${productPrice}</td>
                                     <td>${productStock}</td>
                                     <td>${productType}</td>
@@ -295,7 +295,7 @@
                         alert('상품이 등록 되었습니다!')
                         const productId = response.productId
 
-                        let temp_html = `<tr>
+                        let temp_html = `<tr id="productId${productId}">
                                     <td><span class="hiddentxt"><a href="${imageUrl}">${productName}</a></span><span class="hiddenimg"><img src="${imageUrl}" width="250" /></span></td>
                                     <td>${productPrice}</td>
                                     <td>${productStock}</td>
@@ -321,7 +321,7 @@
 
     // 상품 삭제
     function deleteProduct (productId) {
-        
+
     }
 </script>
 

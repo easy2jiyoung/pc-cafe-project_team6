@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize')
 const { development } = require('../config/config.json')
+const { Op } = require('sequelize');
 const sequelize = new Sequelize(development.database, development.username, development.password, { host: development.host, dialect: development.dialect })
 class PCRepository {
     constructor(PCModel, PCOrderModel) {
@@ -40,6 +41,21 @@ class PCRepository {
             console.log(error)
             error.status = 400
             throw error
+        }
+    }
+
+    logoutPCstatus = async (pcId, pcStatus) => {
+        try {
+            
+            await this.pcModel.update({ pcStatus: pcStatus }, {where: {pcId: pcId}})
+            
+            let date = new Date
+            await this.pcOrderModel.update({ endDateTime: date}, 
+                {where: {pcId: pcId, endDateTime: {[Op.gte]: date}}})
+            return
+        } catch (error) {
+            error.status = 400;
+            throw error;
         }
     }
 }

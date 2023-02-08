@@ -15,7 +15,21 @@ async function auth_middleware(req, res, next) {
         }
 
         // jwt.verify를 이용해 쿠키 토큰값 인증
-        const { userId } = jwt.verify(token, "teamSparta6")
+        const decoded = jwt.verify(token, "teamSparta6", function(err, decoded) {
+            if (err) {
+                console.log('ERROR')
+                res.clearCookie("accessToken")
+                res.locals.user = {}
+                return next()
+            } else return decoded
+        })
+
+        if (!decoded) {
+            res.locals.user = {}
+            return next()
+        }
+
+        const userId = decoded.userId
 
         const user = await Users.findByPk(userId, { attributes: ['userId','id', 'name', 'points', 'role'], raw: true })
         res.locals.user = user;
@@ -36,6 +50,7 @@ async function auth_middleware(req, res, next) {
         next();
 
     } catch (error) {
+        console.log(error)
         res.status(500).send({ error });
     }
 }

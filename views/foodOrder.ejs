@@ -92,30 +92,27 @@
             }, 1000);
 
             $(document).ready(function () {
-                // Active tab 바꾸기
-                const [_, currentLocation] = window.location.href.split(
-                    "http://localhost:1004/foodOrder"
-                );
-                if (currentLocation === "") {
-                    $(".active").removeClass("active");
-                    $("#allProductsTab").addClass("active");
-                } else if (currentLocation === "?type=food") {
-                    $(".active").removeClass("active");
-                    $("#foodTab").addClass("active");
-                } else if (currentLocation === "?type=drink") {
-                    $(".active").removeClass("active");
-                    $("#drinkTab").addClass("active");
-                } else if (currentLocation === "?type=time") {
-                    $(".active").removeClass("active");
-                    $("#timeTab").addClass("active");
-                }
-
-                // 상품 목록 불러오기
                 const urlSearch = new URLSearchParams(location.search)
                 const page = Number(urlSearch.get('page'))
                 const type = urlSearch.get('type')
-                console.log(type)
 
+                // Active tab 바꾸기
+                if (type === "food") {
+                    $(".active").removeClass("active");
+                    $("#foodTab").addClass("active");
+                } else if (type === "drink") {
+                    $(".active").removeClass("active");
+                    $("#drinkTab").addClass("active");
+                } else if (type === "time") {
+                    $(".active").removeClass("active");
+                    $("#timeTab").addClass("active");
+                } else {
+                    $(".active").removeClass("active");
+                    $("#allProductsTab").addClass("active");
+                }
+
+                // 상품 목록 불러오기
+                
                 $.ajax({
                     type: 'GET',
                     url: `/api/products?page=${page || 1}&type=${type}`,

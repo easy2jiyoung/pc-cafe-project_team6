@@ -95,21 +95,11 @@
         let user = "<%= user %>";
         let userRole = "<%= user?.role %>";
 
-        // console.log('endDateTime', endDateTime)
-        // console.log('endDateTime === {}', endDateTime === {})
-        // console.log(!endDateTime)
-        // console.log('Date.now()', Date.now())
-        // console.log('endDateTime < Date.now()',new Date(endDateTime) < Date.now())
-        // console.log('endDateTime > Date.now()',new Date(endDateTime) > Date.now())
-
         if (!user) {
             document.getElementById("divPcOrder").style.display = "none";
         } else if (userRole === "customer") {
             // 고객으로 로그인 되어있으면:
             // pcOrder가 존재하지 않거나
-
-            // console.log(endDateTime,!endDateTime)
-            // console.log('endDateTime === undefined || new Date(endDateTime) < Date.now()',endDateTime === undefined || new Date(endDateTime) < Date.now())
             if (!endDateTime || new Date(endDateTime) < Date.now()) {
                 document.getElementById("divLogin").style.display = "none";
                 document.getElementById("divPcOrder").style.display = "block";

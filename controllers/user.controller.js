@@ -90,7 +90,6 @@ class UserController {
     try {
       const userInfo = await this.userService.findOneUser(id);
       const match = await bcrypt.compare(password, userInfo.password);
-      console.log(userInfo.password);
       if (!match) {
         const error = new Error("패스워드를 확인해주세요");
         error.status = 404;
@@ -99,6 +98,8 @@ class UserController {
       const token = jwt.sign({ userId: userInfo.userId }, "teamSparta6", {
         expiresIn: "1d",
       });
+      console.log(token)
+
       // 에러 나면 if 안에꺼 빼기
       res.cookie("accessToken", token);
 

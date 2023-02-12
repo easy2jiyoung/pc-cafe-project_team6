@@ -32,6 +32,9 @@
 | 프레임워크 | ![Express.js](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge) |
 | 협업 툴 | ![Github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white) ![Slack](https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white) ![Notion](https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white) |
 
+## API
+[API 상세 링크](https://www.notion.so/6-b63522904d0b434c933e4722ee4d506f?pvs=4#5ab2a023463e4178af5e7702457d463a)
+
 ## ERD
 ![](https://relic-cloth-7a9.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Ff971ac52-9afd-4972-a85f-b34e1b2d22ac%2FUntitled.png?id=7d0471ac-4506-4eee-97e6-5744160b843d&table=block&spaceId=c4b6c9fd-2454-42e3-bbf3-a8a5411db531&width=880&userId=&cache=v2)
 
@@ -46,3 +49,10 @@
 
 3. 관리자 페이지
 ![](https://relic-cloth-7a9.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fefc94ad6-6303-43bc-b3bc-4f8203d3a28c%2FUntitled.png?id=3ab110fd-7a3d-4eca-8b33-7b366afcbbff&table=block&spaceId=c4b6c9fd-2454-42e3-bbf3-a8a5411db531&width=2000&userId=&cache=v2)
+
+## 시간 부족으로 적용을 못 한 기능
+### 상품 수정
+관리자 페이지에서 상품 내용을 수정하는 API는 만들어졌지만 프론트엔드에서 적용을 못 했다. 상품 수정을 하고 싶으면 상품을 삭제 후 재등록이 가능하다.
+
+### 고객 비밀번호 재설정
+비밀번호 재설정 페이지는 만들어졌지만 API는 안 만들어졌다. 클라이언트가 이름, ID, 핸드폰를 입력하면 정보에 해당되는 유저가 존재하는지 찾고, 있다면 클라이언트가 새 비밀번호를 입력하고 패스워드를 bcrypt로 암호화한 뒤 검색된 userId의 패스워드를 업데이트하면 된다.
